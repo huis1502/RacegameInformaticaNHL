@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base.cs" />
+    <Compile Include="DelegatesAndEnums.cs" />
     <Compile Include="Window.cs">
       <SubType>Form</SubType>
     </Compile>
