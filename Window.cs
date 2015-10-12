@@ -5,6 +5,11 @@ namespace RaceGame
 {
     public partial class Window : Form
     {
+        public Window()
+        {
+            InitializeComponent();
+        }
+
         private void InitializeComponent()
         {
             this.SuspendLayout();
