@@ -1,1 +1,5 @@
 C:\Users\Hindrik\OneDrive\Documenten\NHL\Projecten\Race game\RaceGame\bin\Debug\RaceGame.exe.config
+C:\Users\Hindrik\GitHub\RaceGame\bin\Debug\RaceGame.exe.config
+C:\Users\Hindrik\GitHub\RaceGame\obj\Debug\RaceGame.csprojResolveAssemblyReference.cache
+C:\Users\Hindrik\GitHub\RaceGame\obj\Debug\RaceGame.Window.resources
+C:\Users\Hindrik\GitHub\RaceGame\obj\Debug\RaceGame.csproj.GenerateResource.Cache
