@@ -11,6 +11,9 @@ namespace Race_info
         static void Main(string[] args)
         {
             Console.WriteLine("Hier ga ik bezig met race info");
+            Console.WriteLine("Nu doe ik in een nieuwe branch");
+            Console.WriteLine("Nu een allerbeste supergoede branch");
+            Console.ReadKey();
         }
     }
 }
