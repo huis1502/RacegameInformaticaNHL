@@ -10,6 +10,7 @@ namespace Race_info
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Hier ga ik bezig met race info");
         }
     }
 }
