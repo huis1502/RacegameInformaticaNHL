@@ -13,16 +13,15 @@ namespace RaceGame
         public Bitmap BackBuffer;
         public List<GameTask> GameTasks;
         public List<DrawInfo> DrawInfos;
-
-        public static Bitmap bitje = new Bitmap("C:/Users/Hindrik/Documents/Test.bmp");
-        public static DrawInfo draw = new DrawInfo(bitje,50,50,104,104, true, 120);
+        public Game currentGame;
 
         public Window()
         {
             InitializeComponent();
             GameTasks = new List<GameTask>();
             DrawInfos = new List<DrawInfo>();
-            DrawInfos.Add(draw);
+
+            CreateGame();
 
             SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.DoubleBuffer, true);
             GameTimer = new Timer();
@@ -101,6 +100,12 @@ namespace RaceGame
             }
         }
 
-
+        void CreateGame()
+        {
+            Base.currentGame = null;
+            currentGame = null;
+            Base.currentGame = new Game();
+            currentGame = Base.currentGame;
+        }
     }
 }
