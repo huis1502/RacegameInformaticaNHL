@@ -1,0 +1,17 @@
+C:\Users\Hindrik\OneDrive\Documenten\NHL\Projecten\Race game\RaceGame\bin\Debug\RaceGame.exe.config
+C:\Users\Hindrik\GitHub\RaceGame\bin\Debug\RaceGame.exe.config
+C:\Users\Hindrik\GitHub\RaceGame\obj\Debug\RaceGame.csprojResolveAssemblyReference.cache
+C:\Users\Hindrik\GitHub\RaceGame\obj\Debug\RaceGame.Window.resources
+C:\Users\Hindrik\GitHub\RaceGame\obj\Debug\RaceGame.csproj.GenerateResource.Cache
+C:\Users\Hindrik\GitHub\RaceGame\bin\Debug\RaceGame.exe
+C:\Users\Hindrik\GitHub\RaceGame\bin\Debug\RaceGame.pdb
+C:\Users\Hindrik\GitHub\RaceGame\obj\Debug\RaceGame.exe
+C:\Users\Hindrik\GitHub\RaceGame\obj\Debug\RaceGame.pdb
+C:\Users\RuteNL\Desktop\RacegameInformaticaNHL-master\bin\Debug\RaceGame.exe.config
+C:\Users\RuteNL\Desktop\RacegameInformaticaNHL-master\obj\Debug\RaceGame.exe
+C:\Users\RuteNL\Desktop\RacegameInformaticaNHL-master\obj\Debug\RaceGame.pdb
+C:\Users\RuteNL\Desktop\RacegameInformaticaNHL-master\obj\Debug\RaceGame.csprojResolveAssemblyReference.cache
+C:\Users\RuteNL\Desktop\RacegameInformaticaNHL-master\obj\Debug\RaceGame.Window.resources
+C:\Users\RuteNL\Desktop\RacegameInformaticaNHL-master\obj\Debug\RaceGame.csproj.GenerateResource.Cache
+C:\Users\RuteNL\Desktop\RacegameInformaticaNHL-master\bin\Debug\RaceGame.exe
+C:\Users\RuteNL\Desktop\RacegameInformaticaNHL-master\bin\Debug\RaceGame.pdb
