@@ -13,6 +13,7 @@ namespace RaceGame
         public int fuelCapacity;
         public float topSpeed;
         public float acceleration;
+        public float deceleration;
         public string spriteName;
         public float turnSpeed;
         public string name;
@@ -21,6 +22,7 @@ namespace RaceGame
         public int maxHealth;
         public int ramDamage;
         public float sideDamageMultiplier;
+        public float grassMultiplier;
 
     }
 
@@ -30,9 +32,10 @@ namespace RaceGame
         {
             fuelCapacity = 95;
             topSpeed = 0.5f;
-            acceleration = 0.2f;
+            acceleration = 0.01f;
+            deceleration = 0.02f;
             spriteName = "tank.png";
-            turnSpeed = 0.6f;
+            turnSpeed = 2;
             name = "Tank";
             weapon = new TankWeapon();
             relativeWeaponPos.X = 0;
@@ -40,6 +43,7 @@ namespace RaceGame
             maxHealth = 200;
             ramDamage = 100;
             sideDamageMultiplier = 1.1f;
+            grassMultiplier = 0.9f;
         }
     }
 
@@ -49,13 +53,15 @@ namespace RaceGame
         {
             fuelCapacity = 120;
             topSpeed = 1.2f;
-            acceleration = 0.6f;
+            acceleration = 0.03f;
+            deceleration = 0.05f;
             spriteName = "jackass.png";
-            turnSpeed = 0.8f;
+            turnSpeed = 1.3f;
             weapon = null;
             maxHealth = 75;
             ramDamage = 200;
             sideDamageMultiplier = 2f;
+            grassMultiplier = 0.4f;
         }
     }
 
@@ -65,15 +71,17 @@ namespace RaceGame
         {
             fuelCapacity = 100;
             topSpeed = 0.7f;
-            acceleration = 0.3f;
+            acceleration = 0.015f;
+            deceleration = 0.03f;
             spriteName = "lapv.png";
-            turnSpeed = 0.9f;
+            turnSpeed = 2.4f;
             weapon = new LAPVWeapon();
             relativeWeaponPos.X = 0;
             relativeWeaponPos.Y = 0;
             maxHealth = 120;
             ramDamage = 80;
             sideDamageMultiplier = 1.1f;
+            grassMultiplier = 0.8f;
         }
     }
 
@@ -83,15 +91,17 @@ namespace RaceGame
         {
             fuelCapacity = 140;
             topSpeed = 1;
-            acceleration = 0.5f;
+            acceleration = 0.025f;
+            deceleration = 0.05f;
             spriteName = "horsepower.png";
-            turnSpeed = 1;
+            turnSpeed = 2.3f;
             weapon = new HorsePowerWeapon();
             relativeWeaponPos.X = 0;
             relativeWeaponPos.Y = 0;
             maxHealth = 90;
             ramDamage = 40;
             sideDamageMultiplier = 1.5f;
+            grassMultiplier = 0.6f;
 
         }
     }
@@ -102,15 +112,17 @@ namespace RaceGame
         {
             fuelCapacity = 70;
             topSpeed = 1.1f;
-            acceleration = 0.7f;
+            acceleration = 0.035f;
+            deceleration = 0.07f;
             spriteName = "Motorfiets.png";
-            turnSpeed = 1.2f;
+            turnSpeed = 3.4f;
             weapon = new LAPVWeapon();
             relativeWeaponPos.X = 0;
             relativeWeaponPos.Y = 0;
             maxHealth = 60;
             ramDamage = 30;
             sideDamageMultiplier = 2;
+            grassMultiplier = 0.4f;
         }
     }
 }

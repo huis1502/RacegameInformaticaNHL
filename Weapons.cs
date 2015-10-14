@@ -13,6 +13,7 @@ namespace RaceGame
         public string spriteName;
         public int damage;
         public int fireRate;
+        public float turnSpeed;
 
         virtual public void shoot()
         { 
@@ -29,6 +30,7 @@ namespace RaceGame
             spriteName = "tankcannon.png";
             damage = 75;
             fireRate = 120;
+            turnSpeed = 3f;
         }
     }
 
@@ -41,6 +43,7 @@ namespace RaceGame
             spriteName = "lapvweapon.png";
             damage = 15;
             fireRate = 25;
+            turnSpeed = 3;
         }
     }
 
@@ -53,6 +56,7 @@ namespace RaceGame
             spriteName = "horsepowerweapon.png";
             damage = 5;
             fireRate = 10;
+            turnSpeed = 3;
         }
     }
 
@@ -65,6 +69,7 @@ namespace RaceGame
             spriteName = "motorfietsweapon.png";
             damage = 10;
             fireRate = 20;
+            turnSpeed = 4;
         }
     }
 }
