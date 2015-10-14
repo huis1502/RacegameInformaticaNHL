@@ -86,13 +86,31 @@ namespace RaceGame
             acceleration = 0.5f;
             spriteName = "horsepower.png";
             turnSpeed = 1;
-            weapon = new LAPVWeapon();
+            weapon = new HorsePowerWeapon();
             relativeWeaponPos.X = 0;
             relativeWeaponPos.Y = 0;
             maxHealth = 90;
             ramDamage = 40;
             sideDamageMultiplier = 1.5f;
 
+        }
+    }
+
+    public class Motorfiets : Cars
+    {
+        public Motorfiets()
+        {
+            fuelCapacity = 70;
+            topSpeed = 1.1f;
+            acceleration = 0.7f;
+            spriteName = "Motorfiets.png";
+            turnSpeed = 1.2f;
+            weapon = new LAPVWeapon();
+            relativeWeaponPos.X = 0;
+            relativeWeaponPos.Y = 0;
+            maxHealth = 60;
+            ramDamage = 30;
+            sideDamageMultiplier = 2;
         }
     }
 }
