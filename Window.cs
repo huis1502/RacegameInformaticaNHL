@@ -89,7 +89,7 @@ namespace RaceGame
                             }
                         }
                     }
-                    buffer.DrawLines(new Pen(Color.White,10f), Base.currentGame.Points);
+                    //buffer.DrawLines(new Pen(Color.White,10f), Base.currentGame.Points);
                 }
                 Invalidate();
             }
@@ -178,10 +178,10 @@ namespace RaceGame
                     Base.currentGame.player1.vehicle.turning = null;
                     break;
                 case Keys.Q:
-                    Base.currentGame.player1.vehicle.weapon.turning = null;
+                    Base.currentGame.player1.vehicle.weapon.turning = "false";
                     break;
                 case Keys.E:
-                    Base.currentGame.player1.vehicle.weapon.turning = null;
+                    Base.currentGame.player1.vehicle.weapon.turning = "false";
                     break;
                 case Keys.I:
                     Base.currentGame.player2.vehicle.throttle = false;
@@ -196,10 +196,10 @@ namespace RaceGame
                     Base.currentGame.player2.vehicle.turning = null;
                     break;
                 case Keys.U:
-                    Base.currentGame.player2.vehicle.weapon.turning = null;
+                    Base.currentGame.player2.vehicle.weapon.turning = "false";
                     break;
                 case Keys.O:
-                    Base.currentGame.player2.vehicle.weapon.turning = null;
+                    Base.currentGame.player2.vehicle.weapon.turning = "false";
                     break;
             }
         }

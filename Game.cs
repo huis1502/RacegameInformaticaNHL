@@ -36,9 +36,11 @@ namespace RaceGame
             player1 = new Player(1);
             player1.CreateVehicle(Enums.VehicleType.Tank);
             player1.vehicle.StartDraw();
+            player1.vehicle.StartWeaponDraw();
             player2 = new Player(2);
             player2.CreateVehicle(Enums.VehicleType.Tank);
             player2.vehicle.StartDraw();
+            player2.vehicle.StartWeaponDraw();
             Base.gameTasks.Add(player1.vehicle.Appelnoot);
             Base.gameTasks.Add(player2.vehicle.Appelnoot);
         }
@@ -109,7 +111,8 @@ namespace RaceGame
             }
             PointsDone.Add(PointsDone[0]);
             Points = PointsDone;
-            Background = new Bitmap(MapsizeX, MapsizeY);
+            //Background = new Bitmap(MapsizeX, MapsizeY);
+            Background = new Bitmap("track3.bmp");
             for (int x = 0; x < MapsizeX; x++)
             {
                 for (int y = 0; y < MapsizeY; y++)
@@ -123,13 +126,15 @@ namespace RaceGame
                     {
                         color = Color.White;
                     }
-                    Background.SetPixel(x,y, color);
+                    //Background.SetPixel(x,y, color);
                 }
             }
             CatMullRomSpline();
 
 
-            Base.drawInfos.Add(new Structs.DrawInfo(Background,MapsizeX/2,MapsizeY/2,MapsizeX,MapsizeY));
+            //Base.drawInfos.Add(new Structs.DrawInfo(Background,MapsizeX/2,MapsizeY/2,MapsizeX,MapsizeY));
+
+            Base.drawInfos.Add(new Structs.DrawInfo(Background, MapsizeX/2, MapsizeY/2, MapsizeX, MapsizeY, 270, 0));
             this.Points = new System.Drawing.Point[Points.Count];
             for (int i = 0; i < Points.Count; i++)
             {

@@ -24,11 +24,11 @@ namespace RaceGame
         {
             name = "Tank Cannon";
             type = "Cannon";
-            spriteName = "tankcannon.png";
+            spriteName = "loop.png";
             damage = 75;
             fireRate = 120;
             turnSpeed = 3f;
-            turning = null;
+            turning = "false";
         }
     }
 

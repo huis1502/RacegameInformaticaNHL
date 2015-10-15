@@ -7,7 +7,7 @@ namespace RaceGame
         public Tank(int x, int y) : base(x,y, VehicleType.Tank)
         {
             fuelCapacity = 95;
-            maxSpeed = 4f;
+            maxSpeed = 1f;
             acceleration = 0.1f;
             deceleration = 0.1f;
             path = "tankbody.png";

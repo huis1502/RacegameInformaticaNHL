@@ -37,10 +37,10 @@ namespace RaceGame
                         vehicle.throttle = true;
                         break;
                     case 'q':
-                        vehicle.qDown = true;
+                        vehicle.turning = "left";
                         break;
                     case 'e':
-                        vehicle.eDown = true;
+                        vehicle.turning = "right";
                         break;
                     case '2':
                         vehicle.Shoot();
@@ -60,10 +60,10 @@ namespace RaceGame
                         vehicle.throttle = true;
                         break;
                     case 'u':
-                        vehicle.qDown = true;
+                        vehicle.turning = "left";
                         break;
                     case 'o':
-                        vehicle.eDown = true;
+                        vehicle.turning = "right";
                         break;
                     case '8':
                         vehicle.Shoot();
