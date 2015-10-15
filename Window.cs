@@ -15,7 +15,7 @@ namespace RaceGame
         public List<GameTask> GameTasks;
         public List<DrawInfo> DrawInfos;
         public Game currentGame;
-
+        
         public Window()
         {
             InitializeComponent();
@@ -140,6 +140,9 @@ namespace RaceGame
                 case Keys.E:
                     Base.currentGame.player1.vehicle.weapon.turning = "right";
                     break;
+                case Keys.D2:
+                    Base.currentGame.player1.vehicle.player1Shooting = true;
+                    break;
                 case Keys.I:
                     Base.currentGame.player2.vehicle.throttle = true;
                     break;
@@ -157,6 +160,9 @@ namespace RaceGame
                     break;
                 case Keys.O:
                     Base.currentGame.player2.vehicle.weapon.turning = "right";
+                    break;
+                case Keys.D8:
+                    Base.currentGame.player2.vehicle.player2Shooting = true;
                     break;
             }
         }
@@ -183,6 +189,9 @@ namespace RaceGame
                 case Keys.E:
                     Base.currentGame.player1.vehicle.weapon.turning = "false";
                     break;
+                case Keys.D2:
+                    Base.currentGame.player1.vehicle.player1Shooting = false;
+                    break;
                 case Keys.I:
                     Base.currentGame.player2.vehicle.throttle = false;
                     break;
@@ -200,6 +209,9 @@ namespace RaceGame
                     break;
                 case Keys.O:
                     Base.currentGame.player2.vehicle.weapon.turning = "false";
+                    break;
+                case Keys.D8:
+                    Base.currentGame.player2.vehicle.player2Shooting = false;
                     break;
             }
         }
