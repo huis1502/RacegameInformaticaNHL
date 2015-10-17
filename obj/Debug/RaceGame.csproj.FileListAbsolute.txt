@@ -7,3 +7,6 @@ C:\Users\Hindrik\GitHub\RaceGame\bin\Debug\RaceGame.exe
 C:\Users\Hindrik\GitHub\RaceGame\bin\Debug\RaceGame.pdb
 C:\Users\Hindrik\GitHub\RaceGame\obj\Debug\RaceGame.exe
 C:\Users\Hindrik\GitHub\RaceGame\obj\Debug\RaceGame.pdb
+D:\Documenten\GitHub\RaceGame\RacegameInformaticaNHL\bin\Debug\RaceGame.exe.config
+D:\Documenten\GitHub\RaceGame\RacegameInformaticaNHL\obj\Debug\RaceGame.exe
+D:\Documenten\GitHub\RaceGame\RacegameInformaticaNHL\obj\Debug\RaceGame.pdb
