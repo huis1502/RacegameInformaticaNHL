@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using RaceGame.Structs;
 using RaceGame.Delegates;
 using System.Drawing.Drawing2D;
 

@@ -1,8 +1,6 @@
-﻿using RaceGame.Structs;
-using RaceGame.Enums;
+﻿using RaceGame.Enums;
 using System.Drawing;
 using System;
-using System.Windows.Forms;
 
 namespace RaceGame
 {

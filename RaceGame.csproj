@@ -45,21 +45,22 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base.cs" />
-    <Compile Include="Cars.cs" />
-    <Compile Include="DelegatesAndEnums.cs" />
-    <Compile Include="Game.cs" />
+    <Compile Include="Core\Base.cs" />
+    <Compile Include="Core\Types.cs" />
+    <Compile Include="Vehicles\Cars.cs" />
+    <Compile Include="Classes\DelegatesAndEnums.cs" />
+    <Compile Include="Core\Game.cs" />
     <Compile Include="Pathfinding\AStar.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Point.cs" />
-    <Compile Include="Vehicle.cs" />
-    <Compile Include="Weapons.cs" />
-    <Compile Include="Window.cs">
+    <Compile Include="Core\Player.cs" />
+    <Compile Include="Classes\Point.cs" />
+    <Compile Include="Vehicles\Vehicle.cs" />
+    <Compile Include="Vehicles\Weapons.cs" />
+    <Compile Include="Core\Window.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Window.resx">
+    <EmbeddedResource Include="Core\Window.resx">
       <DependentUpon>Window.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

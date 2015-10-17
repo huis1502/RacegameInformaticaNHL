@@ -1,5 +1,4 @@
 ﻿using System.Windows.Forms;
-using RaceGame.Structs;
 using RaceGame.Delegates;
 using System.Collections.Generic;
 
