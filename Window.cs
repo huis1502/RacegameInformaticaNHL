@@ -27,7 +27,7 @@ namespace RaceGame
 
             SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.DoubleBuffer, true);
             GameTimer = new Timer();
-            GameTimer.Interval = 16;
+            GameTimer.Interval = 10;
             GameTimer.Tick += new EventHandler(GameTimer_Tick);
             GameTimer.Start();
             Load += new EventHandler(CreateBackBuffer);
@@ -89,7 +89,6 @@ namespace RaceGame
                             }
                         }
                     }
-                    //buffer.DrawLines(new Pen(Color.White,10f), Base.currentGame.Points);
                 }
                 Invalidate();
             }

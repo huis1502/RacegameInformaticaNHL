@@ -15,3 +15,11 @@ C:\Users\RuteNL\Desktop\RacegameInformaticaNHL-master\obj\Debug\RaceGame.Window.
 C:\Users\RuteNL\Desktop\RacegameInformaticaNHL-master\obj\Debug\RaceGame.csproj.GenerateResource.Cache
 C:\Users\RuteNL\Desktop\RacegameInformaticaNHL-master\bin\Debug\RaceGame.exe
 C:\Users\RuteNL\Desktop\RacegameInformaticaNHL-master\bin\Debug\RaceGame.pdb
+C:\Users\Hindrik\Source\Repos\RacegameInformaticaNHL\bin\Debug\RaceGame.exe.config
+C:\Users\Hindrik\Source\Repos\RacegameInformaticaNHL\obj\Debug\RaceGame.exe
+C:\Users\Hindrik\Source\Repos\RacegameInformaticaNHL\obj\Debug\RaceGame.pdb
+C:\Users\Hindrik\Source\Repos\RacegameInformaticaNHL\bin\Debug\RaceGame.exe
+C:\Users\Hindrik\Source\Repos\RacegameInformaticaNHL\bin\Debug\RaceGame.pdb
+C:\Users\Hindrik\Source\Repos\RacegameInformaticaNHL\obj\Debug\RaceGame.csprojResolveAssemblyReference.cache
+C:\Users\Hindrik\Source\Repos\RacegameInformaticaNHL\obj\Debug\RaceGame.Window.resources
+C:\Users\Hindrik\Source\Repos\RacegameInformaticaNHL\obj\Debug\RaceGame.csproj.GenerateResource.Cache
