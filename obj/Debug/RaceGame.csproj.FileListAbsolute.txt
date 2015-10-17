@@ -26,3 +26,8 @@ C:\Users\Hindrik\Source\Repos\RacegameInformaticaNHL\obj\Debug\RaceGame.csproj.G
 D:\Documenten\GitHub\RaceGame\RacegameInformaticaNHL\bin\Debug\RaceGame.exe.config
 D:\Documenten\GitHub\RaceGame\RacegameInformaticaNHL\obj\Debug\RaceGame.exe
 D:\Documenten\GitHub\RaceGame\RacegameInformaticaNHL\obj\Debug\RaceGame.pdb
+D:\Documenten\GitHub\RaceGame\RacegameInformaticaNHL\bin\Debug\RaceGame.exe
+D:\Documenten\GitHub\RaceGame\RacegameInformaticaNHL\bin\Debug\RaceGame.pdb
+D:\Documenten\GitHub\RaceGame\RacegameInformaticaNHL\obj\Debug\RaceGame.csprojResolveAssemblyReference.cache
+D:\Documenten\GitHub\RaceGame\RacegameInformaticaNHL\obj\Debug\RaceGame.Window.resources
+D:\Documenten\GitHub\RaceGame\RacegameInformaticaNHL\obj\Debug\RaceGame.csproj.GenerateResource.Cache

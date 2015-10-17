@@ -59,7 +59,67 @@ namespace RaceGame
                 }
             }
 
+            #region ASTAR
 
+            List<Point> OriginalSet = new List<Point>();
+            for (int i = 0; i < Points.Count; i++)
+            {
+                OriginalSet.Add(Points[i]);
+            }
+
+
+            OriginalSet.Add(OriginalSet[0]);
+            for (int i = 0; i < OriginalSet.Count-1; i++)
+            {
+                List<Point> Return = FindPath(OriginalSet[i], OriginalSet[i+1], RoadType.NULL);
+                for (int j = 0; j < Return.Count; j++)
+                {
+                    Points.Add(Return[j]);
+                }
+                Console.WriteLine("Iteration " + i + "done, of " + (OriginalSet.Count-1) + " iterations");
+            }
+            /*
+            List<Point> T = FindPath(Points[0], Points[1], RoadType.NULL);
+            for (int i = 0; i < T.Count; i++)
+            {
+                Console.WriteLine(T[i].x + "-" + T[i].y);
+                Points.Add(T[i]);
+            }*/
+            #endregion
+
+            #region Reorder points
+            Queue<Point> PointQueue = new Queue<Point>();
+            PointQueue.Enqueue(Points[0]);
+            List<Point> PointsDone = new List<Point>();
+            int z = -1;
+            while (PointQueue.Count != 0)
+            {
+                z++;
+                Console.WriteLine("PointQueue.count: " + PointQueue.Count + " iteration number: " + z + " Expected workcount: " + Points.Count);
+                Point P = PointQueue.Dequeue();
+                float MinDistance = -1;
+                Point NextPoint = null;
+                for (int j = 0; j < Points.Count; j++)
+                {
+                    if (P != Points[j] && !PointsDone.Contains(Points[j]))
+                    {
+                        float Distance = CalculateDistance(P, Points[j]);
+                        if (MinDistance == -1 || MinDistance > Distance)
+                        {
+                            MinDistance = Distance;
+                            NextPoint = Points[j];
+                        }
+                    }
+                }
+                if (NextPoint != null)
+                {
+                    PointsDone.Add(NextPoint);
+                    PointQueue.Enqueue(NextPoint);
+                }
+            }
+            PointsDone.Add(PointsDone[0]);
+            Console.WriteLine("Reordering done");
+            #endregion
 
             #region ProcessMap
             for (int i = 0; i < Points.Count; i++)
@@ -72,6 +132,7 @@ namespace RaceGame
                     GameField[Points[i].x, Points[i].y] = 255;
                 }
             }
+            Console.WriteLine("Setting fields done");
             Background = new Bitmap(MapsizeX, MapsizeY);
             for (int x = 0; x < MapsizeX; x++)
             {
@@ -164,31 +225,9 @@ namespace RaceGame
         }
         List<AstarObject> GetNeighbours(AstarObject A, ref AstarObject[,] Set, NeighbourhoodType NType)
         {
-            if (NType == NeighbourhoodType.Moore)
+            switch (NType)
             {
-                List<AstarObject> Neighbours = new List<AstarObject>();
-                for (int x = -1; x <= 1; x++)
-                {
-                    for (int y = -1; y <= 1; y++)
-                    {
-                        if (x == 0 && y == 0)
-                            continue;
-
-                        int CheckX = A.x + x;
-                        int CheckY = A.y + y;
-
-                        if (CheckX >= 0 && CheckX < MapsizeX && CheckY >= 0 && CheckY < MapsizeY)
-                        {
-                            Neighbours.Add(Set[CheckX, CheckY]);
-                        }
-                    }
-                }
-                return Neighbours;
-            }
-            else
-            {
-                if (NType == NeighbourhoodType.Neumann)
-                {
+                case NeighbourhoodType.Moore:
                     List<AstarObject> Neighbours = new List<AstarObject>();
                     for (int x = -1; x <= 1; x++)
                     {
@@ -207,7 +246,38 @@ namespace RaceGame
                         }
                     }
                     return Neighbours;
-                }
+                case NeighbourhoodType.Neumann:
+                    if (NType == NeighbourhoodType.Neumann)
+                    {
+                        List<AstarObject> Neighbours2 = new List<AstarObject>();
+                        int CheckX = A.x + 1;
+                        int CheckY = A.y;
+                        if (CheckX >= 0 && CheckX < MapsizeX && CheckY >= 0 && CheckY < MapsizeY)
+                        {
+                            Neighbours2.Add(Set[CheckX, CheckY]);
+                        }
+                        CheckX = A.x - 1;
+                        if (CheckX >= 0 && CheckX < MapsizeX && CheckY >= 0 && CheckY < MapsizeY)
+                        {
+                            Neighbours2.Add(Set[CheckX, CheckY]);
+                        }
+                        CheckX = A.x;
+                        CheckY = A.y - 1;
+                        if (CheckX >= 0 && CheckX < MapsizeX && CheckY >= 0 && CheckY < MapsizeY)
+                        {
+                            Neighbours2.Add(Set[CheckX, CheckY]);
+                        }
+                        CheckX = A.x;
+                        CheckY = A.y + 1;
+                        if (CheckX >= 0 && CheckX < MapsizeX && CheckY >= 0 && CheckY < MapsizeY)
+                        {
+                            Neighbours2.Add(Set[CheckX, CheckY]);
+                        }
+                        return Neighbours2;
+                    }
+                    break;
+                default:
+                    return null;
             }
             return null;
         }
