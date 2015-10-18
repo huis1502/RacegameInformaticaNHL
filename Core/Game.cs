@@ -67,7 +67,7 @@ namespace RaceGame
                 OriginalSet.Add(Points[i]);
             }
 
-
+            /*
             OriginalSet.Add(OriginalSet[0]);
             for (int i = 0; i < OriginalSet.Count-1; i++)
             {
@@ -77,25 +77,16 @@ namespace RaceGame
                     Points.Add(Return[j]);
                 }
                 Console.WriteLine("Iteration " + i + "done, of " + (OriginalSet.Count-1) + " iterations");
-            }
-            /*
-            List<Point> T = FindPath(Points[0], Points[1], RoadType.NULL);
-            for (int i = 0; i < T.Count; i++)
-            {
-                Console.WriteLine(T[i].x + "-" + T[i].y);
-                Points.Add(T[i]);
             }*/
             #endregion
+            
 
             #region Reorder points
             Queue<Point> PointQueue = new Queue<Point>();
             PointQueue.Enqueue(Points[0]);
             List<Point> PointsDone = new List<Point>();
-            int z = -1;
             while (PointQueue.Count != 0)
             {
-                z++;
-                Console.WriteLine("PointQueue.count: " + PointQueue.Count + " iteration number: " + z + " Expected workcount: " + Points.Count);
                 Point P = PointQueue.Dequeue();
                 float MinDistance = -1;
                 Point NextPoint = null;
@@ -117,6 +108,7 @@ namespace RaceGame
                     PointQueue.Enqueue(NextPoint);
                 }
             }
+
             PointsDone.Add(PointsDone[0]);
             Console.WriteLine("Reordering done");
             #endregion

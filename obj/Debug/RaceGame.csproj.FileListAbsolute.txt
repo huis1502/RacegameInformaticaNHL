@@ -31,3 +31,11 @@ D:\Documenten\GitHub\RaceGame\RacegameInformaticaNHL\bin\Debug\RaceGame.pdb
 D:\Documenten\GitHub\RaceGame\RacegameInformaticaNHL\obj\Debug\RaceGame.csprojResolveAssemblyReference.cache
 D:\Documenten\GitHub\RaceGame\RacegameInformaticaNHL\obj\Debug\RaceGame.Window.resources
 D:\Documenten\GitHub\RaceGame\RacegameInformaticaNHL\obj\Debug\RaceGame.csproj.GenerateResource.Cache
+C:\Users\Hindrik\Documents\GitHubVisualStudio\RacegameInformaticaNHL\bin\Debug\RaceGame.exe.config
+C:\Users\Hindrik\Documents\GitHubVisualStudio\RacegameInformaticaNHL\obj\Debug\RaceGame.exe
+C:\Users\Hindrik\Documents\GitHubVisualStudio\RacegameInformaticaNHL\obj\Debug\RaceGame.pdb
+C:\Users\Hindrik\Documents\GitHubVisualStudio\RacegameInformaticaNHL\bin\Debug\RaceGame.exe
+C:\Users\Hindrik\Documents\GitHubVisualStudio\RacegameInformaticaNHL\bin\Debug\RaceGame.pdb
+C:\Users\Hindrik\Documents\GitHubVisualStudio\RacegameInformaticaNHL\obj\Debug\RaceGame.csprojResolveAssemblyReference.cache
+C:\Users\Hindrik\Documents\GitHubVisualStudio\RacegameInformaticaNHL\obj\Debug\RaceGame.Window.resources
+C:\Users\Hindrik\Documents\GitHubVisualStudio\RacegameInformaticaNHL\obj\Debug\RaceGame.csproj.GenerateResource.Cache
