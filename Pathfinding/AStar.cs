@@ -124,7 +124,7 @@ namespace RaceGame.Pathfinding
         }
     }
     [Serializable]
-    class AstarObject : IHeapItem<AstarObject>
+    public class AstarObject : IHeapItem<AstarObject>
     {
         public int x;
         public int y;
@@ -167,7 +167,7 @@ namespace RaceGame.Pathfinding
             get; set;
         }
     }
-    enum RoadType
+    public enum RoadType
     {
         NULL,
         horizontalStraight,
@@ -177,9 +177,33 @@ namespace RaceGame.Pathfinding
         toprightCorner,
         topleftCorner
     }
-    enum NeighbourhoodType
+    public enum NeighbourhoodType
     {
         Moore,
         Neumann
     }
+
+    public class Road
+    {
+        public int X;
+        public int Y;
+        public RoadType roadType;
+        public Road(int x, int y, RoadType T)
+        {
+            X = x;
+            Y = y;
+            roadType = T;
+        }
+    }
+
+    public enum Direction
+    {
+        NULL,
+        Top,
+        Right,
+        Bottom,
+        Left
+    }
+
+
 }
