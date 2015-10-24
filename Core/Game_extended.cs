@@ -331,10 +331,6 @@ namespace RaceGame
             for (int i = 0; i < _roads.Count; i++)
             {
                 Direction Prev = GetRoadLocation(_roads[i], Points);
-                if (Prev == Direction.NULL)
-                {
-                    Prev = Direction.Top;
-                }
                 Direction Next;
                 if (i != _roads.Count - 1)
                 {
@@ -421,7 +417,7 @@ namespace RaceGame
             {
                 if (CheckRotation(CheckX,CheckY, SET))
                 {
-                    return Direction.Right;
+                    return Direction.Left;
                 }
             }
             CheckX = R.X + 1;
@@ -429,7 +425,7 @@ namespace RaceGame
             {
                 if (CheckRotation(CheckX, CheckY, SET))
                 {
-                    return Direction.Left;
+                    return Direction.Right;
                 }
             }
             CheckX = R.X;
