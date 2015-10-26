@@ -307,7 +307,6 @@ namespace RaceGame
         List<Point> RetracePath(AstarObject Start, AstarObject End)
         {
             List<Point> path = new List<Point>();
-
             AstarObject CurrentA = End;
             while (CurrentA != Start)
             {
@@ -324,143 +323,287 @@ namespace RaceGame
             List<Road> _roads = new List<Road>();
             for (int j = 0; j < Points.Count; j++)
             {
-                _roads.Add(Roads[Points[j].x, Points[j].y]);                
+                _roads.Add(Roads[Points[j].x, Points[j].y]);
             }
-            //From a to b sorted
-            //Setting first element
-            for (int i = 0; i < _roads.Count; i++)
+            for (int i = 1; i < _roads.Count-1; i++)
             {
-                Direction Prev = GetRoadLocation(_roads[i], Points);
-                Direction Next;
-                if (i != _roads.Count - 1)
-                {
-                    Next = GetRoadLocation(_roads[i + 1], Points);
-                    switch (Next)
-                    {
-                        case Direction.Right:
-                            Next = Direction.Left;
-                            break;
-                        case Direction.Left:
-                            Next = Direction.Right;
-                            break;
-                        case Direction.Top:
-                            Next = Direction.Bottom;
-                            break;
-                        case Direction.Bottom:
-                            Next = Direction.Top;
-                            break;
-                        default:
-                            Next = Direction.NULL;
-                            Console.WriteLine("ERROR");
-                            break;
-                    }
-                }
-                else
-                {
-                    Next = Direction.Right;
-                }
+                SetSingleRoadType(_roads[i-1], _roads[i], _roads[i+1]);
+            }
+            SpecialRoadList.Add(new SpecRoad { Current =  _roads[0], Next = _roads[1]});
+            SpecialRoadList.Add(new SpecRoad { Current = _roads[_roads.Count-1], Prev = _roads[_roads.Count-2]});
+        }
 
-                if ((Prev == Direction.Bottom && Next == Direction.Top) || (Prev == Direction.Top && Next == Direction.Bottom))
+        void SetSingleRoadType(Road Prev, Road Current, Road Next)
+        {
+            int X = Current.X;
+            int Y = Current.Y;
+
+            Direction PrevDir = Direction.NULL;
+            Direction NextDir = Direction.NULL;
+
+            #region Prev
+            //Top
+            if (Prev.X == X && Prev.Y > Y)
+            {
+                PrevDir = Direction.Top;
+            }
+            else
+            {
+                //Bottom
+                if (Prev.X == X && Prev.Y < Y)
                 {
-                    _roads[i].roadType = RoadType.verticalStraight;
+                    PrevDir = Direction.Bottom;
                 }
                 else
                 {
-                    if ((Prev == Direction.Left && Next == Direction.Right) || (Prev == Direction.Right && Next == Direction.Left))
+                    if (Prev.Y == Y && Prev.X < X)
                     {
-                        _roads[i].roadType = RoadType.horizontalStraight;
+                        PrevDir = Direction.Left;
                     }
                     else
                     {
-                        if ((Prev == Direction.Left && Next == Direction.Top) || (Prev == Direction.Top && Next == Direction.Left))
+                        if (Prev.Y == Y && Prev.X > X)
                         {
-                            _roads[i].roadType = RoadType.topleftCorner;
+                            PrevDir = Direction.Right;
                         }
                         else
                         {
-                            if ((Prev == Direction.Right && Next == Direction.Top) || (Prev == Direction.Top && Next == Direction.Right))
+                            Console.WriteLine("INVALID DIRECTION IN SSRT()");
+                        }
+                    }
+                }
+            }
+            #endregion
+            #region NextDir
+            //Top
+            if (Next.X == X && Next.Y > Y)
+            {
+                NextDir = Direction.Top;
+            }
+            else
+            {
+                //Bottom
+                if (Next.X == X && Next.Y < Y)
+                {
+                    NextDir = Direction.Bottom;
+                }
+                else
+                {
+                    if (Next.Y == Y && Next.X < X)
+                    {
+                        NextDir = Direction.Left;
+                    }
+                    else
+                    {
+                        if (Next.Y == Y && Next.X > X)
+                        {
+                            NextDir = Direction.Right;
+                        }
+                        else
+                        {
+                            Console.WriteLine("INVALID DIRECTION IN SSRT()");
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            if ((PrevDir == Direction.Top && NextDir == Direction.Bottom) || (PrevDir == Direction.Bottom && NextDir == Direction.Top))
+            {
+                Current.roadType = RoadType.verticalStraight;
+            }
+            else
+            {
+                if ((PrevDir == Direction.Left && NextDir == Direction.Right) || (PrevDir == Direction.Right && NextDir == Direction.Left))
+                {
+                    Current.roadType = RoadType.horizontalStraight;
+                }
+                else
+                {
+                    if ((PrevDir == Direction.Top && NextDir == Direction.Left) || (PrevDir == Direction.Left && NextDir == Direction.Top))
+                    {
+                        Current.roadType = RoadType.topleftCorner;
+                    }
+                    else
+                    {
+                        if ((PrevDir == Direction.Top && NextDir == Direction.Right) || (PrevDir == Direction.Right && NextDir == Direction.Top))
+                        {
+                            Current.roadType = RoadType.toprightCorner;
+                        }
+                        else
+                        {
+                            if ((PrevDir == Direction.Bottom && NextDir == Direction.Left) || (PrevDir == Direction.Left && NextDir == Direction.Bottom))
                             {
-                                _roads[i].roadType = RoadType.toprightCorner;
+                                Current.roadType = RoadType.bottomleftCorner;
                             }
                             else
                             {
-                                if ((Prev == Direction.Left && Next == Direction.Bottom) || (Prev == Direction.Bottom && Next == Direction.Left))
+                                if ((PrevDir == Direction.Bottom && NextDir == Direction.Right) || (PrevDir == Direction.Right && NextDir == Direction.Bottom))
                                 {
-                                    _roads[i].roadType = RoadType.bottomleftCorner;
+                                    Current.roadType = RoadType.bottomrightCorner;
                                 }
                                 else
                                 {
-                                    if ((Prev == Direction.Right && Next == Direction.Bottom) || (Prev == Direction.Bottom && Next == Direction.Right))
+                                    Console.WriteLine("INVALID ROAD TYPE");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        void SetSpecialRoadType(SpecRoad PrevR, SpecRoad NextR)
+        {
+
+            PrevR.Next = NextR.Current;
+            NextR.Prev = PrevR.Current;
+
+            SpecRoad[] _specs = new SpecRoad[2] { PrevR, NextR };
+
+            for (int i = 0; i < 2; i++)
+            {
+                Road Prev = _specs[i].Prev;
+                Road Next = _specs[i].Next;
+                Road Current = _specs[i].Current;
+                int X = Current.X;
+                int Y = Current.Y;
+                Direction PrevDir = Direction.NULL;
+                Direction NextDir = Direction.NULL;
+
+                #region Prev
+                //Top
+                if (Prev.X == X && Prev.Y > Y)
+                {
+                    PrevDir = Direction.Top;
+                }
+                else
+                {
+                    //Bottom
+                    if (Prev.X == X && Prev.Y < Y)
+                    {
+                        PrevDir = Direction.Bottom;
+                    }
+                    else
+                    {
+                        if (Prev.Y == Y && Prev.X < X)
+                        {
+                            PrevDir = Direction.Left;
+                        }
+                        else
+                        {
+                            if (Prev.Y == Y && Prev.X > X)
+                            {
+                                PrevDir = Direction.Right;
+                            }
+                            else
+                            {
+                                Console.WriteLine("INVALID DIRECTION IN SSRT()");
+                            }
+                        }
+                    }
+                }
+                #endregion
+                #region NextDir
+                //Top
+                if (Next.X == X && Next.Y > Y)
+                {
+                    NextDir = Direction.Top;
+                }
+                else
+                {
+                    //Bottom
+                    if (Next.X == X && Next.Y < Y)
+                    {
+                        NextDir = Direction.Bottom;
+                    }
+                    else
+                    {
+                        if (Next.Y == Y && Next.X < X)
+                        {
+                            NextDir = Direction.Left;
+                        }
+                        else
+                        {
+                            if (Next.Y == Y && Next.X > X)
+                            {
+                                NextDir = Direction.Right;
+                            }
+                            else
+                            {
+                                Console.WriteLine("INVALID DIRECTION IN SSRT()");
+                            }
+                        }
+                    }
+                }
+                #endregion
+
+                if ((PrevDir == Direction.Top && NextDir == Direction.Bottom) || (PrevDir == Direction.Bottom && NextDir == Direction.Top))
+                {
+                    Current.roadType = RoadType.verticalStraight;
+                }
+                else
+                {
+                    if ((PrevDir == Direction.Left && NextDir == Direction.Right) || (PrevDir == Direction.Right && NextDir == Direction.Left))
+                    {
+                        Current.roadType = RoadType.horizontalStraight;
+                    }
+                    else
+                    {
+                        if ((PrevDir == Direction.Top && NextDir == Direction.Left) || (PrevDir == Direction.Left && NextDir == Direction.Top))
+                        {
+                            Current.roadType = RoadType.topleftCorner;
+                        }
+                        else
+                        {
+                            if ((PrevDir == Direction.Top && NextDir == Direction.Right) || (PrevDir == Direction.Right && NextDir == Direction.Top))
+                            {
+                                Current.roadType = RoadType.toprightCorner;
+                            }
+                            else
+                            {
+                                if ((PrevDir == Direction.Bottom && NextDir == Direction.Left) || (PrevDir == Direction.Left && NextDir == Direction.Bottom))
+                                {
+                                    Current.roadType = RoadType.bottomleftCorner;
+                                }
+                                else
+                                {
+                                    if ((PrevDir == Direction.Bottom && NextDir == Direction.Right) || (PrevDir == Direction.Right && NextDir == Direction.Bottom))
                                     {
-                                        _roads[i].roadType = RoadType.toprightCorner;
+                                        Current.roadType = RoadType.bottomrightCorner;
                                     }
                                     else
                                     {
-                                        Console.WriteLine("ERROR INVALID ROAD TYPE");
-                                        Console.WriteLine(Prev + "-" + Next + "" + _roads[i].X + "-" + _roads[i].Y);
+                                        Console.WriteLine("INVALID ROAD TYPE");
                                     }
                                 }
                             }
                         }
                     }
-                } 
-            }
+                }
 
+            }
         }
 
-        Direction GetRoadLocation(Road R, List<Point> SET)
+        struct SpecRoad
         {
-            int CheckX = R.X - 1;
-            int CheckY = R.Y;
+            public Road Prev;
+            public Road Current;
+            public Road Next;
 
-            if (CheckX >= 0 && CheckX < MapsizeXR && CheckY >= 0 && CheckY < MapsizeYR)
+            public override string ToString()
             {
-                if (CheckRotation(CheckX,CheckY, SET))
-                {
-                    return Direction.Left;
-                }
+                string Text = "";
+                if (Prev != null)
+                    Text = Text + "Prev: " + Prev.X + "-" + Prev.Y + "\n";
+                if (Current != null)
+                    Text = Text + "Current: " + Current.X + "-" + Current.Y + "\n";
+                if (Next != null)
+                    Text = Text + "Next: " + Next.X + "-" + Next.Y + "\n";
+
+                return Text;
             }
-            CheckX = R.X + 1;
-            if (CheckX >= 0 && CheckX < MapsizeXR && CheckY >= 0 && CheckY < MapsizeYR)
-            {
-                if (CheckRotation(CheckX, CheckY, SET))
-                {
-                    return Direction.Right;
-                }
-            }
-            CheckX = R.X;
-            CheckY = R.Y + 1;
-            if (CheckX >= 0 && CheckX < MapsizeXR && CheckY >= 0 && CheckY < MapsizeYR)
-            {
-                if (CheckRotation(CheckX, CheckY, SET))
-                {
-                    return Direction.Top;
-                }
-            }
-            CheckY = R.Y - 1;
-            if (CheckX >= 0 && CheckX < MapsizeXR && CheckY >= 0 && CheckY < MapsizeYR)
-            {
-                if (CheckRotation(CheckX, CheckY, SET))
-                {
-                    return Direction.Bottom;
-                }
-            }
-            return Direction.NULL;
+
         }
-
-
-        bool CheckRotation(int x, int y, List<Point> ToCheck)
-        {
-            for (int i = 0; i < ToCheck.Count; i++)
-            {
-                if (ToCheck[i].x == x && ToCheck[i].y == y)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-
     }
 }
