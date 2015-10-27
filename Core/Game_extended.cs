@@ -7,174 +7,10 @@ namespace RaceGame
 {
     public partial class Game
     {
-        /*
-                public float CalculateDistance(Point a, Point b)
-        {
-            return (float)Math.Sqrt(Math.Pow(b.x -a.x, 2) + Math.Pow(b.y - a.y,2));
-        }
-        List<Point> FindPath(Point StartPosition, Point EndPosition, RoadType T)
-        {
-            AstarObject[,] Set = new AstarObject[MapsizeX, MapsizeY];
-            for (int x = 0; x < MapsizeX; x++)
-            {
-                for (int y = 0; y < MapsizeY; y++)
-                {
-                    Set[x, y] = new AstarObject(x, y, this);
-                }
-            }
 
-            Heap<AstarObject> OpenSet = new Heap<AstarObject>(MapsizeX * MapsizeY);
-            HashSet<AstarObject> ClosedSet = new HashSet<AstarObject>();
-            AstarObject Start = Set[StartPosition.x, StartPosition.y];
-            AstarObject End = Set[EndPosition.x, EndPosition.y];
-            OpenSet.Add(Start);
+        protected List<Point> PitstopLocations = new List<Point>();
+        protected PitStopType pitstopType;
 
-            while (OpenSet.Count > 0)
-            {
-                AstarObject CurrentLocation = OpenSet.RemoveFirst();
-
-                ClosedSet.Add(CurrentLocation);
-
-                if (CurrentLocation == End)
-                {
-                    return RetracePath(Start, End);
-                    //Retracepath and stuff.
-                }
-                List<AstarObject> Neighbours = GetNeighbours(CurrentLocation, ref Set, NeighbourhoodType.Moore,MapsizeX,MapsizeY);
-                foreach (AstarObject neighbour in Neighbours)
-                {
-                    if (neighbour.RType != T || ClosedSet.Contains(neighbour))
-                    {
-                        continue;
-                    }
-
-                    int newMovementCostToNeighbour = CurrentLocation.gCost + GetDistance(CurrentLocation, neighbour);
-                    if (newMovementCostToNeighbour < neighbour.gCost || !OpenSet.Contains(neighbour))
-                    {
-                        neighbour.gCost = newMovementCostToNeighbour;
-                        neighbour.hCost = GetDistance(neighbour, End);
-                        neighbour.parent = CurrentLocation;
-
-                        if (!OpenSet.Contains(neighbour))
-                        {
-                            OpenSet.Add(neighbour);
-                        }
-                        else
-                        {
-                            OpenSet.UpdateItem(neighbour);
-                        }
-
-                    }
-
-                }
-
-            }
-            return new List<Point>();
-        }
-        List<Point> CreateSegments(List<Point> Points)
-        {
-            int SegmentWidth = 72;
-            for (int x = 0; x < (MapsizeX / SegmentWidth); x++)
-            {
-                for (int y = 0; y < (MapsizeY / SegmentWidth); y++)
-                {
-                    int MidpointX = x * SegmentWidth + (SegmentWidth / 2);
-                    int MidpointY = y * SegmentWidth + (SegmentWidth / 2);
-                    Points.Add(new Point(MidpointX, MidpointY));
-                }
-            }
-            return Points;
-        }
-        List<Point> ReorderPoints(List<Point> Points, bool CopyEndPoint = false)
-        {
-            Queue<Point> PointQueue = new Queue<Point>();
-            PointQueue.Enqueue(Points[0]);
-            List<Point> PointsDone = new List<Point>();
-            while (PointQueue.Count != 0)
-            {
-                Point P = PointQueue.Dequeue();
-                float MinDistance = -1;
-                Point NextPoint = null;
-                for (int j = 0; j < Points.Count; j++)
-                {
-                    if (P != Points[j] && !PointsDone.Contains(Points[j]))
-                    {
-                        float Distance = CalculateDistance(P, Points[j]);
-                        if (MinDistance == -1 || MinDistance > Distance)
-                        {
-                            MinDistance = Distance;
-                            NextPoint = Points[j];
-                        }
-                    }
-                }
-                if (NextPoint != null)
-                {
-                    PointsDone.Add(NextPoint);
-                    PointQueue.Enqueue(NextPoint);
-                }
-            }
-            if (CopyEndPoint)
-                PointsDone.Add(Points[0]);
-
-            return PointsDone;
-        }
-        List<Point> AddPaths(List<Point> Points, RoadType rt)
-        {
-            List<Point> OriginalSet = new List<Point>();
-            for (int i = 0; i < Points.Count; i++)
-            {
-                OriginalSet.Add(Points[i]);
-            }
-            OriginalSet.Add(OriginalSet[0]);
-            for (int i = 0; i < OriginalSet.Count - 1; i++)
-            {
-                List<Point> Return = FindPath(OriginalSet[i], OriginalSet[i + 1], rt);
-                for (int j = 0; j < Return.Count; j++)
-                {
-                    Points.Insert(i + 1 + j, Return[j]);
-                }
-                Console.WriteLine("Iteration " + i + "done, of " + (OriginalSet.Count - 1) + " iterations");
-            }
-            return Points;
-        }
-        void ProcessPointMap(List<Point> Points)
-        {
-            for (int i = 0; i < Points.Count; i++)
-            {
-                int x = Points[i].x;
-                int y = Points[i].y;
-
-                if (x >= 0 && y >= 0 && x < MapsizeX && y < MapsizeY)
-                {
-                    GameField[Points[i].x, Points[i].y] = 255;
-                }
-            }
-            Background = new Bitmap(MapsizeX, MapsizeY);
-            for (int x = 0; x < MapsizeX; x++)
-            {
-                for (int y = 0; y < MapsizeY; y++)
-                {
-                    Color color;
-                    if (GameField[x, y] == 0)
-                    {
-                        color = Color.Black;
-                    }
-                    else
-                    {
-                        color = Color.White;
-                    }
-                    Background.SetPixel(x, y, color);
-                }
-            }
-            Base.drawInfos.Add(new DrawInfo(Background, MapsizeX / 2, MapsizeY / 2, MapsizeX, MapsizeY, 270, 0));
-            this.Points = new System.Drawing.Point[Points.Count];
-            for (int i = 0; i < Points.Count; i++)
-            {
-                System.Drawing.Point p = new System.Drawing.Point(Points[i].x, Points[i].y);
-                this.Points[i] = p;
-            }
-        }
-        */
         List<Point> FindRoadPath(Road a, Road b, RoadType T)
         {
             AstarObject[,] Set = new AstarObject[14, 9];
@@ -343,14 +179,14 @@ namespace RaceGame
 
             #region Prev
             //Top
-            if (Prev.X == X && Prev.Y > Y)
+            if (Prev.X == X && Prev.Y < Y)
             {
                 PrevDir = Direction.Top;
             }
             else
             {
                 //Bottom
-                if (Prev.X == X && Prev.Y < Y)
+                if (Prev.X == X && Prev.Y > Y)
                 {
                     PrevDir = Direction.Bottom;
                 }
@@ -376,14 +212,14 @@ namespace RaceGame
             #endregion
             #region NextDir
             //Top
-            if (Next.X == X && Next.Y > Y)
+            if (Next.X == X && Next.Y < Y)
             {
                 NextDir = Direction.Top;
             }
             else
             {
                 //Bottom
-                if (Next.X == X && Next.Y < Y)
+                if (Next.X == X && Next.Y > Y)
                 {
                     NextDir = Direction.Bottom;
                 }
@@ -445,6 +281,8 @@ namespace RaceGame
                                 else
                                 {
                                     Console.WriteLine("INVALID ROAD TYPE");
+
+
                                 }
                             }
                         }
@@ -473,14 +311,14 @@ namespace RaceGame
 
                 #region Prev
                 //Top
-                if (Prev.X == X && Prev.Y > Y)
+                if (Prev.X == X && Prev.Y < Y)
                 {
                     PrevDir = Direction.Top;
                 }
                 else
                 {
                     //Bottom
-                    if (Prev.X == X && Prev.Y < Y)
+                    if (Prev.X == X && Prev.Y > Y)
                     {
                         PrevDir = Direction.Bottom;
                     }
@@ -506,14 +344,14 @@ namespace RaceGame
                 #endregion
                 #region NextDir
                 //Top
-                if (Next.X == X && Next.Y > Y)
+                if (Next.X == X && Next.Y < Y)
                 {
                     NextDir = Direction.Top;
                 }
                 else
                 {
                     //Bottom
-                    if (Next.X == X && Next.Y < Y)
+                    if (Next.X == X && Next.Y > Y)
                     {
                         NextDir = Direction.Bottom;
                     }
@@ -581,7 +419,6 @@ namespace RaceGame
                         }
                     }
                 }
-
             }
         }
 
@@ -603,7 +440,96 @@ namespace RaceGame
 
                 return Text;
             }
-
         }
+
+        protected enum PitStopType
+        {
+            Vertical,
+            Horizontal
+        }
+
+        Point[] GeneratePointSet()
+        {
+            Random RND = new Random(DateTime.Now.GetHashCode() + DateTime.UtcNow.GetHashCode() + DateTime.Now.Millisecond.GetHashCode());
+            List<Point> Return = new List<Point>();
+            int Direction = RND.Next(0, 2);
+            Return.Add( new Point(1, 1));
+            Direction = 0;
+            if (Direction == 0)
+            {
+                //Pitstop toevoegen
+                PitstopLocations.Add(new Point(0, 3));
+                PitstopLocations.Add(new Point(0, 4));
+                PitstopLocations.Add(new Point(0, 5));
+                PitstopLocations.Add(new Point(1, 3));
+                PitstopLocations.Add(new Point(1, 4));
+                PitstopLocations.Add(new Point(1, 5));
+                pitstopType = PitStopType.Vertical;
+
+                Direction = RND.Next(0,2);
+
+                if (Direction == 0)
+                {
+                    Return.Add(new Point(1, 3));
+                    Return.Add(new Point(5,3));
+                    Return.Add(new Point(5,6));
+                    Return.Add(new Point(1,6));
+                    Return.Add(new Point(1, 8));
+                }
+                else
+                {
+                    Return.Add(new Point(1,8));
+                }
+
+                Return.Add(new Point(12,8));
+
+                Direction = RND.Next(0, 2);
+                if (Direction == 0)
+                {
+                    Return.Add(new Point(12,6));
+                    Return.Add(new Point(9, 6));
+                    Return.Add(new Point(9, 3));
+                    Return.Add(new Point(12, 3));
+                }
+
+                Return.Add(new Point(12,1));
+            }
+            else
+            {
+                Return.Add(new Point(12, 1));
+                //Pitstop toevoegen
+                PitstopLocations.Add(new Point(6, 0));
+                PitstopLocations.Add(new Point(7, 0));
+                PitstopLocations.Add(new Point(8, 0));
+                PitstopLocations.Add(new Point(6, 1));
+                PitstopLocations.Add(new Point(7, 1));
+                PitstopLocations.Add(new Point(8, 1));
+                pitstopType = PitStopType.Horizontal;
+
+                Direction = RND.Next(0, 2);
+
+                if (Direction == 0)
+                {
+                    Return.Add(new Point(12, 3));
+                    Return.Add(new Point(7, 3));
+                    Return.Add(new Point(7, 6));
+                    Return.Add(new Point(12, 6));
+                    Return.Add(new Point(12, 8));
+                }
+                else
+                {
+                    Return.Add(new Point(12, 8));
+                }
+
+                Direction = RND.Next(0,2);
+                if (Direction == 0)
+                {
+
+                }
+            }
+
+            return Return.ToArray();
+        }
+
     }
 }

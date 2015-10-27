@@ -194,6 +194,10 @@ namespace RaceGame.Pathfinding
             Y = y;
             roadType = T;
         }
+        public override string ToString()
+        {
+            return "------\n(" + X + "," + Y + ")\n" + roadType ;
+        }
     }
 
     public enum Direction

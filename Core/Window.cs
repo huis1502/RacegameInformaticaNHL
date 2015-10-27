@@ -26,7 +26,7 @@ namespace RaceGame
 
             SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.DoubleBuffer, true);
             GameTimer = new Timer();
-            GameTimer.Interval = 1;
+            GameTimer.Interval = 10;
             GameTimer.Tick += new EventHandler(GameTimer_Tick);
             GameTimer.Start();
             Load += new EventHandler(CreateBackBuffer);
@@ -47,6 +47,7 @@ namespace RaceGame
             this.Name = "Window";
             this.ShowIcon = false;
             this.Text = "Race Game";
+            this.Load += new System.EventHandler(this.Window_Load);
             this.ResumeLayout(false);
 
         }
@@ -201,7 +202,15 @@ namespace RaceGame
                     break;
             }
         }
-        
 
+        private void Window_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+           
+        }
     }
 }

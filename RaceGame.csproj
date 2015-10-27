@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Base.cs" />
+    <Compile Include="Core\Bitmaps.cs" />
     <Compile Include="Core\Game_extended.cs" />
     <Compile Include="Core\Types.cs" />
     <Compile Include="Vehicles\Cars.cs" />

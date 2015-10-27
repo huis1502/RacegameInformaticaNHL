@@ -62,8 +62,8 @@ namespace RaceGame
                     Roads[x, y] = new Road(x,y, RoadType.NULL);
                 }
             }
-            Point[] _points = { new Point(0,0), new Point(13,0), new Point(13,8), new Point(0,8) };
-            //1Point[] _points = GeneratePointSet();
+            //Point[] _points = { new Point(0,0), new Point(13,0), new Point(13,8), new Point(0,8) };
+            Point[] _points = GeneratePointSet();
 
             for (int i = 0; i < _points.Length; i++)
             {
@@ -105,39 +105,42 @@ namespace RaceGame
             {
                 for (int y = 0; y < MapsizeYR; y++)
                 {
-                    Color T = Color.Green;
-
-
-                    if (Roads[x, y].roadType != RoadType.NULL)
-                        T = Color.Black;
-
-
-
-
-
+                    Bitmap T;
+                    switch (Roads[x,y].roadType)
+                    {
+                        case RoadType.horizontalStraight:
+                            T = Bitmaps.Roads.HorizontalStraight;
+                            break;
+                        case RoadType.verticalStraight:
+                            T = Bitmaps.Roads.VerticalStraight;
+                            break;
+                        case RoadType.bottomleftCorner:
+                            T = Bitmaps.Roads.LeftBottom;
+                            break;
+                        case RoadType.bottomrightCorner:
+                            T = Bitmaps.Roads.RightBottom;
+                            break;
+                        case RoadType.topleftCorner:
+                            T = Bitmaps.Roads.LeftTop;
+                            break;
+                        case RoadType.toprightCorner:
+                            T = Bitmaps.Roads.RightTop;
+                            break;
+                        default:
+                            T = null;
+                            break;
+                    }
                     for (int x2 = 0; x2 < 72; x2++)
                     {
                         for (int y2 = 0; y2 < 72; y2++)
                         {
-                            Background.SetPixel(x * 72 + x2, y * 72 + y2, T);
+                            if(T != null)
+                            Background.SetPixel(x * 72 + x2, y * 72 + y2, T.GetPixel(x2,y2));
                         }
                     }
                 }
             }
             Base.drawInfos.Add(new DrawInfo(Background, MapsizeX / 2, MapsizeY / 2, MapsizeX, MapsizeY, 270, 0));
-        }
-
-        Point[] GeneratePointSet()
-        {
-            Random RND = new Random(DateTime.Now.GetHashCode());
-
-            int CheckPointAmount = RND.Next(4,11);
-            Point[] Return = new Point[CheckPointAmount];
-
-
-
-
-            return new Point[1];
         }
     }
 }

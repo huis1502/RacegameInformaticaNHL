@@ -77,13 +77,6 @@ namespace RaceGame
             weaponDrawInfo = new DrawInfo(weaponSprite, StartPositionX, StartPositionY, 50, 100, 0f, 0f, drawInfo.angle);
             Base.drawInfos.Add(weaponDrawInfo);
         }
-        /*
-
-        public void StartDraw(DrawInfo _drawInfo)
-        {
-            bitmap = new Bitmap(Application.StartupPath + path);
-            Base.drawInfos.Add(_drawInfo);
-        }*/
         public void StopDraw()
         {
             Base.drawInfos.Remove(drawInfo);
