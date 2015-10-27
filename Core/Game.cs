@@ -63,6 +63,8 @@ namespace RaceGame
                 }
             }
             Point[] _points = { new Point(0,0), new Point(13,0), new Point(13,8), new Point(0,8) };
+            //1Point[] _points = GeneratePointSet();
+
             for (int i = 0; i < _points.Length; i++)
             {
                 int SX = 0;
@@ -104,8 +106,15 @@ namespace RaceGame
                 for (int y = 0; y < MapsizeYR; y++)
                 {
                     Color T = Color.Green;
+
+
                     if (Roads[x, y].roadType != RoadType.NULL)
                         T = Color.Black;
+
+
+
+
+
                     for (int x2 = 0; x2 < 72; x2++)
                     {
                         for (int y2 = 0; y2 < 72; y2++)
@@ -118,9 +127,17 @@ namespace RaceGame
             Base.drawInfos.Add(new DrawInfo(Background, MapsizeX / 2, MapsizeY / 2, MapsizeX, MapsizeY, 270, 0));
         }
 
-        void GeneratePointSet()
+        Point[] GeneratePointSet()
         {
+            Random RND = new Random(DateTime.Now.GetHashCode());
 
+            int CheckPointAmount = RND.Next(4,11);
+            Point[] Return = new Point[CheckPointAmount];
+
+
+
+
+            return new Point[1];
         }
     }
 }
