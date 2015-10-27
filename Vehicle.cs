@@ -84,7 +84,7 @@ namespace RaceGame
         public void startTestDraw()
         {
             bm = new Bitmap("vlam.png");
-            testdraw = new DrawInfo(bm, 500, 500, 10,10, 0, 0, 0);
+            testdraw = new DrawInfo(bm, 500, 500, 20,20, 0, 0,drawInfo.angle);
             //Base.drawInfos.Add(testdraw);
             Console.WriteLine("hier");
             Base.drawInfos.Add(testdraw);
@@ -347,10 +347,15 @@ namespace RaceGame
                 //  Point topleft=(drawInfo.x+16
                 int width = 20;
                 int length = 32;
-                int topleftx = (int)(drawInfo.x + Math.Cos((drawInfo.angle % 360) * (Math.PI / 180)) * Math.Sqrt(Math.Pow(20, 2) + Math.Pow(20, 2)));
-                int toplefty = (int)(drawInfo.y + Math.Sin((drawInfo.angle % 360) * (Math.PI / 180)) * Math.Sqrt(Math.Pow(20, 2) + Math.Pow(20, 2)));
-                testdraw.x = topleftx;
-                testdraw.y = toplefty;
+                float topleftx = (float)(drawInfo.x + Math.Cos((drawInfo.angle % 360) * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+                float toplefty = (float)(drawInfo.y + Math.Sin((drawInfo.angle % 360) * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+
+                float backrightx = (float)(drawInfo.x - Math.Cos((drawInfo.angle % 360) * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+                float backrighty = (float)(drawInfo.y - Math.Sin((drawInfo.angle % 360) * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+
+                testdraw.x = backrightx;
+                testdraw.y = backrighty;
+                Console.WriteLine(testdraw.x);
                 //Console.WriteLine("x van testdraw.x: " + testdraw.x + "\nWidth: " + width + "\nLength: " + length + "\nangle: " + drawInfo.angle % 360 + "\nDraw X: " + drawInfo.x);
 
                 if (true)
