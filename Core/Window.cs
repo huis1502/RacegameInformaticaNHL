@@ -222,7 +222,7 @@ namespace RaceGame
                 Base.currentGame.player1.vehicle.turning = "left";
             if(Keyboard.IsKeyDown(Key.D))
                 Base.currentGame.player1.vehicle.turning = "right";
-            if (Keyboard.IsKeyDown(Key.D2)) { }
+            if (Keyboard.IsKeyDown(Key.D2)) { /*SCHIETEN*/ }
                 //Schieten
             if(Keyboard.IsKeyDown(Key.Q))
                 Base.currentGame.player1.vehicle.weapon.turning = "left";
@@ -245,6 +245,10 @@ namespace RaceGame
                 Base.currentGame.player2.vehicle.weapon.turning = "right";
         }
 
+        void CheckKeysUp()
+        {
+            //etc.
+        }
 
 
 

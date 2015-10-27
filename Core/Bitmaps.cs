@@ -27,8 +27,8 @@ namespace RaceGame
             public static Bitmap HorizontalStraight = new Bitmap("hortrack.png");
             public static Bitmap VerticalStraight = new Bitmap("vertrack.png");
 
-            //public static Bitmap HorizontalPitstop = new Bitmap("horpitstop.png");
-            //public static Bitmap VerticalPitstop = new Bitmap("verpitstop.png");
+            public static Bitmap HorizontalPitstop = new Bitmap("PitHori.png");
+            public static Bitmap VerticalPitstop = new Bitmap("PitVert.png");
 
             public static Bitmap LeftTop = new Bitmap("ulcorner.png");
             public static Bitmap LeftBottom = new Bitmap("dlcorner.png");

@@ -175,7 +175,8 @@ namespace RaceGame.Pathfinding
         bottomleftCorner,
         bottomrightCorner,
         toprightCorner,
-        topleftCorner
+        topleftCorner,
+        PitstopSpecial
     }
     public enum NeighbourhoodType
     {

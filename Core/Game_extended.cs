@@ -452,7 +452,7 @@ namespace RaceGame
             List<Point> Return = new List<Point>();
             int Direction = RND.Next(0, 2);
             Return.Add( new Point(1, 1));
-            Direction = 1;
+            Direction = 0;
             if (Direction == 0)
             {
                 //Pitstop toevoegen
@@ -464,33 +464,33 @@ namespace RaceGame
                 PitstopLocations.Add(new Point(1, 5));
                 pitstopType = PitStopType.Vertical;
 
+                Return.Add(new Point(1,7));
+                
                 Direction = RND.Next(0,2);
-
                 if (Direction == 0)
                 {
-                    Return.Add(new Point(1, 3));
-                    Return.Add(new Point(5,3));
-                    Return.Add(new Point(5,6));
-                    Return.Add(new Point(1,6));
-                    Return.Add(new Point(1, 8));
+                    int yset = RND.Next(2, 5);
+                    Return.Add(new Point(3, 7));
+                    Return.Add(new Point(3, yset));
+                    Return.Add(new Point(6, yset));
+                    Return.Add(new Point(6, 7));
                 }
-                else
-                {
-                    Return.Add(new Point(1,8));
-                }
-
-                Return.Add(new Point(12,8));
-
+                
+                Return.Add(new Point(12,7));
+                
                 Direction = RND.Next(0, 2);
                 if (Direction == 0)
                 {
-                    Return.Add(new Point(12,6));
-                    Return.Add(new Point(9, 6));
+                    Return.Add(new Point(12, 5));
+                    Return.Add(new Point(9, 5));
                     Return.Add(new Point(9, 3));
                     Return.Add(new Point(12, 3));
+                    Return.Add(new Point(12, 1));
                 }
-
-                Return.Add(new Point(12,1));
+                else
+                {
+                    Return.Add(new Point(12,1));
+                }
             }
             else
             {
@@ -505,37 +505,28 @@ namespace RaceGame
                 pitstopType = PitStopType.Horizontal;
 
                 Direction = RND.Next(0, 2);
-
                 if (Direction == 0)
                 {
+                    int setx = RND.Next(7,11);
                     Return.Add(new Point(12, 3));
-                    Return.Add(new Point(7, 3));
-                    Return.Add(new Point(7, 6));
-                    Return.Add(new Point(12, 6));
-                    Return.Add(new Point(12, 8));
+                    Return.Add(new Point(setx, 3));
+                    Return.Add(new Point(setx, 5));
+                    Return.Add(new Point(12, 5));
                 }
-                else
-                {
-                    Return.Add(new Point(12, 8));
-                }
-                /*
-                Direction = RND.Next(0,2);
-                Direction = 0;
+                Return.Add(new Point(12,7));
+
+                Return.Add(new Point(1,7));   
+                Direction = RND.Next(0, 2);
                 if (Direction == 0)
                 {
-                    Return.Add(new Point(9, 8));
-                    Return.Add(new Point(9, 7));
-                    Return.Add(new Point(5, 7));
-                    Return.Add(new Point(5, 8));
-                    Return.Add(new Point(1, 8));
+                    int setx = RND.Next(3,7);
+                    Return.Add(new Point(1, 5));
+                    Return.Add(new Point(setx, 5));
+                    Return.Add(new Point(setx, 3));
+                    Return.Add(new Point(1, 3));
                 }
-                else
-                {
-                    Return.Add(new Point(1,8));
-                } */
-                Return.Add(new Point(1,8));
+                
             }
-
             return Return.ToArray();
         }
 

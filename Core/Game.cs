@@ -62,7 +62,6 @@ namespace RaceGame
                     Roads[x, y] = new Road(x,y, RoadType.NULL);
                 }
             }
-            //Point[] _points = { new Point(0,0), new Point(13,0), new Point(13,8), new Point(0,8) };
             Point[] _points = GeneratePointSet();
 
             for (int i = 0; i < _points.Length; i++)
@@ -93,49 +92,109 @@ namespace RaceGame
                 if (i == SpecialRoadList.Count - 1)
                 {
                     SetSpecialRoadType(SpecialRoadList[i], SpecialRoadList[0]);
+                    //ER MOET MINIMAAL 1 BLOK TUSSEN DE ROADS ZITTEN!!!
                 }
                 else
                 {
                     SetSpecialRoadType(SpecialRoadList[i], SpecialRoadList[i + 1]);
                 }
             }
-            
+
+            //Pitstopmagic
+            for (int i = 0; i < PitstopLocations.Count; ++i)
+            {
+                Roads[PitstopLocations[i].x, PitstopLocations[i].y].roadType = RoadType.PitstopSpecial;
+            }
+
             Background = new Bitmap(MapsizeX, MapsizeY);
+            for (int x = 0; x < MapsizeX; ++x)
+            {
+                for (int y = 0; y < MapsizeY; ++y)
+                {
+                    Background.SetPixel(x,y,Color.Green);
+                }
+            }
             for (int x = 0; x < MapsizeXR; x++)
             {
                 for (int y = 0; y < MapsizeYR; y++)
                 {
                     Bitmap T;
-                    switch (Roads[x,y].roadType)
+                    if (Roads[x, y].roadType != RoadType.PitstopSpecial)
                     {
-                        case RoadType.horizontalStraight:
-                            T = Bitmaps.Roads.HorizontalStraight;
-                            break;
-                        case RoadType.verticalStraight:
-                            T = Bitmaps.Roads.VerticalStraight;
-                            break;
-                        case RoadType.bottomleftCorner:
-                            T = Bitmaps.Roads.LeftBottom;
-                            break;
-                        case RoadType.bottomrightCorner:
-                            T = Bitmaps.Roads.RightBottom;
-                            break;
-                        case RoadType.topleftCorner:
-                            T = Bitmaps.Roads.LeftTop;
-                            break;
-                        case RoadType.toprightCorner:
-                            T = Bitmaps.Roads.RightTop;
-                            break;
-                        default:
-                            T = null;
-                            break;
-                    }
-                    for (int x2 = 0; x2 < 72; x2++)
-                    {
-                        for (int y2 = 0; y2 < 72; y2++)
+                        switch (Roads[x, y].roadType)
                         {
-                            if(T != null)
-                            Background.SetPixel(x * 72 + x2, y * 72 + y2, T.GetPixel(x2,y2));
+                            case RoadType.horizontalStraight:
+                                T = Bitmaps.Roads.HorizontalStraight;
+                                break;
+                            case RoadType.verticalStraight:
+                                T = Bitmaps.Roads.VerticalStraight;
+                                break;
+                            case RoadType.bottomleftCorner:
+                                T = Bitmaps.Roads.LeftBottom;
+                                break;
+                            case RoadType.bottomrightCorner:
+                                T = Bitmaps.Roads.RightBottom;
+                                break;
+                            case RoadType.topleftCorner:
+                                T = Bitmaps.Roads.LeftTop;
+                                break;
+                            case RoadType.toprightCorner:
+                                T = Bitmaps.Roads.RightTop;
+                                break;
+                            default:
+                                T = null;
+                                break;
+                        }
+                        for (int x2 = 0; x2 < 72; x2++)
+                        {
+                            for (int y2 = 0; y2 < 72; y2++)
+                            {
+                                if (T != null && T.GetPixel(x2,y2).A != 0)
+                                {
+                                    Background.SetPixel(x * 72 + x2, y * 72 + y2, T.GetPixel(x2, y2));
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //Pitstop code
+                        if (pitstopType == PitStopType.Horizontal)
+                        {
+                            T = Bitmaps.Roads.HorizontalPitstop;
+                            if (Roads[x,y].X == 6 && Roads[x,y].Y == 0)
+                            {
+                                for (int x2 = 0; x2 < 216; ++x2)
+                                {
+                                    for (int y2 = 0; y2 < 144; ++y2)
+                                    {
+                                        if (T.GetPixel(x2, y2).A != 0)
+                                        Background.SetPixel(x * 72 + x2, y * 72 + y2, T.GetPixel(x2, y2));
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (pitstopType == PitStopType.Vertical)
+                            {
+                                T = Bitmaps.Roads.VerticalPitstop;
+                                if (Roads[x, y].X == 0 && Roads[x, y].Y == 3)
+                                {
+                                    for (int x2 = 0; x2 < 144; ++x2)
+                                    {
+                                        for (int y2 = 0; y2 < 216; ++y2)
+                                        {
+                                            if (T.GetPixel(x2, y2).A != 0)
+                                                Background.SetPixel(x * 72 + x2, y * 72 + y2, T.GetPixel(x2, y2));
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("INVALID PITSTOPTYPE GAME.CS");
+                            }
                         }
                     }
                 }
