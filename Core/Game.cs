@@ -11,13 +11,18 @@ namespace RaceGame
         public Player player1;
         public Player player2;
         public byte[,] GameField;
-        int MapsizeX = 1008;
+        int MapsizeX = 1008; // Uit de Window.cs designer gehaald
         int MapsizeY = 648;
         //14x9 roads
         int MapsizeXR = 14;
         int MapsizeYR = 9;
         public Road[,] Roads;
+        public Point[] CheckPoints;
         List<SpecRoad> SpecialRoadList = new List<SpecRoad>();
+        public Point PitStopPoint;
+
+        int FillPercentage = 50;
+        int Iterations = 3;
 
         public Bitmap Background;
         protected Random random;
@@ -63,6 +68,7 @@ namespace RaceGame
                 }
             }
             Point[] _points = GeneratePointSet();
+            CheckPoints = _points;
 
             for (int i = 0; i < _points.Length; i++)
             {
@@ -107,11 +113,13 @@ namespace RaceGame
             }
 
             Background = new Bitmap(MapsizeX, MapsizeY);
+            CellularAutomata();
+
             for (int x = 0; x < MapsizeX; ++x)
             {
                 for (int y = 0; y < MapsizeY; ++y)
                 {
-                    Background.SetPixel(x,y,Color.Green);
+                    Background.SetPixel(x,y, GameField[x,y] == 1 ? Color.Green : Color.FromArgb(255,93,171,67));
                 }
             }
             for (int x = 0; x < MapsizeXR; x++)
@@ -199,7 +207,90 @@ namespace RaceGame
                     }
                 }
             }
+            for (int x = 0; x < 16; ++x)
+            {
+                for (int y = 0; y < 16; ++y)
+                {
+                    if(Bitmaps.Other.Wrench.GetPixel(x,y).A != 0)
+                    Background.SetPixel(PitStopPoint.x - 8 + x, PitStopPoint.y - 8 + y, Bitmaps.Other.Wrench.GetPixel(x,y));
+                }
+            }
+            for (int i = 0; i < CheckPoints.Length; ++i)
+            {
+                for (int x = 0; x < 16; ++x)
+                {
+                    for (int y = 0; y < 16; ++y)
+                    {
+                        if (Bitmaps.Other.GreenArrowUp.GetPixel(x, y).A != 0)
+                            Background.SetPixel(CheckPoints[i].x * 72 - 8 + x + 36, CheckPoints[i].y * 72 - 8 + y + 36, Bitmaps.Other.BlueArrowUp.GetPixel(x, y));
+                    }
+                }
+            }
+
+
+
+
             Base.drawInfos.Add(new DrawInfo(Background, MapsizeX / 2, MapsizeY / 2, MapsizeX, MapsizeY, 270, 0));
+        }
+
+        void CellularAutomata()
+        {
+            Random RND = new Random();
+            for (int x = 0; x < MapsizeX; ++x)
+            {
+                for (int y = 0; y < MapsizeY; ++y)
+                {
+                    GameField[x, y] = RND.Next(0,101) < FillPercentage ? (byte)1 : (byte)0;
+                }
+            }
+
+            for (int i = 0; i < Iterations; i++)
+            {
+                for (int x = 0; x < MapsizeX; ++x)
+                {
+                    for (int y = 0; y < MapsizeY; ++y)
+                    {
+                        int Count = GetNeighbours(x,y);
+                        if (Count > 4)
+                        {
+                            GameField[x, y] = 1;
+                        }
+                        else
+                        {
+                            if (Count < 4)
+                            {
+                                GameField[x, y] = 0;
+                            }
+                            else
+                            {
+                                GameField[x,y] = (byte)RND.Next(0,2);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        int GetNeighbours(int xCoord, int yCoord)
+        {
+            int Count = 0;
+            for (int x = -1; x <= 1; x++)
+            {
+                for (int y = -1; y <= 1; y++)
+                {
+                    if (x == 0 && y == 0)
+                        continue;
+
+                    int CheckX = xCoord + x;
+                    int CheckY = yCoord + y;
+
+                    if (CheckX >= 0 && CheckX < MapsizeX && CheckY >= 0 && CheckY < MapsizeY)
+                    {
+                        Count += GameField[CheckX, CheckY];
+                    }
+                }
+            }
+            return Count;
         }
     }
 }

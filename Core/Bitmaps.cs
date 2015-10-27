@@ -38,6 +38,13 @@ namespace RaceGame
 
         }
 
+        public static class Other
+        {
+            public static Bitmap Wrench = new Bitmap("Wrench.png");
+            public static Bitmap GreenArrowUp = new Bitmap("GreenArrowUp.png");
+            public static Bitmap BlueArrowUp = new Bitmap("BlueArrowUp.png");
+        }
+
 
 
 
