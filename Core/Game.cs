@@ -17,6 +17,7 @@ namespace RaceGame
         int MapsizeXR = 14;
         int MapsizeYR = 9;
         public Road[,] Roads;
+        List<SpecRoad> SpecialRoadList = new List<SpecRoad>();
 
         public Bitmap Background;
         protected Random random;
@@ -61,26 +62,80 @@ namespace RaceGame
                     Roads[x, y] = new Road(x,y, RoadType.NULL);
                 }
             }
-            List<Point> P = FindRoadPath(Roads[0,0], Roads[MapsizeXR-1, MapsizeYR-1], RoadType.NULL);
-            List<Road> CurrentPath = new List<Road>();
-            for (int i = 0; i < P.Count; i++)
+            //Point[] _points = { new Point(0,0), new Point(13,0), new Point(13,8), new Point(0,8) };
+            Point[] _points = GeneratePointSet();
+
+            for (int i = 0; i < _points.Length; i++)
             {
-                CurrentPath.Add(Roads[P[i].x, P[i].y]);
+                int SX = 0;
+                int SY = 0;
+                if (i != _points.Length - 1)
+                {
+                    SX = _points[i + 1].x;
+                    SY = _points[i + 1].y;
+                }
+                else
+                {
+                    SX = _points[0].x;
+                    SY = _points[0].y;
+                }
+                List<Point> P = FindRoadPath(Roads[_points[i].x, _points[i].y], Roads[SX, SY], RoadType.NULL);
+                List<Road> CurrentPath = new List<Road>();
+                for (int j = 0; j < P.Count; j++)
+                {
+                    CurrentPath.Add(Roads[P[j].x, P[j].y]);
+                }
+                SetRoadType(P);
             }
-            SetRoadType(P);
+
+            for (int i = 1; i < SpecialRoadList.Count; i += 2)
+            {
+                if (i == SpecialRoadList.Count - 1)
+                {
+                    SetSpecialRoadType(SpecialRoadList[i], SpecialRoadList[0]);
+                }
+                else
+                {
+                    SetSpecialRoadType(SpecialRoadList[i], SpecialRoadList[i + 1]);
+                }
+            }
+            
             Background = new Bitmap(MapsizeX, MapsizeY);
             for (int x = 0; x < MapsizeXR; x++)
             {
                 for (int y = 0; y < MapsizeYR; y++)
                 {
-                    Color T = Color.Green;
-                    if (Roads[x, y].roadType != RoadType.NULL)
-                        T = Color.Black;
+                    Bitmap T;
+                    switch (Roads[x,y].roadType)
+                    {
+                        case RoadType.horizontalStraight:
+                            T = Bitmaps.Roads.HorizontalStraight;
+                            break;
+                        case RoadType.verticalStraight:
+                            T = Bitmaps.Roads.VerticalStraight;
+                            break;
+                        case RoadType.bottomleftCorner:
+                            T = Bitmaps.Roads.LeftBottom;
+                            break;
+                        case RoadType.bottomrightCorner:
+                            T = Bitmaps.Roads.RightBottom;
+                            break;
+                        case RoadType.topleftCorner:
+                            T = Bitmaps.Roads.LeftTop;
+                            break;
+                        case RoadType.toprightCorner:
+                            T = Bitmaps.Roads.RightTop;
+                            break;
+                        default:
+                            T = null;
+                            break;
+                    }
                     for (int x2 = 0; x2 < 72; x2++)
                     {
                         for (int y2 = 0; y2 < 72; y2++)
                         {
-                            Background.SetPixel(x * 72 + x2, y * 72 + y2, T);
+                            if(T != null)
+                            Background.SetPixel(x * 72 + x2, y * 72 + y2, T.GetPixel(x2,y2));
                         }
                     }
                 }

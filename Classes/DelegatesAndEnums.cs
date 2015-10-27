@@ -20,7 +20,6 @@ namespace RaceGame.Enums
         LAPV,
         HorsePower,
         Motorfiets,
-
     }
 
     public enum PointType
