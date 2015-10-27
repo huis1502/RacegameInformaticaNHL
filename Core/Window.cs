@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using RaceGame.Delegates;
 using System.Drawing.Drawing2D;
+using System.Windows.Input;
 
 namespace RaceGame
 {
@@ -117,39 +118,47 @@ namespace RaceGame
             currentGame = Base.currentGame;
         }
 
-        protected override void OnKeyDown(KeyEventArgs e)
+        protected override void OnKeyDown(System.Windows.Forms.KeyEventArgs e)
         {
+            CheckKeysDown();/*
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    Base.currentGame.player1.vehicle.throttle = true;
+                    
+                    Console.WriteLine("PLayer 1 FORWARD");
                     break;
                 case Keys.A:
-                    Base.currentGame.player1.vehicle.turning = "left";
+
+                    Console.WriteLine("PLAYER 1 LEFT");
                     break;
                 case Keys.S:
-                    Base.currentGame.player1.vehicle.brake = true;
+
                     break;
                 case Keys.D:
                     Base.currentGame.player1.vehicle.turning = "right";
+                    Console.WriteLine("PLAYER 1 RIGHT");
                     break;
                 case Keys.Q:
-                    Base.currentGame.player1.vehicle.weapon.turning = "left";
+
                     break;
                 case Keys.E:
-                    Base.currentGame.player1.vehicle.weapon.turning = "right";
+
                     break;
                 case Keys.I:
                     Base.currentGame.player2.vehicle.throttle = true;
+                    Console.WriteLine("PLAYER 2 FORWARD");
                     break;
                 case Keys.J:
                     Base.currentGame.player2.vehicle.turning = "left";
+                    Console.WriteLine("PLAYER 2 LEFT");
                     break;
                 case Keys.K:
                     Base.currentGame.player2.vehicle.brake = true;
                     break;
                 case Keys.L:
                     Base.currentGame.player2.vehicle.turning = "right";
+                    Console.WriteLine("PLAYER 2 RIGHT");
+
                     break;
                 case Keys.U:
                     Base.currentGame.player2.vehicle.weapon.turning = "left";
@@ -157,10 +166,10 @@ namespace RaceGame
                 case Keys.O:
                     Base.currentGame.player2.vehicle.weapon.turning = "right";
                     break;
-            }
+            }        */   
         }
 
-        protected override void OnKeyUp(KeyEventArgs e)
+        protected override void OnKeyUp(System.Windows.Forms.KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -202,6 +211,44 @@ namespace RaceGame
                     break;
             }
         }
+
+        void CheckKeysDown()
+        {
+            if(Keyboard.IsKeyDown(Key.W))
+                Base.currentGame.player1.vehicle.throttle = true;
+            if(Keyboard.IsKeyDown(Key.S))
+                Base.currentGame.player1.vehicle.brake = true;
+            if(Keyboard.IsKeyDown(Key.A))
+                Base.currentGame.player1.vehicle.turning = "left";
+            if(Keyboard.IsKeyDown(Key.D))
+                Base.currentGame.player1.vehicle.turning = "right";
+            if (Keyboard.IsKeyDown(Key.D2)) { }
+                //Schieten
+            if(Keyboard.IsKeyDown(Key.Q))
+                Base.currentGame.player1.vehicle.weapon.turning = "left";
+            if(Keyboard.IsKeyDown(Key.E))
+                Base.currentGame.player1.vehicle.weapon.turning = "right";
+
+            if (Keyboard.IsKeyDown(Key.I))
+                Base.currentGame.player2.vehicle.throttle = true;
+            if (Keyboard.IsKeyDown(Key.K))
+                Base.currentGame.player2.vehicle.brake = true;
+            if (Keyboard.IsKeyDown(Key.J))
+                Base.currentGame.player2.vehicle.turning = "left";
+            if (Keyboard.IsKeyDown(Key.L))
+                Base.currentGame.player2.vehicle.turning = "right";
+            if (Keyboard.IsKeyDown(Key.D8)) { }
+            //Schieten
+            if (Keyboard.IsKeyDown(Key.U))
+                Base.currentGame.player2.vehicle.weapon.turning = "left";
+            if (Keyboard.IsKeyDown(Key.O))
+                Base.currentGame.player2.vehicle.weapon.turning = "right";
+        }
+
+
+
+
+
 
         private void Window_Load(object sender, EventArgs e)
         {

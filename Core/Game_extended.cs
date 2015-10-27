@@ -281,8 +281,6 @@ namespace RaceGame
                                 else
                                 {
                                     Console.WriteLine("INVALID ROAD TYPE");
-
-
                                 }
                             }
                         }
@@ -454,7 +452,7 @@ namespace RaceGame
             List<Point> Return = new List<Point>();
             int Direction = RND.Next(0, 2);
             Return.Add( new Point(1, 1));
-            Direction = 0;
+            Direction = 1;
             if (Direction == 0)
             {
                 //Pitstop toevoegen
@@ -520,12 +518,22 @@ namespace RaceGame
                 {
                     Return.Add(new Point(12, 8));
                 }
-
+                /*
                 Direction = RND.Next(0,2);
+                Direction = 0;
                 if (Direction == 0)
                 {
-
+                    Return.Add(new Point(9, 8));
+                    Return.Add(new Point(9, 7));
+                    Return.Add(new Point(5, 7));
+                    Return.Add(new Point(5, 8));
+                    Return.Add(new Point(1, 8));
                 }
+                else
+                {
+                    Return.Add(new Point(1,8));
+                } */
+                Return.Add(new Point(1,8));
             }
 
             return Return.ToArray();
