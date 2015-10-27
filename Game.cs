@@ -37,10 +37,12 @@ namespace RaceGame
             player1.CreateVehicle(Enums.VehicleType.Tank, -20);
             player1.vehicle.StartDraw();
             player1.vehicle.StartWeaponDraw();
+            player1.vehicle.startTestDraw();
             player2 = new Player(2);
             player2.CreateVehicle(Enums.VehicleType.Tank, 20);
             player2.vehicle.StartDraw();
             player2.vehicle.StartWeaponDraw();
+            player2.vehicle.startTestDraw();
             Base.gameTasks.Add(player1.vehicle.Appelnoot);
             Base.gameTasks.Add(player2.vehicle.Appelnoot);
         }

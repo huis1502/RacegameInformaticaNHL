@@ -49,6 +49,8 @@ namespace RaceGame
             this.Name = "Window";
             this.ShowIcon = false;
             this.Text = "Race Game";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Window_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Window_KeyUp_1);
             this.ResumeLayout(false);
 
         }
@@ -119,10 +121,21 @@ namespace RaceGame
             currentGame = Base.currentGame;
         }
 
-        protected override void OnKeyDown(KeyEventArgs e)
+
+
+      
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.A)
+            {
+                Console.WriteLine("iets");
+            }
             switch (e.KeyCode)
             {
+                case Keys.W:
+                    Base.currentGame.player1.vehicle.throttle = "go";
+                    break;
                 case Keys.A:
                     Base.currentGame.player1.vehicle.turning = "left";
                     break;
@@ -140,6 +153,9 @@ namespace RaceGame
                     break;
                 case Keys.D2:
                     Base.currentGame.player1.vehicle.shooting = true;
+                    break;
+                case Keys.I:
+                    Base.currentGame.player2.vehicle.throttle = "go";
                     break;
                 case Keys.J:
                     Base.currentGame.player2.vehicle.turning = "left";
@@ -162,10 +178,14 @@ namespace RaceGame
             }
         }
 
-        protected override void OnKeyUp(KeyEventArgs e)
+        private void Window_KeyUp_1(object sender, KeyEventArgs e)
         {
+
             switch (e.KeyCode)
             {
+                case Keys.W:
+                    Base.currentGame.player1.vehicle.throttle = "";
+                    break;
                 case Keys.A:
                     Base.currentGame.player1.vehicle.turning = null;
                     break;
@@ -183,6 +203,9 @@ namespace RaceGame
                     break;
                 case Keys.D2:
                     Base.currentGame.player1.vehicle.shooting = false;
+                    break;
+                case Keys.I:
+                    Base.currentGame.player2.vehicle.throttle = "";
                     break;
                 case Keys.J:
                     Base.currentGame.player2.vehicle.turning = null;
@@ -204,7 +227,8 @@ namespace RaceGame
                     break;
             }
         }
-        
-        //xx anoniem
     }
+
+        //xx anoniem
+    
 }

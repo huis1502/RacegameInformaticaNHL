@@ -11,8 +11,14 @@ namespace RaceGame
         public string path;
         public DrawInfo drawInfo;
         public DrawInfo weaponDrawInfo;
+
+        public DrawInfo testdraw;
+
         public Bitmap bitmap;
         public Bitmap weaponSprite;
+
+        public Bitmap bm;
+
         public Player player;
         public VehicleType vehicletype;
         public int StartPositionX;
@@ -40,7 +46,7 @@ namespace RaceGame
         public int j = 0;
         private bool go = false;
         public string turning = "false";
-        public bool throttle = true;
+        public string throttle = "";
         public bool brake = false;
 
 
@@ -74,6 +80,15 @@ namespace RaceGame
             weaponDrawInfo = new DrawInfo(weaponSprite, StartPositionX, StartPositionY, 50, 100, 0f, 0f, drawInfo.angle);
             Base.drawInfos.Add(weaponDrawInfo);
         }
+
+        public void startTestDraw()
+        {
+            bm = new Bitmap("tankbody.png");
+            testdraw = new DrawInfo(bm, 500, 500, 1000, 5, 0, 0, 90);
+            //Base.drawInfos.Add(testdraw);
+            Console.WriteLine("hier");
+        }
+
         /*
 
         public void StartDraw(DrawInfo _drawInfo)
@@ -93,8 +108,10 @@ namespace RaceGame
 
         public void Appelnoot()
         {
-            if (throttle == true)
+            //Console.WriteLine(throttle);
+            if (throttle == "go")
             {
+                
                 if (Math.Abs(0 - speed) <= 0.01)
                 {
                     go = true;
@@ -237,6 +254,8 @@ namespace RaceGame
                 }
             }
 
+            //Console.WriteLine(speed);
+
             if (turning == "right")
             {
                 if (vehicletype != VehicleType.Tank)
@@ -294,7 +313,7 @@ namespace RaceGame
             }
 
 
-            if (Math.Abs(180 - (drawInfo.angle - weaponDrawInfo.angle)) % 360 < 30 && shooting && throttle && speed >= maxSpeed)
+            if (Math.Abs(180 - (drawInfo.angle - weaponDrawInfo.angle)) % 360 < 30 && shooting && throttle == "go" && speed >= maxSpeed)
             {
                 speed *= 4;
             }
@@ -325,15 +344,20 @@ namespace RaceGame
             if (Base.currentGame.player1 == player) {
                 //current player is player 1
                 //  Point topleft=(drawInfo.x+16
-                Console.WriteLine("Hoek: " + drawInfo.angle);
+                int width = 20;
+                int length = 32;
+                int topleftx = (int)(drawInfo.x + Math.Cos((drawInfo.angle % 360) * (Math.PI / 180)) * width/2 + Math.Cos((drawInfo.angle%360) * (Math.PI / 180)) * (length - width / 2));
+                testdraw.x = topleftx;
+                //Console.WriteLine("x van testdraw.x: " + testdraw.x + "\nWidth: " + width + "\nLength: " + length + "\nangle: " + drawInfo.angle % 360 + "\nDraw X: " + drawInfo.x);
+
                 if (true)
                 {
                     //collide op x of y as aan 1 kant
-                    Console.WriteLine("Collide");
+                   // Console.WriteLine("Collide");
                 }
                 else
                 {
-                    Console.WriteLine("Niet collide");
+                    //Console.WriteLine("Niet collide");
                 }
             }
         }
