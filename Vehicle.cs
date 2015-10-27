@@ -83,10 +83,11 @@ namespace RaceGame
 
         public void startTestDraw()
         {
-            bm = new Bitmap("tankbody.png");
-            testdraw = new DrawInfo(bm, 500, 500, 1000, 5, 0, 0, 90);
+            bm = new Bitmap("vlam.png");
+            testdraw = new DrawInfo(bm, 500, 500, 10,10, 0, 0, 0);
             //Base.drawInfos.Add(testdraw);
             Console.WriteLine("hier");
+            Base.drawInfos.Add(testdraw);
         }
 
         /*
@@ -346,14 +347,16 @@ namespace RaceGame
                 //  Point topleft=(drawInfo.x+16
                 int width = 20;
                 int length = 32;
-                int topleftx = (int)(drawInfo.x + Math.Cos((drawInfo.angle % 360) * (Math.PI / 180)) * width/2 + Math.Cos((drawInfo.angle%360) * (Math.PI / 180)) * (length - width / 2));
+                int topleftx = (int)(drawInfo.x + Math.Cos((drawInfo.angle % 360) * (Math.PI / 180)) * Math.Sqrt(Math.Pow(20, 2) + Math.Pow(20, 2)));
+                int toplefty = (int)(drawInfo.y + Math.Sin((drawInfo.angle % 360) * (Math.PI / 180)) * Math.Sqrt(Math.Pow(20, 2) + Math.Pow(20, 2)));
                 testdraw.x = topleftx;
+                testdraw.y = toplefty;
                 //Console.WriteLine("x van testdraw.x: " + testdraw.x + "\nWidth: " + width + "\nLength: " + length + "\nangle: " + drawInfo.angle % 360 + "\nDraw X: " + drawInfo.x);
 
                 if (true)
                 {
                     //collide op x of y as aan 1 kant
-                   // Console.WriteLine("Collide");
+                    //Console.WriteLine("Collide");
                 }
                 else
                 {
@@ -362,9 +365,4 @@ namespace RaceGame
             }
         }
     }
-
-
-
-
-
 }

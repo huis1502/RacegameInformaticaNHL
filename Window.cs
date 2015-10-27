@@ -183,9 +183,9 @@ namespace RaceGame
 
             switch (e.KeyCode)
             {
-                case Keys.W:
-                    Base.currentGame.player1.vehicle.throttle = "";
-                    break;
+                //case Keys.W:
+                //    Base.currentGame.player1.vehicle.throttle = "";
+                //    break;
                 case Keys.A:
                     Base.currentGame.player1.vehicle.turning = null;
                     break;
@@ -204,9 +204,9 @@ namespace RaceGame
                 case Keys.D2:
                     Base.currentGame.player1.vehicle.shooting = false;
                     break;
-                case Keys.I:
-                    Base.currentGame.player2.vehicle.throttle = "";
-                    break;
+                //case Keys.I:
+                //    Base.currentGame.player2.vehicle.throttle = "";
+                //    break;
                 case Keys.J:
                     Base.currentGame.player2.vehicle.turning = null;
                     break;
