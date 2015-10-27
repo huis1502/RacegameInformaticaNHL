@@ -13,6 +13,7 @@ namespace RaceGame
         public DrawInfo weaponDrawInfo;
         public Bitmap bitmap;
         public Bitmap weaponSprite;
+        public Player player;
         public VehicleType vehicletype;
         public int StartPositionX;
         public int StartPositionY;
@@ -28,8 +29,7 @@ namespace RaceGame
         public int ramDamage;
         public float sideDamageMultiplier;
         public float grassMultiplier;
-        public bool player1Shooting;
-        public bool player2Shooting;
+        public bool shooting = false;
 
         float deltaTime = 1.00f;
         float prevDelta = 1.00f;
@@ -40,26 +40,18 @@ namespace RaceGame
         public int j = 0;
         private bool go = false;
         public string turning = "false";
-        public bool throttle = false;
+        public bool throttle = true;
         public bool brake = false;
 
-        public Vehicle(int x, int y)
-        {
-            StartPositionX = x;
-            StartPositionY = y;
-        }
-        public Vehicle(int x, int y, string path)
-        {
-            StartPositionX = x;
-            StartPositionY = y;
-            this.path = path;
-        }
-        public Vehicle(int x, int y,VehicleType t)
+
+        public Vehicle(int x, int y,VehicleType t, Player t2)
         {
             vehicletype = t;
             StartPositionX = x;
             StartPositionY = y;
+            player = t2;
             Base.gameTasks.Add(CheckShooting);
+            Base.gameTasks.Add(CheckCollision);
         }
         #region Drawing and stopping drawingappelnoot
         public void StartDraw(int x, int y)
@@ -127,13 +119,21 @@ namespace RaceGame
                     else
                     {
                         i = 0;
-                        while (Math.Abs((((-(float)Math.Pow(acceleration * (i / 2) - Math.Sqrt(maxSpeed), 2)) + maxSpeed) * deltaTime) - speed) > .5)
+                        if (speed <= maxSpeed)
                         {
-                            i++;
-                            if (Math.Abs((((-(float)Math.Pow(acceleration * (i / 2) - Math.Sqrt(maxSpeed), 2)) + maxSpeed) * deltaTime) - speed) <= .5)
+                            while (Math.Abs((((-(float)Math.Pow(acceleration * (i / 2) - Math.Sqrt(maxSpeed), 2)) + maxSpeed) * deltaTime) - speed) > .5)
                             {
-                                go = true;
+                                i++;
+                                if (Math.Abs((((-(float)Math.Pow(acceleration * (i / 2) - Math.Sqrt(maxSpeed), 2)) + maxSpeed) * deltaTime) - speed) <= .5)
+                                {
+                                    go = true;
+                                    Console.WriteLine("na dit gaat hij stuk");
+                                }
                             }
+                        }
+                        else
+                        {
+                            speed = maxSpeed;
                         }
                     }
                 }
@@ -292,6 +292,13 @@ namespace RaceGame
             {
                 weaponDrawInfo.angle += weapon.turnSpeed;
             }
+
+
+            if (Math.Abs(180 - (drawInfo.angle - weaponDrawInfo.angle)) % 360 < 30 && shooting && throttle && speed >= maxSpeed)
+            {
+                speed *= 4;
+            }
+
             drawInfo.x += (float)(Math.Cos(drawInfo.angle * (Math.PI / 180)) * speed);
             drawInfo.y += (float)(Math.Cos((90 - drawInfo.angle) * (Math.PI / 180)) * speed);
 
@@ -303,20 +310,31 @@ namespace RaceGame
             // {
             //     deltaTime = grassMultiplier;
             //   }
-
-            
         }
 
         public void CheckShooting()
         {
-            if (player1Shooting)
+            if (shooting)
             {
-                weapon.shoot("player1");
+                weapon.shoot();
             }
+        }
 
-            else if (player2Shooting)
-            {
-                weapon.shoot("player2");
+        public void CheckCollision()
+        {
+            if (Base.currentGame.player1 == player) {
+                //current player is player 1
+                //  Point topleft=(drawInfo.x+16
+                Console.WriteLine("Hoek: " + drawInfo.angle);
+                if (true)
+                {
+                    //collide op x of y as aan 1 kant
+                    Console.WriteLine("Collide");
+                }
+                else
+                {
+                    Console.WriteLine("Niet collide");
+                }
             }
         }
     }

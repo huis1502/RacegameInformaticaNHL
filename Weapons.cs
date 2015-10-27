@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using RaceGame.Structs;
 
@@ -9,21 +10,32 @@ namespace RaceGame
         public float angle;
         public float speed;
         public int timeout;
-        public string player;
+        public Player player;
+        public DrawInfo bulletDrawInfo;
+
+        public Bullet(Bitmap bitmap, int x, int y, int width, int height, float _angle = 0, float RotateX = 0f, float RotateY = 0f, bool AutoRemove = false, int Frames = 0)
+        {
+            bulletDrawInfo = new DrawInfo(bitmap, x, y, width, height, _angle, RotateX, RotateY, AutoRemove, Frames);
+            Base.drawInfos.Add(bulletDrawInfo);
+        }
 
         public void TrackBullet()
         {
-            Console.WriteLine(Base.currentGame.player1.vehicle.weapon.bulletDrawInfo.x);
-            Base.currentGame.player1.vehicle.weapon.bulletDrawInfo.x += (float)(Math.Cos(Base.currentGame.player1.vehicle.weaponDrawInfo.angle % 360 * (Math.PI / 180)) * speed);
-            Base.currentGame.player1.vehicle.weapon.bulletDrawInfo.y += (float)(Math.Cos((90 - Base.currentGame.player1.vehicle.weaponDrawInfo.angle) % 360 * (Math.PI / 180)) * speed);
+            if (bulletDrawInfo.x <= 0 || bulletDrawInfo.x >= Base.currentGame.MapsizeX || bulletDrawInfo.y <= 0 || bulletDrawInfo.y >= Base.currentGame.MapsizeY)
+            {
+                Base.drawInfos.Remove(bulletDrawInfo);
+                Base.gameTasks.Remove(TrackBullet);
+                return;
+            }
 
+            bulletDrawInfo.x += (float)(Math.Cos(bulletDrawInfo.angle % 360 * (Math.PI / 180)) * speed);
+            bulletDrawInfo.y += (float)(Math.Cos((90 - bulletDrawInfo.angle) % 360 * (Math.PI / 180)) * speed);
+            
             if (timeout <= 0)
             {
-                if(player == "player1")
-                {
-                    Base.drawInfos.Remove(Base.currentGame.player1.vehicle.weapon.bulletDrawInfo);
+                    Base.drawInfos.Remove(bulletDrawInfo);
                     Base.gameTasks.Remove(TrackBullet);
-                }
+                return;
             }
 
             timeout--;
@@ -39,29 +51,31 @@ namespace RaceGame
         public int fireRate;
         public float turnSpeed;
         public string turning;
-        public DrawInfo bulletDrawInfo;
+        public Player player;
+
+        public static List<Bullet> Bullets = new List<Bullet>();
+        public static int i;
         public int weaponReloading;
 
-        virtual public void shoot(string Player)
+        public Weapons(Player t)
+        {
+            player = t;
+        }
+
+        virtual public void shoot()
         {
             if (weaponReloading == 0) //IK heb grote ballen
             {
-                if (Player == "player1")
-                {
-                    Console.WriteLine(Base.currentGame.player1.vehicle.weaponDrawInfo.angle);
-                    //Big Dicks Over The Road Racing
-                    Bitmap koegmap = new Bitmap("koegel.png");
-                    bulletDrawInfo = new DrawInfo(koegmap, (int)Base.currentGame.player1.vehicle.drawInfo.x, (int)Base.currentGame.player1.vehicle.drawInfo.y, 10, 10, 0f, 0f, 0f, true, 200);
-                    Base.drawInfos.Add(bulletDrawInfo);
-                    Bullet Bullet = new Bullet();
-                    Bullet.angle = Base.currentGame.player1.vehicle.weaponDrawInfo.angle;
-                    Bullet.speed = 5;
-                    Bullet.timeout = 120;
-                    Bullet.player = Player;
-                    Base.gameTasks.Add(Bullet.TrackBullet);
-                    weaponReloading = fireRate;
-                    Base.gameTasks.Add(weaponReload);
-                }
+                Bitmap koegmap = new Bitmap("koegel.png");
+
+                Bullets.Add(new Bullet(koegmap, (int)player.vehicle.drawInfo.x, (int)player.vehicle.drawInfo.y, 10, 10, player.vehicle.weaponDrawInfo.angle, 0f, 0f));
+                i = Bullets.Count - 1;
+                Bullets[i].speed = 30;
+                Bullets[i].timeout = 300;
+                Bullets[i].player = player;
+                Base.gameTasks.Add(Bullets[i].TrackBullet);
+                weaponReloading = fireRate;
+                Base.gameTasks.Add(weaponReload);
             }
         }
 
@@ -77,21 +91,38 @@ namespace RaceGame
 
     public class TankWeapon : Weapons
     {
-        public TankWeapon()
+        public TankWeapon(Player s) : base(s)
         {
             name = "Tank Cannon";
             type = "Cannon";
             spriteName = "loop.png";
             damage = 75;
-            fireRate = 20;
+            fireRate = 4;
             turnSpeed = 3f;
             turning = "false";
+        }
+
+        public override void shoot()
+        {
+            if (weaponReloading == 0) //IK heb grote ballen
+            {
+                Bitmap koegmap = new Bitmap("kannonbal.png");
+
+                Bullets.Add(new Bullet(koegmap, (int)player.vehicle.drawInfo.x, (int)player.vehicle.drawInfo.y, 10, 10, player.vehicle.weaponDrawInfo.angle, 0f, 0f));
+                i = Bullets.Count - 1;
+                Bullets[i].speed = 30;
+                Bullets[i].timeout = 300;
+                Bullets[i].player = player;
+                Base.gameTasks.Add(Bullets[i].TrackBullet);
+                weaponReloading = fireRate;
+                Base.gameTasks.Add(weaponReload);
+            }
         }
     }
 
     public class LAPVWeapon : Weapons
     {
-        public LAPVWeapon()
+        public LAPVWeapon(Player s) : base(s)
         {
             name = "LAPV Turret";
             type = "MachineGun";
@@ -104,20 +135,37 @@ namespace RaceGame
 
     public class HorsePowerWeapon : Weapons
     {
-        public HorsePowerWeapon()
+        public HorsePowerWeapon(Player s) : base(s)
         {
             name = "HorsePower Flamethrower";
             type = "Flamethrower";
             spriteName = "horsepowerweapon.png";
             damage = 5;
             fireRate = 10;
-            turnSpeed = 3;
+            turnSpeed = 3; 
+        }
+
+        public override void shoot()
+        {
+            if (weaponReloading == 0) //IK heb grote ballen
+            {
+                Bitmap koegmap = new Bitmap("vlam.png");
+
+                Bullets.Add(new Bullet(koegmap, (int)player.vehicle.drawInfo.x, (int)player.vehicle.drawInfo.y, 30, 90, player.vehicle.weaponDrawInfo.angle, 0f, 0f, true, 300));
+                i = Bullets.Count - 1;
+                Bullets[i].speed = 30;
+                Bullets[i].timeout = 300;
+                Bullets[i].player = player;
+                Base.gameTasks.Add(Bullets[i].TrackBullet);
+                weaponReloading = fireRate;
+                Base.gameTasks.Add(weaponReload);
+            }
         }
     }
 
     public class MotorfietsWeapon : Weapons
     {
-        public MotorfietsWeapon()
+        public MotorfietsWeapon(Player s) : base(s)
         {
             name = "Motorfiets SMG";
             type = "MachineGun";

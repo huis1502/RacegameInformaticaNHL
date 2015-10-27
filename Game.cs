@@ -10,8 +10,8 @@ namespace RaceGame
         public Player player1;
         public Player player2;
         public byte[,] GameField;
-        int MapsizeX = 1008;
-        int MapsizeY = 747;
+        public int MapsizeX = 1008;
+        public int MapsizeY = 747;
         public Bitmap Background;
         protected Random random;
         public System.Drawing.Point[] Points;
@@ -34,11 +34,11 @@ namespace RaceGame
             player1 = null;
             player2 = null;
             player1 = new Player(1);
-            player1.CreateVehicle(Enums.VehicleType.Tank);
+            player1.CreateVehicle(Enums.VehicleType.Tank, -20);
             player1.vehicle.StartDraw();
             player1.vehicle.StartWeaponDraw();
             player2 = new Player(2);
-            player2.CreateVehicle(Enums.VehicleType.Tank);
+            player2.CreateVehicle(Enums.VehicleType.Tank, 20);
             player2.vehicle.StartDraw();
             player2.vehicle.StartWeaponDraw();
             Base.gameTasks.Add(player1.vehicle.Appelnoot);

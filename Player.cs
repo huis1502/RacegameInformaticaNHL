@@ -18,79 +18,25 @@ namespace RaceGame
             playerType = _playerType;
             vehicleType = _vehicleType;
         }
-        public void GetKey(char input)
-        {
-            if (vehicle != null)
-            {
-                switch (input)
-                {
-                    case 'a':
-                        vehicle.turning = "left";
-                        break;
-                    case 's':
-                        vehicle.brake = true;
-                        break;
-                    case 'd':
-                        vehicle.turning = "right";
-                        break;
-                    case 'w':
-                        vehicle.throttle = true;
-                        break;
-                    case 'q':
-                        vehicle.turning = "left";
-                        break;
-                    case 'e':
-                        vehicle.turning = "right";
-                        break;
-                    case '2':
-                        vehicle.Shoot();
-                        break;
 
-                    //Player 2
-                    case 'j':
-                        vehicle.turning = "left";
-                        break;
-                    case 'k':
-                        vehicle.brake = true;
-                        break;
-                    case 'l':
-                        vehicle.turning = "right";
-                        break;
-                    case 'i':
-                        vehicle.throttle = true;
-                        break;
-                    case 'u':
-                        vehicle.turning = "left";
-                        break;
-                    case 'o':
-                        vehicle.turning = "right";
-                        break;
-                    case '8':
-                        vehicle.Shoot();
-                        break;
-
-                }
-            }
-        }
-
-        public void CreateVehicle(VehicleType vehicleType)
+        public void CreateVehicle(VehicleType vehicleType, int offset)
         {
             switch (vehicleType)
             {
                 case VehicleType.Tank:
-                    vehicle = new Tank(500,500);
+                    vehicle = new Tank(500, 500 + offset, this);
                     break;
                 case VehicleType.Jackass:
-                    vehicle = new Jackass(500, 500);
+                    vehicle = new Jackass(500, 500 + offset, this);
                     break;
                 case VehicleType.LAPV:
-                    vehicle = new LAPV(500, 500);
+                    vehicle = new LAPV(500, 500 + offset, this);
                     break;
                 case VehicleType.HorsePower:
-                    vehicle = new HorsePower(500, 500);
+                    vehicle = new HorsePower(500, 500 + offset, this);
                     break;
                 case VehicleType.Motorfiets:
-                    vehicle = new Motorfiets(500, 500);
+                    vehicle = new Motorfiets(500, 500 + offset, this);
                     break;
             }
         }

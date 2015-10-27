@@ -4,7 +4,7 @@ namespace RaceGame
 {
     public class Tank : Vehicle
     {
-        public Tank(int x, int y) : base(x,y, VehicleType.Tank)
+        public Tank(int x, int y, Player _player) : base(x,y, VehicleType.Tank, _player)
         {
             fuelCapacity = 95;
             maxSpeed = 1f;
@@ -13,7 +13,7 @@ namespace RaceGame
             path = "tankbody.png";
             turnSpeed = 2;
             name = "Tank";
-            weapon = new TankWeapon();
+            weapon = new TankWeapon(_player);
             relativeWeaponPos.X = 0;
             relativeWeaponPos.Y = 0;
             maxHealth = 200;
@@ -25,7 +25,7 @@ namespace RaceGame
 
     public class Jackass : Vehicle
     {
-        public Jackass(int x, int y) : base(x,y,VehicleType.Jackass)
+        public Jackass(int x, int y, Player _player) : base(x,y,VehicleType.Jackass, _player)
         {
             fuelCapacity = 120;
             maxSpeed = 1.2f;
@@ -43,7 +43,7 @@ namespace RaceGame
 
     public class LAPV : Vehicle
     {
-        public LAPV(int x, int y) : base(x, y, VehicleType.LAPV)
+        public LAPV(int x, int y, Player _player) : base(x, y, VehicleType.LAPV, _player)
         {
             fuelCapacity = 100;
             maxSpeed = 0.7f;
@@ -51,7 +51,7 @@ namespace RaceGame
             deceleration = 0.03f;
             path = "lapv.png";
             turnSpeed = 2.4f;
-            weapon = new LAPVWeapon();
+            weapon = new LAPVWeapon(_player);
             relativeWeaponPos.X = 0;
             relativeWeaponPos.Y = 0;
             maxHealth = 120;
@@ -63,7 +63,7 @@ namespace RaceGame
 
     public class HorsePower : Vehicle
     {
-        public HorsePower(int x, int y) : base(x, y, VehicleType.HorsePower)
+        public HorsePower(int x, int y, Player _player) : base(x, y, VehicleType.HorsePower, _player)
         {
             fuelCapacity = 140;
             maxSpeed = 1;
@@ -71,7 +71,7 @@ namespace RaceGame
             deceleration = 0.05f;
             path = "horsepower.png";
             turnSpeed = 2.3f;
-            weapon = new HorsePowerWeapon();
+            weapon = new HorsePowerWeapon(_player);
             relativeWeaponPos.X = 0;
             relativeWeaponPos.Y = 0;
             maxHealth = 90;
@@ -84,7 +84,7 @@ namespace RaceGame
 
     public class Motorfiets : Vehicle
     {
-        public Motorfiets(int x, int y) : base(x, y, VehicleType.Motorfiets)
+        public Motorfiets(int x, int y, Player _player) : base(x, y, VehicleType.Motorfiets, _player)
         {
             fuelCapacity = 70;
             maxSpeed = 1.1f;
@@ -92,7 +92,7 @@ namespace RaceGame
             deceleration = 0.07f;
             path = "Motorfiets.png";
             turnSpeed = 3.4f;
-            weapon = new LAPVWeapon();
+            weapon = new LAPVWeapon(_player);
             relativeWeaponPos.X = 0;
             relativeWeaponPos.Y = 0;
             maxHealth = 60;

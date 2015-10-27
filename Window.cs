@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections;
 using System.Collections.Generic;
 using RaceGame.Structs;
 using RaceGame.Delegates;
@@ -122,9 +123,6 @@ namespace RaceGame
         {
             switch (e.KeyCode)
             {
-                case Keys.W:
-                    Base.currentGame.player1.vehicle.throttle = true;
-                    break;
                 case Keys.A:
                     Base.currentGame.player1.vehicle.turning = "left";
                     break;
@@ -141,10 +139,7 @@ namespace RaceGame
                     Base.currentGame.player1.vehicle.weapon.turning = "right";
                     break;
                 case Keys.D2:
-                    Base.currentGame.player1.vehicle.player1Shooting = true;
-                    break;
-                case Keys.I:
-                    Base.currentGame.player2.vehicle.throttle = true;
+                    Base.currentGame.player1.vehicle.shooting = true;
                     break;
                 case Keys.J:
                     Base.currentGame.player2.vehicle.turning = "left";
@@ -162,7 +157,7 @@ namespace RaceGame
                     Base.currentGame.player2.vehicle.weapon.turning = "right";
                     break;
                 case Keys.D8:
-                    Base.currentGame.player2.vehicle.player2Shooting = true;
+                    Base.currentGame.player2.vehicle.shooting = true;
                     break;
             }
         }
@@ -171,9 +166,6 @@ namespace RaceGame
         {
             switch (e.KeyCode)
             {
-                case Keys.W:
-                    Base.currentGame.player1.vehicle.throttle = false;
-                    break;
                 case Keys.A:
                     Base.currentGame.player1.vehicle.turning = null;
                     break;
@@ -190,10 +182,7 @@ namespace RaceGame
                     Base.currentGame.player1.vehicle.weapon.turning = "false";
                     break;
                 case Keys.D2:
-                    Base.currentGame.player1.vehicle.player1Shooting = false;
-                    break;
-                case Keys.I:
-                    Base.currentGame.player2.vehicle.throttle = false;
+                    Base.currentGame.player1.vehicle.shooting = false;
                     break;
                 case Keys.J:
                     Base.currentGame.player2.vehicle.turning = null;
@@ -211,11 +200,11 @@ namespace RaceGame
                     Base.currentGame.player2.vehicle.weapon.turning = "false";
                     break;
                 case Keys.D8:
-                    Base.currentGame.player2.vehicle.player2Shooting = false;
+                    Base.currentGame.player2.vehicle.shooting = false;
                     break;
             }
         }
         
-
+        //xx anoniem
     }
 }
