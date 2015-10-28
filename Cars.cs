@@ -7,9 +7,9 @@ namespace RaceGame
         public Tank(int x, int y, Player _player) : base(x,y, VehicleType.Tank, _player)
         {
             fuelCapacity = 95;
-            maxSpeed = 1f;
-            acceleration = 0.1f;
-            deceleration = 0.1f;
+            maxSpeed = 4f;
+            acceleration = 0.05f;
+            deceleration = 0.05f;
             path = "tankbody.png";
             turnSpeed = 2;
             name = "Tank";
@@ -17,6 +17,7 @@ namespace RaceGame
             relativeWeaponPos.X = 0;
             relativeWeaponPos.Y = 0;
             maxHealth = 200;
+            health = maxHealth;
             ramDamage = 100;
             sideDamageMultiplier = 1.1f;
             grassMultiplier = 0.9f;

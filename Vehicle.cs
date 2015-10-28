@@ -32,10 +32,16 @@ namespace RaceGame
         public Weapons weapon;
         public System.Drawing.Point relativeWeaponPos;
         public int maxHealth;
+        public int health;
         public int ramDamage;
         public float sideDamageMultiplier;
         public float grassMultiplier;
         public bool shooting = false;
+
+        public PointF topleft;
+        public PointF topright;
+        public PointF backleft;
+        public PointF backright;
 
         float deltaTime = 1.00f;
         float prevDelta = 1.00f;
@@ -86,7 +92,6 @@ namespace RaceGame
             bm = new Bitmap("vlam.png");
             testdraw = new DrawInfo(bm, 500, 500, 20,20, 0, 0,drawInfo.angle);
             //Base.drawInfos.Add(testdraw);
-            Console.WriteLine("hier");
             Base.drawInfos.Add(testdraw);
         }
 
@@ -316,7 +321,7 @@ namespace RaceGame
 
             if (Math.Abs(180 - (drawInfo.angle - weaponDrawInfo.angle)) % 360 < 30 && shooting && throttle == "go" && speed >= maxSpeed)
             {
-                speed *= 4;
+                speed *= 2;
             }
 
             drawInfo.x += (float)(Math.Cos(drawInfo.angle * (Math.PI / 180)) * speed);
@@ -337,35 +342,56 @@ namespace RaceGame
             if (shooting)
             {
                 weapon.shoot();
+                Console.WriteLine("ratatata pew");
             }
         }
 
         public void CheckCollision()
         {
-            if (Base.currentGame.player1 == player) {
-                //current player is player 1
-                //  Point topleft=(drawInfo.x+16
-                int width = 20;
-                int length = 32;
-                float topleftx = (float)(drawInfo.x + Math.Cos((drawInfo.angle % 360) * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
-                float toplefty = (float)(drawInfo.y + Math.Sin((drawInfo.angle % 360) * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+            //  Point topleft=(drawInfo.x+16
+            float width = 20;
+            float length = 32;
+            float temgle = (float)(drawInfo.angle - (Math.Atan(((width / 2) / (length / 2))) * (180 / Math.PI)));
+            float topleftx = (float)(drawInfo.x + Math.Cos(temgle * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+            float toplefty = (float)(drawInfo.y + Math.Sin(temgle * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
 
-                float backrightx = (float)(drawInfo.x - Math.Cos((drawInfo.angle % 360) * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
-                float backrighty = (float)(drawInfo.y - Math.Sin((drawInfo.angle % 360) * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+            float toprightx = (float)(drawInfo.x + Math.Cos(temgle * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+            float toprighty = (float)(drawInfo.y - Math.Sin(temgle * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
 
-                testdraw.x = backrightx;
-                testdraw.y = backrighty;
-                Console.WriteLine(testdraw.x);
-                //Console.WriteLine("x van testdraw.x: " + testdraw.x + "\nWidth: " + width + "\nLength: " + length + "\nangle: " + drawInfo.angle % 360 + "\nDraw X: " + drawInfo.x);
+            float backleftx = (float)(drawInfo.x - Math.Cos(temgle * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+            float backlefty = (float)(drawInfo.y + Math.Sin(temgle * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
 
-                if (true)
+            float backrightx = (float)(drawInfo.x - Math.Cos(temgle * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+            float backrighty = (float)(drawInfo.y - Math.Sin(temgle * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+
+            topleft = new PointF(topleftx, toplefty);
+            topright = new PointF(toprightx, toprighty);
+            backleft = new PointF(backleftx, backlefty);
+            backright = new PointF(backrightx, backrighty);
+
+            testdraw.x = topleft.X;
+            testdraw.y = topleft.Y;
+            //Console.WriteLine("x van testdraw.x: " + testdraw.x + "\nWidth: " + width + "\nLength: " + length + "\nangle: " + drawInfo.angle % 360 + "\nDraw X: " + drawInfo.x);
+
+            if (topleft.X > Base.currentGame.MapsizeX || topright.X > Base.currentGame.MapsizeX || backleft.X > Base.currentGame.MapsizeX || backright.X > Base.currentGame.MapsizeX
+                || topleft.X<0||topright.X<0||backleft.X<0||backright.X<0
+                || topleft.Y > Base.currentGame.MapsizeY || topright.Y > Base.currentGame.MapsizeY || backleft.Y > Base.currentGame.MapsizeY || backright.Y > Base.currentGame.MapsizeY
+                || topleft.Y < 0 || topright.Y < 0 || backleft.Y < 0 || backright.Y < 0)
+            {
+                drawInfo.angle += 180;
+                weaponDrawInfo.angle += 180;
+            }
+
+            if (player == Base.currentGame.player1)
+            {
+                DrawInfo p2 = Base.currentGame.player2.vehicle.drawInfo;
+
+                if (Math.Abs(p2.x - topleft.X) < width && Math.Abs(p2.y - topleft.Y) < width || Math.Abs(p2.x - topright.X) < width && Math.Abs(p2.y - topright.Y) < width
+                    || Math.Abs(p2.x - backleft.X) < width && Math.Abs(p2.y - backleft.Y) < width || Math.Abs(p2.x - backright.X) < width && Math.Abs(p2.y - backright.Y) < width
+                   )
                 {
-                    //collide op x of y as aan 1 kant
-                    //Console.WriteLine("Collide");
-                }
-                else
-                {
-                    //Console.WriteLine("Niet collide");
+                    drawInfo.angle += 180;
+                    weaponDrawInfo.angle += 180;
                 }
             }
         }

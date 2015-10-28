@@ -10,6 +10,7 @@ namespace RaceGame
         public float angle;
         public float speed;
         public int timeout;
+        public int damage;
         public Player player;
         public DrawInfo bulletDrawInfo;
 
@@ -17,10 +18,42 @@ namespace RaceGame
         {
             bulletDrawInfo = new DrawInfo(bitmap, x, y, width, height, _angle, RotateX, RotateY, AutoRemove, Frames);
             Base.drawInfos.Add(bulletDrawInfo);
+
         }
 
         public void TrackBullet()
         {
+
+            if (player == Base.currentGame.player1)
+            {
+                if (Math.Abs(bulletDrawInfo.x - Base.currentGame.player2.vehicle.topleft.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player2.vehicle.topleft.Y) < 20 || Math.Abs(bulletDrawInfo.x - Base.currentGame.player2.vehicle.topright.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player2.vehicle.topright.Y) < 20
+                        || Math.Abs(bulletDrawInfo.x - Base.currentGame.player2.vehicle.backleft.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player2.vehicle.backleft.Y) < 20 || Math.Abs(bulletDrawInfo.x - Base.currentGame.player2.vehicle.backright.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player2.vehicle.backright.Y) < 20
+                       )
+                {
+                    Base.currentGame.player2.vehicle.drawInfo.angle = bulletDrawInfo.angle;
+                    Base.currentGame.player2.vehicle.weaponDrawInfo.angle = bulletDrawInfo.angle;
+                    Base.currentGame.player2.vehicle.health -= damage;
+                    Console.WriteLine("damage gedaan: "+damage);
+                    Console.WriteLine("helf remain iz: " + Base.currentGame.player2.vehicle.health);
+                    timeout = 0;
+
+
+                }
+            }
+            if (player == Base.currentGame.player2)
+            {
+                if (Math.Abs(bulletDrawInfo.x - Base.currentGame.player1.vehicle.topleft.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player1.vehicle.topleft.Y) < 20 || Math.Abs(bulletDrawInfo.x - Base.currentGame.player1.vehicle.topright.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player1.vehicle.topright.Y) < 20
+                        || Math.Abs(bulletDrawInfo.x - Base.currentGame.player1.vehicle.backleft.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player1.vehicle.backleft.Y) < 20 || Math.Abs(bulletDrawInfo.x - Base.currentGame.player1.vehicle.backright.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player1.vehicle.backright.Y) < 20
+                       )
+                {
+                    Base.currentGame.player1.vehicle.drawInfo.angle = bulletDrawInfo.angle;
+                    Base.currentGame.player2.vehicle.weaponDrawInfo.angle = bulletDrawInfo.angle;
+                    Base.currentGame.player1.vehicle.health -= damage;
+                    Console.WriteLine(Base.currentGame.player1.vehicle.health);
+                    timeout = 0;
+                }
+            }
+
             if (bulletDrawInfo.x <= 0 || bulletDrawInfo.x >= Base.currentGame.MapsizeX || bulletDrawInfo.y <= 0 || bulletDrawInfo.y >= Base.currentGame.MapsizeY)
             {
                 Base.drawInfos.Remove(bulletDrawInfo);
@@ -64,15 +97,18 @@ namespace RaceGame
 
         virtual public void shoot()
         {
+            Console.WriteLine("yo");
             if (weaponReloading == 0) //IK heb grote ballen
             {
                 Bitmap koegmap = new Bitmap("koegel.png");
-
+                Console.WriteLine("wtf");
                 Bullets.Add(new Bullet(koegmap, (int)player.vehicle.drawInfo.x, (int)player.vehicle.drawInfo.y, 10, 10, player.vehicle.weaponDrawInfo.angle, 0f, 0f));
                 i = Bullets.Count - 1;
                 Bullets[i].speed = 30;
                 Bullets[i].timeout = 300;
                 Bullets[i].player = player;
+                Console.WriteLine("damage: " + damage);
+                Bullets[i].damage = damage;
                 Base.gameTasks.Add(Bullets[i].TrackBullet);
                 weaponReloading = fireRate;
                 Base.gameTasks.Add(weaponReload);
@@ -97,7 +133,7 @@ namespace RaceGame
             type = "Cannon";
             spriteName = "loop.png";
             damage = 75;
-            fireRate = 4;
+            fireRate = 100;
             turnSpeed = 3f;
             turning = "false";
         }
@@ -113,6 +149,7 @@ namespace RaceGame
                 Bullets[i].speed = 30;
                 Bullets[i].timeout = 300;
                 Bullets[i].player = player;
+                Bullets[i].damage = damage;
                 Base.gameTasks.Add(Bullets[i].TrackBullet);
                 weaponReloading = fireRate;
                 Base.gameTasks.Add(weaponReload);
@@ -156,6 +193,7 @@ namespace RaceGame
                 Bullets[i].speed = 30;
                 Bullets[i].timeout = 300;
                 Bullets[i].player = player;
+                Bullets[i].damage = damage;
                 Base.gameTasks.Add(Bullets[i].TrackBullet);
                 weaponReloading = fireRate;
                 Base.gameTasks.Add(weaponReload);

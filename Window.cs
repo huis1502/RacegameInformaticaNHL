@@ -127,10 +127,6 @@ namespace RaceGame
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.A)
-            {
-                Console.WriteLine("iets");
-            }
             switch (e.KeyCode)
             {
                 case Keys.W:
