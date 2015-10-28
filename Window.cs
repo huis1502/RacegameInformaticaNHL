@@ -55,6 +55,7 @@ namespace RaceGame
         public ProgressBar Player2Speed;
         public Game currentGame;
         public bool showMenu = true;
+        public int TotalLaps = 5;
         Enums.VehicleType player1Vehicle;
         Enums.VehicleType player2Vehicle;
 
@@ -386,6 +387,7 @@ namespace RaceGame
             0,
             0,
             0});
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // Laps
             // 
@@ -765,6 +767,7 @@ namespace RaceGame
             Base.currentGame = null;
             currentGame = null;
             Base.currentGame = new Game(player1Vehicle, player2Vehicle);
+            Progressbars.TotalLaps = TotalLaps;
             currentGame = Base.currentGame;
         }
 
@@ -791,13 +794,16 @@ namespace RaceGame
                     break;
 
                 case Keys.Q:
-                    Base.currentGame.player1.vehicle.weapon.turning = "left";
+                    if (Base.currentGame.player1.vehicle.weapon != null)
+                        Base.currentGame.player1.vehicle.weapon.turning = "left";
                     break;
                 case Keys.E:
+                    if(Base.currentGame.player1.vehicle.weapon != null)
                     Base.currentGame.player1.vehicle.weapon.turning = "right";
                     break;
                 case Keys.D2:
-                    Base.currentGame.player1.vehicle.shooting = true;
+                    if (Base.currentGame.player1.vehicle.weapon != null)
+                        Base.currentGame.player1.vehicle.shooting = true;
                     break;
 
 
@@ -816,13 +822,16 @@ namespace RaceGame
                     break;
 
                 case Keys.RShiftKey:
-                    Base.currentGame.player2.vehicle.weapon.turning = "left";
+                    if (Base.currentGame.player2.vehicle.weapon != null)
+                        Base.currentGame.player2.vehicle.weapon.turning = "left";
                     break;
                 case Keys.NumPad1:
-                    Base.currentGame.player2.vehicle.weapon.turning = "right";
+                    if (Base.currentGame.player2.vehicle.weapon != null)
+                        Base.currentGame.player2.vehicle.weapon.turning = "right";
                     break;
                 case Keys.Enter:
-                    Base.currentGame.player2.vehicle.shooting = true;
+                    if (Base.currentGame.player2.vehicle.weapon != null)
+                        Base.currentGame.player2.vehicle.shooting = true;
                     break;
             }
 
@@ -848,13 +857,16 @@ namespace RaceGame
                     break;
 
                 case Keys.Q:
-                    Base.currentGame.player1.vehicle.weapon.turning = "false";
+                    if (Base.currentGame.player1.vehicle.weapon != null)
+                        Base.currentGame.player1.vehicle.weapon.turning = "false";
                     break;
                 case Keys.E:
-                    Base.currentGame.player1.vehicle.weapon.turning = "false";
+                    if (Base.currentGame.player1.vehicle.weapon != null)
+                        Base.currentGame.player1.vehicle.weapon.turning = "false";
                     break;
                 case Keys.D2:
-                    Base.currentGame.player1.vehicle.shooting = false;
+                    if (Base.currentGame.player1.vehicle.weapon != null)
+                        Base.currentGame.player1.vehicle.shooting = false;
                     break;
 
 
@@ -873,13 +885,16 @@ namespace RaceGame
                     break;
 
                 case Keys.RShiftKey:
-                    Base.currentGame.player2.vehicle.weapon.turning = "false";
+                    if (Base.currentGame.player2.vehicle.weapon != null)
+                        Base.currentGame.player2.vehicle.weapon.turning = "false";
                     break;
                 case Keys.NumPad1:
-                    Base.currentGame.player2.vehicle.weapon.turning = "false";
+                    if (Base.currentGame.player2.vehicle.weapon != null)
+                        Base.currentGame.player2.vehicle.weapon.turning = "false";
                     break;
                 case Keys.Enter:
-                    Base.currentGame.player2.vehicle.shooting = false;
+                    if (Base.currentGame.player2.vehicle.weapon != null)
+                        Base.currentGame.player2.vehicle.shooting = false;
                     break;
             }
         }
@@ -953,6 +968,13 @@ namespace RaceGame
             Pitstop P = new Pitstop();
             Progressbars.Initialize();
             Base.gameTasks.Add(Progressbars.Check);
+            Base.currentGame.player1.vehicle.pitstopCounter = TotalLaps;
+            Base.currentGame.player2.vehicle.pitstopCounter = TotalLaps;
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            TotalLaps = (int)(numericUpDown1.Value);
         }
 
         //xx anoniem

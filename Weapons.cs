@@ -90,7 +90,10 @@ namespace RaceGame
         public int fireRate;
         public float turnSpeed;
         public string turning;
+        public int timeout = 300;
         public Player player;
+        public Bitmap weaponSprite;
+        public Bitmap BulletSprite;
 
         public static List<Bullet> Bullets = new List<Bullet>();
         public static int i;
@@ -103,17 +106,13 @@ namespace RaceGame
 
         virtual public void shoot()
         {
-            Console.WriteLine("yo");
-            if (weaponReloading == 0) //IK heb grote ballen
+            if (weaponReloading == 0)
             {
-                Bitmap koegmap = new Bitmap("koegel.png");
-                Console.WriteLine("wtf");
-                Bullets.Add(new Bullet(koegmap, (int)player.vehicle.drawInfo.x, (int)player.vehicle.drawInfo.y, 10, 10, player.vehicle.weaponDrawInfo.angle, 0f, 0f));
+                Bullets.Add(new Bullet(BulletSprite, (int)player.vehicle.drawInfo.x, (int)player.vehicle.drawInfo.y, 10, 10, player.vehicle.weaponDrawInfo.angle, 0f, 0f, true, timeout));
                 i = Bullets.Count - 1;
                 Bullets[i].speed = 30;
-                Bullets[i].timeout = 300;
+                Bullets[i].timeout = timeout;
                 Bullets[i].player = player;
-                Console.WriteLine("damage: " + damage);
                 Bullets[i].damage = damage;
                 Base.gameTasks.Add(Bullets[i].TrackBullet);
                 weaponReloading = fireRate;
@@ -135,18 +134,18 @@ namespace RaceGame
     {
         public TankWeapon(Player s) : base(s)
         {
-            name = "Tank Cannon";
-            type = "Cannon";
-            spriteName = "loop.png";
+            weaponSprite = Bitmaps.Vehicles.TankWeapon;
             damage = 75;
             fireRate = 100;
             turnSpeed = 3f;
             turning = "false";
+            BulletSprite = Bitmaps.Bullets.RoundBullet;
         }
 
+        /*
         public override void shoot()
         {
-            if (weaponReloading == 0) //IK heb grote ballen
+            if (weaponReloading == 0)
             {
                 Bitmap koegmap = new Bitmap("kannonbal.png");
 
@@ -160,19 +159,18 @@ namespace RaceGame
                 weaponReloading = fireRate;
                 Base.gameTasks.Add(weaponReload);
             }
-        }
+        }*/
     }
 
     public class LAPVWeapon : Weapons
     {
         public LAPVWeapon(Player s) : base(s)
         {
-            name = "LAPV Turret";
-            type = "MachineGun";
-            spriteName = "lapvweapon.png";
+            weaponSprite = Bitmaps.Vehicles.LAPVWeapon;
             damage = 15;
             fireRate = 25;
             turnSpeed = 3;
+            BulletSprite = Bitmaps.Bullets.RegularBullet;
         }
     }
 
@@ -180,24 +178,21 @@ namespace RaceGame
     {
         public HorsePowerWeapon(Player s) : base(s)
         {
-            name = "HorsePower Flamethrower";
-            type = "Flamethrower";
-            spriteName = "horsepowerweapon.png";
             damage = 5;
-            fireRate = 10;
-            turnSpeed = 3; 
+            fireRate = 1;
+            turnSpeed = 3;
+            timeout = 4;
+            weaponSprite = Bitmaps.Bullets.Vlam;
         }
 
         public override void shoot()
         {
             if (weaponReloading == 0) //IK heb grote ballen
             {
-                Bitmap koegmap = new Bitmap("vlam.png");
-
-                Bullets.Add(new Bullet(koegmap, (int)player.vehicle.drawInfo.x, (int)player.vehicle.drawInfo.y, 30, 90, player.vehicle.weaponDrawInfo.angle, 0f, 0f, true, 300));
+                Bullets.Add(new Bullet(weaponSprite, (int)player.vehicle.drawInfo.x, (int)player.vehicle.drawInfo.y, 30, 90, player.vehicle.weaponDrawInfo.angle, 0f, 0f, true, timeout));
                 i = Bullets.Count - 1;
                 Bullets[i].speed = 30;
-                Bullets[i].timeout = 300;
+                Bullets[i].timeout = timeout;
                 Bullets[i].player = player;
                 Bullets[i].damage = damage;
                 Base.gameTasks.Add(Bullets[i].TrackBullet);
@@ -211,12 +206,11 @@ namespace RaceGame
     {
         public MotorfietsWeapon(Player s) : base(s)
         {
-            name = "Motorfiets SMG";
-            type = "MachineGun";
-            spriteName = "motorfietsweapon.png";
+            weaponSprite = Bitmaps.Vehicles.MotorfietsWeapon;
             damage = 10;
             fireRate = 20;
             turnSpeed = 4;
+            weaponSprite = Bitmaps.Bullets.RoundBullet;
         }
     }
 }

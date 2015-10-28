@@ -7,8 +7,12 @@ namespace RaceGame
 
     public static class Progressbars
     {
+        public static int TotalLaps;
+
         public static void Initialize()
         {
+
+
             Base.windowHandle.Player1Fuel.Maximum = Convert.ToInt32(Base.currentGame.player1.vehicle.fuelCapacity);
             Base.windowHandle.Player2Fuel.Maximum = Convert.ToInt32(Base.currentGame.player2.vehicle.fuelCapacity);
             Base.windowHandle.Player1Health.Maximum = Convert.ToInt32(Base.currentGame.player1.vehicle.maxHealth);
@@ -40,7 +44,11 @@ namespace RaceGame
                 Base.windowHandle.Player2Speed.Value = Convert.ToInt32(Math.Abs(Base.currentGame.player2.vehicle.speed * 100));
             }
 
+            Base.windowHandle.Player1PitCount.Text = Base.currentGame.player1.vehicle.pitstopCounter + "/" + TotalLaps;
+            Base.windowHandle.Player2PitCount.Text = Base.currentGame.player2.vehicle.pitstopCounter + "/" + TotalLaps;
 
+            Base.windowHandle.Player1LapCount.Text = Base.currentGame.player1.LapCounter + "/" + TotalLaps;
+            Base.windowHandle.Player2LapCount.Text = Base.currentGame.player2.LapCounter + "/" + TotalLaps;
         }
     }
 

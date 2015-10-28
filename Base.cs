@@ -16,6 +16,7 @@ namespace RaceGame
         [STAThread]
         public static void Main(string[] Args)
         {
+            Application.EnableVisualStyles();
             windowHandle = new Window();
             Application.Run(windowHandle);
         }

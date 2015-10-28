@@ -8,15 +8,11 @@ namespace RaceGame
 {
     public abstract class Vehicle
     {
-        public string path;
         public DrawInfo drawInfo;
         public DrawInfo weaponDrawInfo;
 
         public Bitmap bitmap;
         public Bitmap weaponSprite;
-
-        public Bitmap bm;
-
         public Player player;
         public VehicleType vehicletype;
         public int StartPositionX;
@@ -36,20 +32,22 @@ namespace RaceGame
         public float sideDamageMultiplier;
         public float grassMultiplier;
         public bool shooting = false;
+        public bool inPitstop = false;
+        public int pitstopCounter = 0;
 
         public PointF topleft;
         public PointF topright;
         public PointF backleft;
         public PointF backright;
 
-        float deltaTime = 1.00f;
-        float prevDelta = 1.00f;
+        protected float deltaTime = 1.00f;
+        protected float prevDelta = 1.00f;
         public float speed = 0f;
-        float prevSpeed = 0f;
-        float prevSpeedrev = 0f;
+        protected float prevSpeed = 0f;
+        protected float prevSpeedrev = 0f;
         public int i = 0;
         public int j = 0;
-        private bool go = false;
+        protected bool go = false;
         public string turning = "false";
         public bool throttle = false;
         public bool brake = false;
@@ -67,22 +65,19 @@ namespace RaceGame
         #region Drawing and stopping drawingappelnoot
         public void StartDraw(int x, int y)
         {
-            bitmap = new Bitmap(path);
             drawInfo = new DrawInfo(bitmap, x,y,50,50, 0f,0f,0f);
             Base.drawInfos.Add(drawInfo);
         }
         
         public void StartDraw()
         {
-            bitmap = new Bitmap(path);
             drawInfo = new DrawInfo(bitmap, StartPositionX, StartPositionY, 50, 50, 0f,0f,0f);
             Base.drawInfos.Add(drawInfo);
         }
 
-        public void StartWeaponDraw()
+        public virtual void StartWeaponDraw()
         {
-            weaponSprite = new Bitmap(weapon.spriteName);
-            weaponDrawInfo = new DrawInfo(weaponSprite, StartPositionX, StartPositionY, 50, 100, 0f, 0f, drawInfo.angle);
+            weaponDrawInfo = new DrawInfo(weapon.weaponSprite, StartPositionX, StartPositionY, 50, 100, 0f, 0f, drawInfo.angle);
             Base.drawInfos.Add(weaponDrawInfo);
         }
 
@@ -103,7 +98,7 @@ namespace RaceGame
         public virtual void Shoot() { }
         #endregion
 
-        public void Appelnoot()
+        public virtual void Appelnoot()
         {
             //Console.WriteLine(throttle);
             if (throttle)
@@ -299,20 +294,22 @@ namespace RaceGame
                     weaponDrawInfo.angle -= rotationPlus;
                 }
             }
-            else if (weapon.turning == "left")
+            else
             {
-                weaponDrawInfo.angle -= weapon.turnSpeed;
-            }
-            else if (weapon.turning == "right")
-            {
-                weaponDrawInfo.angle += weapon.turnSpeed;
+                    if (weapon.turning == "left")
+                    {
+                        weaponDrawInfo.angle -= weapon.turnSpeed;
+                    }
+                    else if (weapon.turning == "right")
+                    {
+                        weaponDrawInfo.angle += weapon.turnSpeed;
+                    }
             }
 
-
-            if (Math.Abs(180 - (drawInfo.angle - weaponDrawInfo.angle)) % 360 < 30 && shooting && throttle && speed >= maxSpeed)
-            {
-                speed *= 2;
-            }
+                if (Math.Abs(180 - (drawInfo.angle - weaponDrawInfo.angle)) % 360 < 30 && shooting && throttle && speed >= maxSpeed)
+                {
+                    speed *= 2;
+                }
 
             int NextX = (int)(drawInfo.x +  (float)(Math.Cos(drawInfo.angle * (Math.PI / 180)) * speed));
             int NextY = (int)(drawInfo.y + (float)(Math.Cos((90 - drawInfo.angle) * (Math.PI / 180)) * speed));
@@ -411,7 +408,7 @@ namespace RaceGame
             }
         }
 
-        int GetDistance(int x, int y, int x2, int y2)
+        protected int GetDistance(int x, int y, int x2, int y2)
         {
             return (int)Math.Sqrt(Math.Pow(Math.Abs(x - x2), 2) + Math.Pow(Math.Abs(y - y2), 2));
         }

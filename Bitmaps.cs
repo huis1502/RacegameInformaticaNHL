@@ -9,14 +9,16 @@ namespace RaceGame
             public static Bitmap TankBody = new Bitmap("tankbody.png");
             public static Bitmap TankWeapon = new Bitmap("loop.png");
 
-            public static Bitmap Jackass = new Bitmap("jackass.png");
+            public static Bitmap Jackass = new Bitmap("cart.png");
 
             public static Bitmap LAPVBody = new Bitmap("lapv.png");
-            public static Bitmap LAPVWeapon = new Bitmap("lapvweapon.png");
+            public static Bitmap LAPVWeapon = new Bitmap("lapv turret.png");
 
-            public static Bitmap HorsePowerBody = new Bitmap("horsepower.png");
+            public static Bitmap HorsePowerBody = new Bitmap("horse.png");
 
-            public static Bitmap MotorfietsBody = new Bitmap("motorfiets.png");
+            public static Bitmap MotorfietsBody = new Bitmap("motor.png");
+            public static Bitmap MotorfietsWeapon = new Bitmap("hoofdenwapenmotor.png");
+            public static Bitmap Transparent = new Bitmap("transparent.png");
 
         }
 
@@ -73,7 +75,12 @@ namespace RaceGame
             public static Bitmap Stone = new Bitmap("stone.png");
         }
 
-
+        public class Bullets
+        {
+            public static Bitmap RoundBullet = new Bitmap("kannonbal.png");
+            public static Bitmap Vlam = new Bitmap("vlam.png");
+            public static Bitmap RegularBullet = new Bitmap("regbullet.png");
+        }
 
 
     }
