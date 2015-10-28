@@ -161,12 +161,12 @@ namespace RaceGame
             {
                 _roads.Add(Roads[Points[j].x, Points[j].y]);
             }
-            for (int i = 1; i < _roads.Count-1; i++)
+            for (int i = 1; i < _roads.Count - 1; i++)
             {
-                SetSingleRoadType(_roads[i-1], _roads[i], _roads[i+1]);
+                SetSingleRoadType(_roads[i - 1], _roads[i], _roads[i + 1]);
             }
-            SpecialRoadList.Add(new SpecRoad { Current =  _roads[0], Next = _roads[1]});
-            SpecialRoadList.Add(new SpecRoad { Current = _roads[_roads.Count-1], Prev = _roads[_roads.Count-2]});
+            SpecialRoadList.Add(new SpecRoad { Current = _roads[0], Next = _roads[1] });
+            SpecialRoadList.Add(new SpecRoad { Current = _roads[_roads.Count - 1], Prev = _roads[_roads.Count - 2] });
         }
 
         void SetSingleRoadType(Road Prev, Road Current, Road Next)
@@ -448,11 +448,10 @@ namespace RaceGame
 
         Point[] GeneratePointSet()
         {
-            Random RND = new Random(DateTime.Now.GetHashCode() + DateTime.UtcNow.GetHashCode() + DateTime.Now.Millisecond.GetHashCode());
+            Random RND = new Random();
             List<Point> Return = new List<Point>();
             int Direction = RND.Next(0, 2);
-            Return.Add( new Point(1, 1));
-            Direction = 1;
+            Return.Add(new Point(1, 1));
             if (Direction == 0)
             {
                 //Pitstop toevoegen
@@ -463,11 +462,11 @@ namespace RaceGame
                 PitstopLocations.Add(new Point(1, 4));
                 PitstopLocations.Add(new Point(1, 5));
                 pitstopType = PitStopType.Vertical;
-                PitStopPoint = new Point(30,324);
+                PitStopPoint = new Point(30, 324);
 
-                Return.Add(new Point(1,7));
-                
-                Direction = RND.Next(0,2);
+                Return.Add(new Point(1, 7));
+
+                Direction = RND.Next(0, 2);
                 if (Direction == 0)
                 {
                     int yset = RND.Next(2, 5);
@@ -476,9 +475,9 @@ namespace RaceGame
                     Return.Add(new Point(6, yset));
                     Return.Add(new Point(6, 7));
                 }
-                
-                Return.Add(new Point(12,7));
-                
+
+                Return.Add(new Point(12, 7));
+
                 Direction = RND.Next(0, 2);
                 if (Direction == 0)
                 {
@@ -490,7 +489,7 @@ namespace RaceGame
                 }
                 else
                 {
-                    Return.Add(new Point(12,1));
+                    Return.Add(new Point(12, 1));
                 }
             }
             else
@@ -509,27 +508,105 @@ namespace RaceGame
                 Direction = RND.Next(0, 2);
                 if (Direction == 0)
                 {
-                    int setx = RND.Next(7,11);
+                    int setx = RND.Next(7, 11);
                     Return.Add(new Point(12, 3));
                     Return.Add(new Point(setx, 3));
                     Return.Add(new Point(setx, 5));
                     Return.Add(new Point(12, 5));
                 }
-                Return.Add(new Point(12,7));
+                Return.Add(new Point(12, 7));
 
-                Return.Add(new Point(1,7));   
+                Return.Add(new Point(1, 7));
                 Direction = RND.Next(0, 2);
                 if (Direction == 0)
                 {
-                    int setx = RND.Next(3,7);
+                    int setx = RND.Next(3, 7);
                     Return.Add(new Point(1, 5));
                     Return.Add(new Point(setx, 5));
                     Return.Add(new Point(setx, 3));
                     Return.Add(new Point(1, 3));
                 }
-                
+
             }
             return Return.ToArray();
+        }
+
+        void GenerateObstacles()
+        {
+            Random RND = new Random(DateTime.Now.Millisecond.GetHashCode());
+            List<Obstacle> Obstacles = new List<Obstacle>();
+            for (int x = 0; x < MapsizeXR; ++x)
+            {
+                for (int y = 0; y < MapsizeYR; ++y)
+                {
+                    switch (Roads[x, y].roadType)
+                    {
+                        case RoadType.NULL:
+                            int j = RND.Next(0, 2);
+                            if (j == 0)
+                            {
+                                int xpos = x * 72 + 36;
+                                int ypos = y * 72 + 36;
+
+                                for (int x2 = 0; x2 < 64; ++x2)
+                                {
+                                    for (int y2 = 0; y2 < 64; ++y2)
+                                    {
+                                        if (Bitmaps.Obstacles.Tree.GetPixel(x2, y2).A == 255)
+                                            Background.SetPixel(xpos - 32 + x2, ypos - 32 + y2, Bitmaps.Obstacles.Tree.GetPixel(x2, y2));
+                                    }
+                                }
+                                Obstacles.Add(new Obstacle(x, y, 12));
+                            }
+                            break;
+                        case RoadType.verticalStraight:
+                            goto case RoadType.horizontalStraight;
+                        case RoadType.horizontalStraight:
+                            int k = RND.Next(0, 16);
+                            if (k == 0)
+                            {
+                                int xpos = x * 72 + 36;
+                                int ypos = y * 72 + 36;
+
+                                int rand = RND.Next(-32, 32);
+                                int rand2 = RND.Next(-32, 32);
+
+                                for (int x2 = 0; x2 < 16; ++x2)
+                                {
+                                    for (int y2 = 0; y2 < 16; ++y2)
+                                    {
+                                        if (Bitmaps.Obstacles.Stone.GetPixel(x2, y2).A == 255)
+                                            Background.SetPixel(xpos - 8 + x2 + rand, ypos - 8 + y2 + rand, Bitmaps.Obstacles.Stone.GetPixel(x2, y2));
+                                    }
+                                }
+                                Obstacles.Add(new Obstacle(x, y, 4));
+                            }
+                            break;
+                    }
+                }
+            }
+            ObstaclesList = Obstacles;
+        }
+
+        struct Obstacle
+        {
+            int x;
+            int y;
+            int range;
+            public Obstacle(int x, int y, int range)
+            {
+                this.x = x;
+                this.y = y;
+                this.range = range;
+            }
+        }
+
+        void PLayerTrackers()
+        {
+            Bluepointer.x = player1.vehicle.drawInfo.x;
+            Bluepointer.y = player1.vehicle.drawInfo.y - 10;
+            Redpointer.x = player2.vehicle.drawInfo.x;
+            Redpointer.y = player2.vehicle.drawInfo.y - 10;
         }
 
     }

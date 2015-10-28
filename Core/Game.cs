@@ -18,8 +18,19 @@ namespace RaceGame
         int MapsizeYR = 9;
         public Road[,] Roads;
         public Point[] CheckPoints;
+        public bool[] CheckPointsPassedP1;
+        public bool[] CheckPointsPassedP2;
         List<SpecRoad> SpecialRoadList = new List<SpecRoad>();
         public Point PitStopPoint;
+        bool ValuesChanged = false;
+        bool forceCheck = false;
+        List<Obstacle> ObstaclesList = new List<Obstacle>();
+
+        DrawInfo Redpointer;
+        DrawInfo Bluepointer;
+
+        Point SpawnPointP1;
+        Point SpawnPointP2;
 
         int FillPercentage = 50;
         int Iterations = 3;
@@ -55,6 +66,11 @@ namespace RaceGame
             player2.vehicle.StartWeaponDraw();
             Base.gameTasks.Add(player1.vehicle.Appelnoot);
             Base.gameTasks.Add(player2.vehicle.Appelnoot);
+            Bluepointer = new DrawInfo(Bitmaps.Other.Bluepointer, SpawnPointP1.x, SpawnPointP1.y - 10, 16, 16, -90);
+            Redpointer = new DrawInfo(Bitmaps.Other.Redpointer, SpawnPointP2.x, SpawnPointP2.y - 10, 16, 16, -90);
+            Base.drawInfos.Add(Bluepointer);
+            Base.drawInfos.Add(Redpointer);
+            Base.gameTasks.Add(PLayerTrackers);
         }
 
         public void CreateMap()
@@ -215,22 +231,14 @@ namespace RaceGame
                     Background.SetPixel(PitStopPoint.x - 8 + x, PitStopPoint.y - 8 + y, Bitmaps.Other.Wrench.GetPixel(x,y));
                 }
             }
-            for (int i = 0; i < CheckPoints.Length; ++i)
-            {
-                for (int x = 0; x < 16; ++x)
-                {
-                    for (int y = 0; y < 16; ++y)
-                    {
-                        if (Bitmaps.Other.GreenArrowUp.GetPixel(x, y).A != 0)
-                            Background.SetPixel(CheckPoints[i].x * 72 - 8 + x + 36, CheckPoints[i].y * 72 - 8 + y + 36, Bitmaps.Other.BlueArrowUp.GetPixel(x, y));
-                    }
-                }
-            }
-
-
-
-
+            CheckPointsPassedP1 = new bool[CheckPoints.Length];
+            CheckPointsPassedP2 = new bool[CheckPoints.Length];
+            forceCheck = true;
+            Finish();
             Base.drawInfos.Add(new DrawInfo(Background, MapsizeX / 2, MapsizeY / 2, MapsizeX, MapsizeY, 270, 0));
+            Base.gameTasks.Add(CheckPoint);
+            Base.gameTasks.Add(CheckFinish);
+            GenerateObstacles();
         }
 
         void CellularAutomata()
@@ -291,6 +299,282 @@ namespace RaceGame
                 }
             }
             return Count;
+        }
+
+        void CheckPoint() 
+        {
+            for (int i = 1; i < CheckPoints.Length; ++i)
+            {
+                int Cx = CheckPoints[i].x * 72 + 36;
+                int Cy = CheckPoints[i].y * 72 + 36;
+
+
+                if (player1.vehicle.drawInfo.x > Cx - 36 && player1.vehicle.drawInfo.x < Cx + 36 && player1.vehicle.drawInfo.y > Cy - 36 && player1.vehicle.drawInfo.y < Cy + 36)
+                {
+                    CheckPointsPassedP1[i] = true;
+                    ValuesChanged = true;
+                }
+                else
+                {
+                    if (player2.vehicle.drawInfo.x > Cx - 36 && player2.vehicle.drawInfo.x < Cx + 36 && player2.vehicle.drawInfo.y > Cy - 36 && player2.vehicle.drawInfo.y < Cy + 36)
+                    {
+                        CheckPointsPassedP2[i] = true;
+                        ValuesChanged = true;
+                    }
+                    else
+                    {
+                        ValuesChanged = false;
+                    }
+                }
+
+                Direction Dir = Direction.NULL;
+
+                if (i != CheckPoints.Length - 1)
+                {
+                    if (CheckPoints[i].x == CheckPoints[i + 1].x && CheckPoints[i].y < CheckPoints[i + 1].y)
+                    {
+                        Dir = Direction.Bottom;
+                    }
+                    else
+                    {
+                        if (CheckPoints[i].x == CheckPoints[i + 1].x && CheckPoints[i].y > CheckPoints[i + 1].y)
+                        {
+                            Dir = Direction.Top;
+                        }
+                        else
+                        {
+                            if (CheckPoints[i].y == CheckPoints[i + 1].y && CheckPoints[i].x > CheckPoints[i + 1].x)
+                            {
+                                Dir = Direction.Left;
+                            }
+                            else
+                            {
+                                if (CheckPoints[i].y == CheckPoints[i + 1].y && CheckPoints[i].x < CheckPoints[i + 1].x)
+                                {
+                                    Dir = Direction.Right;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("ERRURRR2");
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (CheckPoints[i].x == CheckPoints[0].x && CheckPoints[i].y < CheckPoints[0].y)
+                    {
+                        Dir = Direction.Bottom;
+                    }
+                    else
+                    {
+                        if (CheckPoints[i].x == CheckPoints[0].x && CheckPoints[i].y > CheckPoints[0].y)
+                        {
+                            Dir = Direction.Top;
+                        }
+                        else
+                        {
+                            if (CheckPoints[i].y == CheckPoints[0].y && CheckPoints[i].x > CheckPoints[0].x)
+                            {
+                                Dir = Direction.Left;
+                            }
+                            else
+                            {
+                                if (CheckPoints[i].y == CheckPoints[0].y && CheckPoints[i].x < CheckPoints[0].x)
+                                {
+                                    Dir = Direction.Right;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("ERRURRR2");
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Bitmap B = null;
+
+                if (CheckPointsPassedP1[i] && CheckPointsPassedP2[i])
+                {
+                    //Beide groen
+                    switch (Dir)
+                    {
+                        case Direction.Left:
+                            B = Bitmaps.Other.OneGreenTwoGreenLeft;
+                            break;
+                        case Direction.Right:
+                            B = Bitmaps.Other.OneGreenTwoGreenRight;
+                            break;
+                        case Direction.Bottom:
+                            B = Bitmaps.Other.OneGreenTwoGreenDown;
+                            break;
+                        case Direction.Top:
+                            B = Bitmaps.Other.OneGreenTwoGreenUp;
+                            break;
+                        default:
+                            Console.WriteLine("ERRUR");
+                            B = null;
+                            break;
+                    }
+                }
+                else
+                {
+                    if (CheckPointsPassedP1[i] == false && CheckPointsPassedP2[i])
+                    {
+                        //Player 1 blauw, Player 2 groen
+                        switch (Dir)
+                        {
+                            case Direction.Left:
+                                B = Bitmaps.Other.OneBlueTwoGreenLeft;
+                                break;
+                            case Direction.Right:
+                                B = Bitmaps.Other.OneBlueTwoGreenRight;
+                                break;
+                            case Direction.Bottom:
+                                B = Bitmaps.Other.OneBlueTwoGreenDown;
+                                break;
+                            case Direction.Top:
+                                B = Bitmaps.Other.OneBlueTwoGreenUp;
+                                break;
+                            default:
+                                Console.WriteLine("ERRUR");
+                                B = null;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        if (CheckPointsPassedP1[i] && CheckPointsPassedP2[i] == false)
+                        {
+                            //Player 1 groen, Player 2 blue
+                            switch (Dir)
+                            {
+                                case Direction.Left:
+                                    B = Bitmaps.Other.OneGreenTwoBlueLeft;
+                                    break;
+                                case Direction.Right:
+                                    B = Bitmaps.Other.OneGreenTwoBlueRight;
+                                    break;
+                                case Direction.Bottom:
+                                    B = Bitmaps.Other.OneGreenTwoBlueDown;
+                                    break;
+                                case Direction.Top:
+                                    B = Bitmaps.Other.OneGreenTwoBlueUp;
+                                    break;
+                                default:
+                                    Console.WriteLine("ERRUR");
+                                    B = null;
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            if (!CheckPointsPassedP1[i] && !CheckPointsPassedP2[i])
+                            {
+                                //Beide blauw
+                                switch (Dir)
+                                {
+                                    case Direction.Left:
+                                        B = Bitmaps.Other.OneBlueTwoBlueLeft;
+                                        break;
+                                    case Direction.Right:
+                                        B = Bitmaps.Other.OneBlueTwoBlueRight;
+                                        break;
+                                    case Direction.Bottom:
+                                        B = Bitmaps.Other.OneBlueTwoBlueDown;
+                                        break;
+                                    case Direction.Top:
+                                        B = Bitmaps.Other.OneBlueTwoBlueUp;
+                                        break;
+                                    default:
+                                        Console.WriteLine("ERRUR");
+                                        B = null;
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("BAD STUFF");
+                            }
+                        }
+                    }
+                }
+
+                if (forceCheck ||  ValuesChanged)
+                {
+                    for (int x = 0; x < 32; ++x)
+                    {
+                        for (int y = 0; y < 32; ++y)
+                        {
+                            if (B.GetPixel(x, y).A != 0)
+                                Background.SetPixel(CheckPoints[i].x * 72 - 16 + x + 36, CheckPoints[i].y * 72 - 16 + y + 36, B.GetPixel(x, y));
+                        }
+                    }
+                }
+            }
+            forceCheck = false;
+        }
+
+        void Finish()
+        {
+            int Cx = CheckPoints[0].x * 72 + 54;
+            int Cy = CheckPoints[0].y * 72;
+
+            SpawnPointP1 = new Point(Cx - 32,Cy + 32);
+            SpawnPointP2 = new Point(Cx - 32, Cy + 32);
+
+            for (int x = 0; x < 18; ++x)
+            {
+                for (int y = 0; y < 72; ++y)
+                {
+                    if(Bitmaps.Other.Finish.GetPixel(x,y).A != 0)
+                    Background.SetPixel(Cx + x + 18,Cy + y, Bitmaps.Other.Finish.GetPixel(x,y));
+                }
+            }
+        }
+
+        void CheckFinish()
+        {
+            int Cx = CheckPoints[0].x * 72 + 72;
+            int Cy = CheckPoints[0].y * 72 + 36;
+
+            if(player1.vehicle.drawInfo.x > Cx - 36 && player1.vehicle.drawInfo.x < Cx + 36 && player1.vehicle.drawInfo.y > Cy - 36 && player1.vehicle.drawInfo.y < Cy + 36)
+            {
+                int CheckPointCount = 0;
+                for (int i = 0; i < CheckPointsPassedP1.Length; ++i)
+                {
+                    if (CheckPointsPassedP1[i])
+                    {
+                        CheckPointCount++;
+                    }
+                }
+                if (CheckPointCount == CheckPointsPassedP1.Length-1) //-1 voor finish correctie
+                {
+                    Base.currentGame.player1.LapCounter++;
+                    CheckPointsPassedP1 = new bool[CheckPoints.Length];
+                    forceCheck = true;
+                }
+
+            }
+            if (player2.vehicle.drawInfo.x > Cx - 36 && player2.vehicle.drawInfo.x < Cx + 36 && player2.vehicle.drawInfo.y > Cy - 36 && player2.vehicle.drawInfo.y < Cy + 36)
+            {
+                int CheckPointCount = 0;
+                for (int i = 0; i < CheckPointsPassedP2.Length; ++i)
+                {
+                    if (CheckPointsPassedP2[i])
+                    {
+                        CheckPointCount++;
+                    }
+                }
+                if (CheckPointCount == CheckPointsPassedP2.Length-1) //-1 voor finish correctie
+                {
+                    Base.currentGame.player2.LapCounter++;
+                    CheckPointsPassedP2 = new bool[CheckPoints.Length];
+                    forceCheck = true;
+                }
+            }
         }
     }
 }
