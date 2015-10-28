@@ -67,7 +67,7 @@ namespace RaceGame
             {
                 using (var buffer = Graphics.FromImage(BackBuffer))
                 {
-                    buffer.Clear(Color.White);
+                    buffer.Clear(Color.Black);
                     for (int i = 0; i < DrawInfos.Count;i++)
                     {
                         DrawInfo DR = DrawInfos[i];

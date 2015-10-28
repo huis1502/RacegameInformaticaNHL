@@ -173,7 +173,7 @@ namespace RaceGame
                         {
                             for (int y2 = 0; y2 < 72; y2++)
                             {
-                                if (T != null && T.GetPixel(x2,y2).A != 0)
+                                if (T != null && T.GetPixel(x2, y2).A != 0)
                                 {
                                     Background.SetPixel(x * 72 + x2, y * 72 + y2, T.GetPixel(x2, y2));
                                 }
