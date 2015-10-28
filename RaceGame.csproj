@@ -45,12 +45,18 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AStar.cs" />
     <Compile Include="Base.cs" />
+    <Compile Include="Bitmaps.cs" />
     <Compile Include="Cars.cs" />
     <Compile Include="DelegatesAndEnums.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Game_extended.cs" />
+    <Compile Include="Pitstop.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Point.cs" />
+    <Compile Include="Progressbars.cs" />
+    <Compile Include="Types.cs" />
     <Compile Include="Vehicle.cs" />
     <Compile Include="Weapons.cs" />
     <Compile Include="Window.cs">

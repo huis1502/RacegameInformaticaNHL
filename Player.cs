@@ -10,6 +10,7 @@ namespace RaceGame
         public PlayerType playerType;
         public Vehicle vehicle;
         public VehicleType vehicleType;
+        public int LapCounter = 0;
 
 
         public Player(int i, PlayerType _playerType = PlayerType.Human, VehicleType _vehicleType = VehicleType.HorsePower)

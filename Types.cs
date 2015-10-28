@@ -1,35 +1,6 @@
 ﻿using System.Drawing;
 
-namespace RaceGame.Delegates
-{
-    public delegate void GameTask();
-}
-
-namespace RaceGame.Enums
-{
-    public enum PlayerType
-    {
-        Human,
-        AI
-    }
-
-    public enum VehicleType
-    {
-        Tank,
-        Jackass,
-        LAPV,
-        HorsePower,
-        Motorfiets,
-    }
-
-    public enum PointType
-    {
-        Inner,
-        Corner,
-    }
-}
-
-namespace RaceGame.Structs
+namespace RaceGame
 {
     public class DrawInfo
     {
@@ -53,7 +24,7 @@ namespace RaceGame.Structs
             this.AutoRemove = AutoRemove;
             this.Frames = Frames;
             this.angle = _angle;
-            rotatePoint = new PointF(RotateX,RotateY);
+            rotatePoint = new PointF(RotateX, RotateY);
         }
         public void LowerFrameCount()
         {

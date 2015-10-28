@@ -12,8 +12,6 @@ namespace RaceGame
         public DrawInfo drawInfo;
         public DrawInfo weaponDrawInfo;
 
-        public DrawInfo testdraw;
-
         public Bitmap bitmap;
         public Bitmap weaponSprite;
 
@@ -23,7 +21,8 @@ namespace RaceGame
         public VehicleType vehicletype;
         public int StartPositionX;
         public int StartPositionY;
-        public int fuelCapacity;
+        public float fuelCapacity;
+        public float fuel;
         public float maxSpeed;
         public float acceleration;
         public float deceleration;
@@ -45,14 +44,14 @@ namespace RaceGame
 
         float deltaTime = 1.00f;
         float prevDelta = 1.00f;
-        float speed = 0f;
+        public float speed = 0f;
         float prevSpeed = 0f;
         float prevSpeedrev = 0f;
         public int i = 0;
         public int j = 0;
         private bool go = false;
         public string turning = "false";
-        public string throttle = "";
+        public bool throttle = false;
         public bool brake = false;
 
 
@@ -87,14 +86,6 @@ namespace RaceGame
             Base.drawInfos.Add(weaponDrawInfo);
         }
 
-        public void startTestDraw()
-        {
-            bm = new Bitmap("vlam.png");
-            testdraw = new DrawInfo(bm, 500, 500, 20,20, 0, 0,drawInfo.angle);
-            //Base.drawInfos.Add(testdraw);
-            Base.drawInfos.Add(testdraw);
-        }
-
         /*
 
         public void StartDraw(DrawInfo _drawInfo)
@@ -115,9 +106,9 @@ namespace RaceGame
         public void Appelnoot()
         {
             //Console.WriteLine(throttle);
-            if (throttle == "go")
+            if (throttle)
             {
-                
+                fuel -= 0.04f;
                 if (Math.Abs(0 - speed) <= 0.01)
                 {
                     go = true;
@@ -150,7 +141,6 @@ namespace RaceGame
                                 if (Math.Abs((((-(float)Math.Pow(acceleration * (i / 2) - Math.Sqrt(maxSpeed), 2)) + maxSpeed) * deltaTime) - speed) <= .5)
                                 {
                                     go = true;
-                                    Console.WriteLine("na dit gaat hij stuk");
                                 }
                             }
                         }
@@ -319,13 +309,89 @@ namespace RaceGame
             }
 
 
-            if (Math.Abs(180 - (drawInfo.angle - weaponDrawInfo.angle)) % 360 < 30 && shooting && throttle == "go" && speed >= maxSpeed)
+            if (Math.Abs(180 - (drawInfo.angle - weaponDrawInfo.angle)) % 360 < 30 && shooting && throttle && speed >= maxSpeed)
             {
                 speed *= 2;
             }
 
-            drawInfo.x += (float)(Math.Cos(drawInfo.angle * (Math.PI / 180)) * speed);
-            drawInfo.y += (float)(Math.Cos((90 - drawInfo.angle) * (Math.PI / 180)) * speed);
+            int NextX = (int)(drawInfo.x +  (float)(Math.Cos(drawInfo.angle * (Math.PI / 180)) * speed));
+            int NextY = (int)(drawInfo.y + (float)(Math.Cos((90 - drawInfo.angle) * (Math.PI / 180)) * speed));
+
+            bool CanMove = true;
+
+            for (int k = 0; k < Base.currentGame.ObstaclesList.Count; k++)
+            {
+                if (GetDistance(Base.currentGame.ObstaclesList[k].x, Base.currentGame.ObstaclesList[k].y, NextX, NextY) < 72)
+                {
+                    int MinXRange = Base.currentGame.ObstaclesList[k].x - Base.currentGame.ObstaclesList[k].range;
+                    int MaxXRange = Base.currentGame.ObstaclesList[k].x + Base.currentGame.ObstaclesList[k].range;
+
+                    int MinYRange = Base.currentGame.ObstaclesList[k].y - Base.currentGame.ObstaclesList[k].range;
+                    int MaxYRange = Base.currentGame.ObstaclesList[k].y + Base.currentGame.ObstaclesList[k].range;
+
+                    if (NextX > MinXRange && NextX < MaxXRange && NextY > MinYRange && NextY < MaxYRange)
+                    {
+                        CanMove = false;
+                    }
+
+                    float width = 20;
+                    float length = 32;
+                    float temgle = (float)(drawInfo.angle - (Math.Atan(((width / 2) / (length / 2))) * (180 / Math.PI)));
+                    float topleftx = (float)(NextX + Math.Cos(temgle * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+                    float toplefty = (float)(NextY + Math.Sin(temgle * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+
+                    float toprightx = (float)(NextX + Math.Cos(temgle * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+                    float toprighty = (float)(NextY - Math.Sin(temgle * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+
+                    float backleftx = (float)(NextX - Math.Cos(temgle * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+                    float backlefty = (float)(NextY + Math.Sin(temgle * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+
+                    float backrightx = (float)(NextX - Math.Cos(temgle * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+                    float backrighty = (float)(NextY - Math.Sin(temgle * (Math.PI / 180)) * Math.Sqrt(Math.Pow(width / 2, 2) + Math.Pow(length / 2, 2)));
+
+                    topleft = new PointF(topleftx, toplefty);
+                    topright = new PointF(toprightx, toprighty);
+                    backleft = new PointF(backleftx, backlefty);
+                    backright = new PointF(backrightx, backrighty);
+
+                    if (player == Base.currentGame.player1)
+                    {
+                        DrawInfo p2 = Base.currentGame.player2.vehicle.drawInfo;
+
+                        if (Math.Abs(p2.x - topleft.X) < width && Math.Abs(p2.y - topleft.Y) < width || Math.Abs(p2.x - topright.X) < width && Math.Abs(p2.y - topright.Y) < width
+                            || Math.Abs(p2.x - backleft.X) < width && Math.Abs(p2.y - backleft.Y) < width || Math.Abs(p2.x - backright.X) < width && Math.Abs(p2.y - backright.Y) < width
+                           )
+                        {
+                            CanMove = false;
+                        }
+                    }
+
+                    if (player == Base.currentGame.player2)
+                    {
+                        DrawInfo p1 = Base.currentGame.player1.vehicle.drawInfo;
+
+                        if (Math.Abs(p1.x - topleft.X) < width && Math.Abs(p1.y - topleft.Y) < width || Math.Abs(p1.x - topright.X) < width && Math.Abs(p1.y - topright.Y) < width
+                            || Math.Abs(p1.x - backleft.X) < width && Math.Abs(p1.y - backleft.Y) < width || Math.Abs(p1.x - backright.X) < width && Math.Abs(p1.y - backright.Y) < width
+                           )
+                        {
+                            CanMove = false;
+                        }
+                    }
+                }
+            }
+            if (CanMove)
+            {
+                if (NextX > 0 && NextX < Base.currentGame.MapsizeX && NextY > 0 && NextY < Base.currentGame.MapsizeY)
+                {
+                    drawInfo.x += (float)(Math.Cos(drawInfo.angle * (Math.PI / 180)) * speed);
+                    drawInfo.y += (float)(Math.Cos((90 - drawInfo.angle) * (Math.PI / 180)) * speed);
+                }
+            }
+            else
+            {
+                speed = 0f;
+                i = 0;
+            }
 
             weaponDrawInfo.x = drawInfo.x;
             weaponDrawInfo.y = drawInfo.y;
@@ -342,12 +408,17 @@ namespace RaceGame
             if (shooting)
             {
                 weapon.shoot();
-                Console.WriteLine("ratatata pew");
             }
+        }
+
+        int GetDistance(int x, int y, int x2, int y2)
+        {
+            return (int)Math.Sqrt(Math.Pow(Math.Abs(x - x2), 2) + Math.Pow(Math.Abs(y - y2), 2));
         }
 
         public void CheckCollision()
         {
+            
             //  Point topleft=(drawInfo.x+16
             float width = 20;
             float length = 32;
@@ -369,19 +440,6 @@ namespace RaceGame
             backleft = new PointF(backleftx, backlefty);
             backright = new PointF(backrightx, backrighty);
 
-            testdraw.x = topleft.X;
-            testdraw.y = topleft.Y;
-            //Console.WriteLine("x van testdraw.x: " + testdraw.x + "\nWidth: " + width + "\nLength: " + length + "\nangle: " + drawInfo.angle % 360 + "\nDraw X: " + drawInfo.x);
-
-            if (topleft.X > Base.currentGame.MapsizeX || topright.X > Base.currentGame.MapsizeX || backleft.X > Base.currentGame.MapsizeX || backright.X > Base.currentGame.MapsizeX
-                || topleft.X<0||topright.X<0||backleft.X<0||backright.X<0
-                || topleft.Y > Base.currentGame.MapsizeY || topright.Y > Base.currentGame.MapsizeY || backleft.Y > Base.currentGame.MapsizeY || backright.Y > Base.currentGame.MapsizeY
-                || topleft.Y < 0 || topright.Y < 0 || backleft.Y < 0 || backright.Y < 0)
-            {
-                drawInfo.angle += 180;
-                weaponDrawInfo.angle += 180;
-            }
-
             if (player == Base.currentGame.player1)
             {
                 DrawInfo p2 = Base.currentGame.player2.vehicle.drawInfo;
@@ -390,10 +448,43 @@ namespace RaceGame
                     || Math.Abs(p2.x - backleft.X) < width && Math.Abs(p2.y - backleft.Y) < width || Math.Abs(p2.x - backright.X) < width && Math.Abs(p2.y - backright.Y) < width
                    )
                 {
-                    drawInfo.angle += 180;
-                    weaponDrawInfo.angle += 180;
+                    speed = 0;
+                    i = 0;
+                    throttle = false;
                 }
             }
+
+            if (player == Base.currentGame.player2)
+            {
+                DrawInfo p1 = Base.currentGame.player1.vehicle.drawInfo;
+
+                if (Math.Abs(p1.x - topleft.X) < width && Math.Abs(p1.y - topleft.Y) < width || Math.Abs(p1.x - topright.X) < width && Math.Abs(p1.y - topright.Y) < width
+                    || Math.Abs(p1.x - backleft.X) < width && Math.Abs(p1.y - backleft.Y) < width || Math.Abs(p1.x - backright.X) < width && Math.Abs(p1.y - backright.Y) < width
+                   )
+                {
+                    speed = 0;
+                    i = 0;
+                    throttle = false;
+                }
+            }
+            /*
+            for (int b = 0; b < Base.currentGame.ObstaclesList.Count; b++)
+            {
+                if (Math.Abs(Base.currentGame.ObstaclesList[b].x - topleft.X) < Base.currentGame.ObstaclesList[b].range && Math.Abs(Base.currentGame.ObstaclesList[b].y - topleft.Y) < Base.currentGame.ObstaclesList[b].range || Math.Abs(Base.currentGame.ObstaclesList[b].x - topright.X) < Base.currentGame.ObstaclesList[b].range && Math.Abs(Base.currentGame.ObstaclesList[b].y - topright.Y) < Base.currentGame.ObstaclesList[b].range
+                    || Math.Abs(Base.currentGame.ObstaclesList[b].x - backleft.X) < Base.currentGame.ObstaclesList[b].range && Math.Abs(Base.currentGame.ObstaclesList[b].y - backleft.Y) < Base.currentGame.ObstaclesList[b].range || Math.Abs(Base.currentGame.ObstaclesList[b].x - backright.X) < Base.currentGame.ObstaclesList[b].range && Math.Abs(Base.currentGame.ObstaclesList[b].y - backright.Y) < Base.currentGame.ObstaclesList[b].range
+                   )
+                {
+                    //drawInfo.angle += 180;
+                   // weaponDrawInfo.angle += 180;
+                    speed *=-1;
+                    //throttle = false;
+                    //drawInfo.x -= (float)(Math.Cos((drawInfo.angle) * (Math.PI / 180)) * 15);
+                    //drawInfo.y -= (float)(Math.Cos((90 - (drawInfo.angle)) * (Math.PI / 180)) *15);
+                    //i = 0;
+                    //go = true;
+                }
+            }
+            */
         }
     }
 }

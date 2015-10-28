@@ -7,6 +7,7 @@ namespace RaceGame
         public Tank(int x, int y, Player _player) : base(x,y, VehicleType.Tank, _player)
         {
             fuelCapacity = 95;
+            fuel = fuelCapacity;
             maxSpeed = 4f;
             acceleration = 0.05f;
             deceleration = 0.05f;
@@ -29,6 +30,7 @@ namespace RaceGame
         public Jackass(int x, int y, Player _player) : base(x,y,VehicleType.Jackass, _player)
         {
             fuelCapacity = 120;
+            fuel = fuelCapacity;
             maxSpeed = 1.2f;
             acceleration = 0.03f;
             deceleration = 0.05f;
@@ -47,6 +49,7 @@ namespace RaceGame
         public LAPV(int x, int y, Player _player) : base(x, y, VehicleType.LAPV, _player)
         {
             fuelCapacity = 100;
+            fuel = fuelCapacity;
             maxSpeed = 0.7f;
             acceleration = 0.015f;
             deceleration = 0.03f;
@@ -67,6 +70,7 @@ namespace RaceGame
         public HorsePower(int x, int y, Player _player) : base(x, y, VehicleType.HorsePower, _player)
         {
             fuelCapacity = 140;
+            fuel = fuelCapacity;
             maxSpeed = 1;
             acceleration = 0.025f;
             deceleration = 0.05f;
@@ -88,6 +92,7 @@ namespace RaceGame
         public Motorfiets(int x, int y, Player _player) : base(x, y, VehicleType.Motorfiets, _player)
         {
             fuelCapacity = 70;
+            fuel = fuelCapacity;
             maxSpeed = 1.1f;
             acceleration = 0.035f;
             deceleration = 0.07f;

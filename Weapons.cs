@@ -27,12 +27,15 @@ namespace RaceGame
             if (player == Base.currentGame.player1)
             {
                 if (Math.Abs(bulletDrawInfo.x - Base.currentGame.player2.vehicle.topleft.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player2.vehicle.topleft.Y) < 20 || Math.Abs(bulletDrawInfo.x - Base.currentGame.player2.vehicle.topright.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player2.vehicle.topright.Y) < 20
-                        || Math.Abs(bulletDrawInfo.x - Base.currentGame.player2.vehicle.backleft.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player2.vehicle.backleft.Y) < 20 || Math.Abs(bulletDrawInfo.x - Base.currentGame.player2.vehicle.backright.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player2.vehicle.backright.Y) < 20
-                       )
+                        || Math.Abs(bulletDrawInfo.x - Base.currentGame.player2.vehicle.backleft.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player2.vehicle.backleft.Y) < 20 || Math.Abs(bulletDrawInfo.x - Base.currentGame.player2.vehicle.backright.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player2.vehicle.backright.Y) < 20)
                 {
                     Base.currentGame.player2.vehicle.drawInfo.angle = bulletDrawInfo.angle;
                     Base.currentGame.player2.vehicle.weaponDrawInfo.angle = bulletDrawInfo.angle;
                     Base.currentGame.player2.vehicle.health -= damage;
+                    if (Base.currentGame.player2.vehicle.health < 0)
+                    {
+                        Base.currentGame.player2.vehicle.health = 0;
+                    }
                     Console.WriteLine("damage gedaan: "+damage);
                     Console.WriteLine("helf remain iz: " + Base.currentGame.player2.vehicle.health);
                     timeout = 0;
@@ -43,12 +46,15 @@ namespace RaceGame
             if (player == Base.currentGame.player2)
             {
                 if (Math.Abs(bulletDrawInfo.x - Base.currentGame.player1.vehicle.topleft.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player1.vehicle.topleft.Y) < 20 || Math.Abs(bulletDrawInfo.x - Base.currentGame.player1.vehicle.topright.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player1.vehicle.topright.Y) < 20
-                        || Math.Abs(bulletDrawInfo.x - Base.currentGame.player1.vehicle.backleft.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player1.vehicle.backleft.Y) < 20 || Math.Abs(bulletDrawInfo.x - Base.currentGame.player1.vehicle.backright.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player1.vehicle.backright.Y) < 20
-                       )
+                        || Math.Abs(bulletDrawInfo.x - Base.currentGame.player1.vehicle.backleft.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player1.vehicle.backleft.Y) < 20 || Math.Abs(bulletDrawInfo.x - Base.currentGame.player1.vehicle.backright.X) < 20 && Math.Abs(bulletDrawInfo.y - Base.currentGame.player1.vehicle.backright.Y) < 20)
                 {
                     Base.currentGame.player1.vehicle.drawInfo.angle = bulletDrawInfo.angle;
                     Base.currentGame.player2.vehicle.weaponDrawInfo.angle = bulletDrawInfo.angle;
                     Base.currentGame.player1.vehicle.health -= damage;
+                    if (Base.currentGame.player1.vehicle.health < 0)
+                    {
+                        Base.currentGame.player1.vehicle.health = 0;
+                    }
                     Console.WriteLine(Base.currentGame.player1.vehicle.health);
                     timeout = 0;
                 }

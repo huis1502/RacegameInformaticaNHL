@@ -2,6 +2,7 @@
 using RaceGame.Structs;
 using RaceGame.Delegates;
 using System.Collections.Generic;
+using System;
 
 namespace RaceGame
 {
@@ -12,6 +13,7 @@ namespace RaceGame
         public static List<GameTask> gameTasks;
         public static List<DrawInfo> drawInfos;
 
+        [STAThread]
         public static void Main(string[] Args)
         {
             windowHandle = new Window();
