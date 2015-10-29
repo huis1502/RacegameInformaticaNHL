@@ -20,24 +20,24 @@ namespace RaceGame
             vehicleType = _vehicleType;
         }
 
-        public void CreateVehicle(VehicleType vehicleType, int offset)
+        public void CreateVehicle(VehicleType vehicleType, Point Position)
         {
             switch (vehicleType)
             {
                 case VehicleType.Tank:
-                    vehicle = new Tank(500, 500 + offset, this);
+                    vehicle = new Tank(Position.x, Position.y, this);
                     break;
                 case VehicleType.Jackass:
-                    vehicle = new Jackass(500, 500 + offset, this);
+                    vehicle = new Jackass(Position.x, Position.y, this);
                     break;
                 case VehicleType.LAPV:
-                    vehicle = new LAPV(500, 500 + offset, this);
+                    vehicle = new LAPV(Position.x, Position.y, this);
                     break;
                 case VehicleType.HorsePower:
-                    vehicle = new HorsePower(500, 500 + offset, this);
+                    vehicle = new HorsePower(Position.x, Position.y, this);
                     break;
                 case VehicleType.Motorfiets:
-                    vehicle = new Motorfiets(500, 500 + offset, this);
+                    vehicle = new Motorfiets(Position.x, Position.y, this);
                     break;
             }
         }

@@ -218,6 +218,7 @@ namespace RaceGame
             // Tank2
             // 
             this.Tank2.AutoSize = true;
+            this.Tank2.Checked = true;
             this.Tank2.Location = new System.Drawing.Point(10, 10);
             this.Tank2.Name = "Tank2";
             this.Tank2.Size = new System.Drawing.Size(50, 17);
@@ -234,7 +235,6 @@ namespace RaceGame
             this.Jackass2.Name = "Jackass2";
             this.Jackass2.Size = new System.Drawing.Size(64, 17);
             this.Jackass2.TabIndex = 4;
-            this.Jackass2.TabStop = true;
             this.Jackass2.Text = "Jackass";
             this.Jackass2.UseVisualStyleBackColor = true;
             this.Jackass2.CheckedChanged += new System.EventHandler(this.Jackass2_CheckedChanged);
@@ -246,7 +246,6 @@ namespace RaceGame
             this.LAPV2.Name = "LAPV2";
             this.LAPV2.Size = new System.Drawing.Size(52, 17);
             this.LAPV2.TabIndex = 5;
-            this.LAPV2.TabStop = true;
             this.LAPV2.Text = "LAPV";
             this.LAPV2.UseVisualStyleBackColor = true;
             this.LAPV2.CheckedChanged += new System.EventHandler(this.LAPV2_CheckedChanged);
@@ -258,7 +257,6 @@ namespace RaceGame
             this.Horsepower2.Name = "Horsepower2";
             this.Horsepower2.Size = new System.Drawing.Size(82, 17);
             this.Horsepower2.TabIndex = 6;
-            this.Horsepower2.TabStop = true;
             this.Horsepower2.Text = "Horsepower";
             this.Horsepower2.UseVisualStyleBackColor = true;
             this.Horsepower2.CheckedChanged += new System.EventHandler(this.Horsepower2_CheckedChanged);
@@ -270,7 +268,6 @@ namespace RaceGame
             this.Motorfiets2.Name = "Motorfiets2";
             this.Motorfiets2.Size = new System.Drawing.Size(71, 17);
             this.Motorfiets2.TabIndex = 7;
-            this.Motorfiets2.TabStop = true;
             this.Motorfiets2.Text = "Motorfiets";
             this.Motorfiets2.UseVisualStyleBackColor = true;
             this.Motorfiets2.CheckedChanged += new System.EventHandler(this.Motorfiets2_CheckedChanged);
@@ -322,10 +319,12 @@ namespace RaceGame
             // Tank1
             // 
             this.Tank1.AutoSize = true;
+            this.Tank1.Checked = true;
             this.Tank1.Location = new System.Drawing.Point(10, 10);
             this.Tank1.Name = "Tank1";
             this.Tank1.Size = new System.Drawing.Size(50, 17);
             this.Tank1.TabIndex = 8;
+            this.Tank1.TabStop = true;
             this.Tank1.Text = "Tank";
             this.Tank1.UseVisualStyleBackColor = true;
             this.Tank1.CheckedChanged += new System.EventHandler(this.Tank1_CheckedChanged);
@@ -808,28 +807,28 @@ namespace RaceGame
 
 
                 //P2
-                case Keys.Up:
+                case Keys.NumPad8:
                     Base.currentGame.player2.vehicle.throttle = true;
                     break;
-                case Keys.Down:
+                case Keys.NumPad5:
                     Base.currentGame.player2.vehicle.brake = true;
                     break;
-                case Keys.Left:
+                case Keys.NumPad4:
                     Base.currentGame.player2.vehicle.turning = "left";
                     break;
-                case Keys.Right:
+                case Keys.NumPad6:
                     Base.currentGame.player2.vehicle.turning = "right";
                     break;
 
-                case Keys.RShiftKey:
+                case Keys.NumPad7:
                     if (Base.currentGame.player2.vehicle.weapon != null)
                         Base.currentGame.player2.vehicle.weapon.turning = "left";
                     break;
-                case Keys.NumPad1:
+                case Keys.NumPad9:
                     if (Base.currentGame.player2.vehicle.weapon != null)
                         Base.currentGame.player2.vehicle.weapon.turning = "right";
                     break;
-                case Keys.Enter:
+                case Keys.Divide:
                     if (Base.currentGame.player2.vehicle.weapon != null)
                         Base.currentGame.player2.vehicle.shooting = true;
                     break;
@@ -871,28 +870,28 @@ namespace RaceGame
 
 
                 //P2
-                case Keys.Up:
+                case Keys.NumPad8:
                     Base.currentGame.player2.vehicle.throttle = false;
                     break;
-                case Keys.Down:
+                case Keys.NumPad5:
                     Base.currentGame.player2.vehicle.brake = false;
                     break;
-                case Keys.Left:
+                case Keys.NumPad4:
                     Base.currentGame.player2.vehicle.turning = "false";
                     break;
-                case Keys.Right:
+                case Keys.NumPad6:
                     Base.currentGame.player2.vehicle.turning = "false";
                     break;
 
-                case Keys.RShiftKey:
+                case Keys.NumPad7:
                     if (Base.currentGame.player2.vehicle.weapon != null)
                         Base.currentGame.player2.vehicle.weapon.turning = "false";
                     break;
-                case Keys.NumPad1:
+                case Keys.NumPad9:
                     if (Base.currentGame.player2.vehicle.weapon != null)
                         Base.currentGame.player2.vehicle.weapon.turning = "false";
                     break;
-                case Keys.Enter:
+                case Keys.Divide:
                     if (Base.currentGame.player2.vehicle.weapon != null)
                         Base.currentGame.player2.vehicle.shooting = false;
                     break;
@@ -904,13 +903,11 @@ namespace RaceGame
         private void Tank1_CheckedChanged(object sender, EventArgs e)
         {
             player1Vehicle = Enums.VehicleType.Tank;
-            Console.WriteLine("Tank you");
         }
 
         private void Jackass1_CheckedChanged(object sender, EventArgs e)
         {
             player1Vehicle = Enums.VehicleType.Jackass;
-            Console.WriteLine("Yo");
         }
 
         private void LAPV1_CheckedChanged(object sender, EventArgs e)

@@ -576,7 +576,7 @@ namespace RaceGame
                                     for (int y2 = 0; y2 < 16; ++y2)
                                     {
                                         if (Bitmaps.Obstacles.Stone.GetPixel(x2, y2).A == 255)
-                                            Background.SetPixel(xpos - 8 + x2 + rand, ypos - 8 + y2 + rand, Bitmaps.Obstacles.Stone.GetPixel(x2, y2));
+                                            Background.SetPixel(xpos - 8 + x2 + rand, ypos - 8 + y2 + rand2, Bitmaps.Obstacles.Stone.GetPixel(x2, y2));
                                     }
                                 }
                                 Obstacles.Add(new Obstacle(xpos + rand, ypos + rand2, 24));

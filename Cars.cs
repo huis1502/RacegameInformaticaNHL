@@ -40,6 +40,7 @@ namespace RaceGame
             bitmap = Bitmaps.Vehicles.Jackass;
             weapon = null;
             maxHealth = 75;
+            health = maxHealth;
             ramDamage = 200;
             sideDamageMultiplier = 2f;
             grassMultiplier = 0.4f;
@@ -340,6 +341,7 @@ namespace RaceGame
             relativeWeaponPos.X = 0;
             relativeWeaponPos.Y = 0;
             maxHealth = 120;
+            health = maxHealth;
             ramDamage = 80;
             sideDamageMultiplier = 1.1f;
             grassMultiplier = 0.8f;
@@ -361,6 +363,7 @@ namespace RaceGame
             relativeWeaponPos.X = 0;
             relativeWeaponPos.Y = 0;
             maxHealth = 90;
+            health = maxHealth;
             ramDamage = 40;
             sideDamageMultiplier = 1.5f;
             grassMultiplier = 0.6f;
@@ -669,6 +672,7 @@ namespace RaceGame
             relativeWeaponPos.X = 0;
             relativeWeaponPos.Y = 0;
             maxHealth = 60;
+            health = maxHealth;
             ramDamage = 30;
             sideDamageMultiplier = 2;
             grassMultiplier = 0.4f;

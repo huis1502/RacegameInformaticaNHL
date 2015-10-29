@@ -23,3 +23,11 @@ C:\Users\Ruurd\NieuwGame\bin\Debug\RaceGame.pdb
 C:\Users\Ruurd\NieuwGame\obj\Debug\RaceGame.csprojResolveAssemblyReference.cache
 C:\Users\Ruurd\NieuwGame\obj\Debug\RaceGame.Window.resources
 C:\Users\Ruurd\NieuwGame\obj\Debug\RaceGame.csproj.GenerateResource.Cache
+C:\Users\Hindrik\Documents\GitHub\VisualStudio\RaceGame\RacegameInformaticaNHL\bin\Debug\RaceGame.exe.config
+C:\Users\Hindrik\Documents\GitHub\VisualStudio\RaceGame\RacegameInformaticaNHL\obj\Debug\RaceGame.exe
+C:\Users\Hindrik\Documents\GitHub\VisualStudio\RaceGame\RacegameInformaticaNHL\obj\Debug\RaceGame.pdb
+C:\Users\Hindrik\Documents\GitHub\VisualStudio\RaceGame\RacegameInformaticaNHL\bin\Debug\RaceGame.exe
+C:\Users\Hindrik\Documents\GitHub\VisualStudio\RaceGame\RacegameInformaticaNHL\bin\Debug\RaceGame.pdb
+C:\Users\Hindrik\Documents\GitHub\VisualStudio\RaceGame\RacegameInformaticaNHL\obj\Debug\RaceGame.csprojResolveAssemblyReference.cache
+C:\Users\Hindrik\Documents\GitHub\VisualStudio\RaceGame\RacegameInformaticaNHL\obj\Debug\RaceGame.Window.resources
+C:\Users\Hindrik\Documents\GitHub\VisualStudio\RaceGame\RacegameInformaticaNHL\obj\Debug\RaceGame.csproj.GenerateResource.Cache

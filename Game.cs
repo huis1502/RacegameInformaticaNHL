@@ -62,11 +62,11 @@ namespace RaceGame
             player1 = null;
             player2 = null;
             player1 = new Player(1);
-            player1.CreateVehicle(player1Vehicle, -20);
+            player1.CreateVehicle(player1Vehicle, SpawnPointP1);
             player1.vehicle.StartDraw();
             player1.vehicle.StartWeaponDraw();
             player2 = new Player(2);
-            player2.CreateVehicle(player2Vehicle, 20);
+            player2.CreateVehicle(player2Vehicle, SpawnPointP2);
             player2.vehicle.StartDraw();
             player2.vehicle.StartWeaponDraw();
             Base.gameTasks.Add(player1.vehicle.Appelnoot);
@@ -522,8 +522,8 @@ namespace RaceGame
             int Cx = CheckPoints[0].x * 72 + 54;
             int Cy = CheckPoints[0].y * 72;
 
-            SpawnPointP1 = new Point(Cx - 32, Cy + 32);
-            SpawnPointP2 = new Point(Cx - 32, Cy + 32);
+            SpawnPointP1 = new Point(Cx - 32, Cy + 36);
+            SpawnPointP2 = new Point(Cx - 32, Cy - 36);
 
             for (int x = 0; x < 18; ++x)
             {
