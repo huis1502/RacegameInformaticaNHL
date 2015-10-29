@@ -94,6 +94,8 @@ namespace RaceGame
         public Player player;
         public Bitmap weaponSprite;
         public Bitmap BulletSprite;
+        public int weaponSizeX = 50;
+        public int weaponSizeY = 100;
 
         public static List<Bullet> Bullets = new List<Bullet>();
         public static int i;
@@ -168,9 +170,11 @@ namespace RaceGame
         {
             weaponSprite = Bitmaps.Vehicles.LAPVWeapon;
             damage = 15;
-            fireRate = 25;
+            fireRate = 5;
             turnSpeed = 3;
             BulletSprite = Bitmaps.Bullets.RegularBullet;
+            weaponSizeX = weaponSprite.Width * 2;
+            weaponSizeY = weaponSprite.Height * 2;
         }
     }
 
@@ -178,7 +182,7 @@ namespace RaceGame
     {
         public HorsePowerWeapon(Player s) : base(s)
         {
-            damage = 5;
+            damage = 2;
             fireRate = 1;
             turnSpeed = 3;
             timeout = 4;

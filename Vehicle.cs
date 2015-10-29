@@ -34,6 +34,8 @@ namespace RaceGame
         public bool shooting = false;
         public bool inPitstop = false;
         public int pitstopCounter = 0;
+        public int vehicleSizeX;
+        public int vehicleSizeY;
 
         public PointF topleft;
         public PointF topright;
@@ -71,13 +73,13 @@ namespace RaceGame
         
         public void StartDraw()
         {
-            drawInfo = new DrawInfo(bitmap, StartPositionX, StartPositionY, 50, 50, 0f,0f,0f);
+            drawInfo = new DrawInfo(bitmap, StartPositionX, StartPositionY, vehicleSizeX, vehicleSizeY, 0f,0f,0f);
             Base.drawInfos.Add(drawInfo);
         }
 
         public virtual void StartWeaponDraw()
         {
-            weaponDrawInfo = new DrawInfo(weapon.weaponSprite, StartPositionX, StartPositionY, 50, 100, 0f, 0f, drawInfo.angle);
+            weaponDrawInfo = new DrawInfo(weapon.weaponSprite, StartPositionX, StartPositionY, weapon.weaponSizeX, weapon.weaponSizeY, 0f, 0f, drawInfo.angle);
             Base.drawInfos.Add(weaponDrawInfo);
         }
 

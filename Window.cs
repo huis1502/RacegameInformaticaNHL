@@ -965,8 +965,6 @@ namespace RaceGame
             Pitstop P = new Pitstop();
             Progressbars.Initialize();
             Base.gameTasks.Add(Progressbars.Check);
-            Base.currentGame.player1.vehicle.pitstopCounter = TotalLaps;
-            Base.currentGame.player2.vehicle.pitstopCounter = TotalLaps;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)

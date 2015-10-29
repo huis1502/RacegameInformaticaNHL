@@ -16,6 +16,8 @@ namespace RaceGame
             turnSpeed = 2;
             name = "Tank";
             bitmap = Bitmaps.Vehicles.TankBody;
+            vehicleSizeX = bitmap.Width * 2;
+            vehicleSizeY = bitmap.Height * 2;
             weapon = new TankWeapon(_player);
             relativeWeaponPos.X = 0;
             relativeWeaponPos.Y = 0;
@@ -33,11 +35,13 @@ namespace RaceGame
         {
             fuelCapacity = 120;
             fuel = fuelCapacity;
-            maxSpeed = 1.2f;
-            acceleration = 0.03f;
-            deceleration = 0.05f;
-            turnSpeed = 1.3f;
+            maxSpeed = 5f;
+            acceleration = 0.06f;
+            deceleration = 0.02f;
+            turnSpeed = 6f;
             bitmap = Bitmaps.Vehicles.Jackass;
+            vehicleSizeX = Convert.ToInt32(bitmap.Width * 1.5f);
+            vehicleSizeY = Convert.ToInt32(bitmap.Height * 1.5f);
             weapon = null;
             maxHealth = 75;
             health = maxHealth;
@@ -332,11 +336,13 @@ namespace RaceGame
         {
             fuelCapacity = 100;
             fuel = fuelCapacity;
-            maxSpeed = 0.7f;
-            acceleration = 0.015f;
+            maxSpeed = 2.5f;
+            acceleration = 0.05f;
             deceleration = 0.03f;
-            turnSpeed = 2.4f;
+            turnSpeed = 4f;
             bitmap = Bitmaps.Vehicles.LAPVBody;
+            vehicleSizeX = Convert.ToInt32(bitmap.Width * 1.5f);
+            vehicleSizeY = Convert.ToInt32(bitmap.Height * 1.5f);
             weapon = new LAPVWeapon(_player);
             relativeWeaponPos.X = 0;
             relativeWeaponPos.Y = 0;
@@ -354,11 +360,13 @@ namespace RaceGame
         {
             fuelCapacity = 140;
             fuel = fuelCapacity;
-            maxSpeed = 1;
+            maxSpeed = 4;
             acceleration = 0.025f;
             deceleration = 0.05f;
-            turnSpeed = 2.3f;
+            turnSpeed = 2.6f;
             bitmap = Bitmaps.Vehicles.HorsePowerBody;
+            vehicleSizeX = bitmap.Width;
+            vehicleSizeY = bitmap.Height;
             weapon = new HorsePowerWeapon(_player);
             relativeWeaponPos.X = 0;
             relativeWeaponPos.Y = 0;
@@ -668,6 +676,8 @@ namespace RaceGame
             deceleration = 0.07f;
             turnSpeed = 3.4f;
             bitmap = Bitmaps.Vehicles.MotorfietsBody;
+            vehicleSizeX = bitmap.Width;
+            vehicleSizeY = bitmap.Height;
             weapon = new LAPVWeapon(_player);
             relativeWeaponPos.X = 0;
             relativeWeaponPos.Y = 0;

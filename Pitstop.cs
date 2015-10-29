@@ -17,25 +17,25 @@ namespace RaceGame
 
         void CheckPitStop()
         {
-            if (Base.currentGame.player1.vehicle.drawInfo.x <= PosX + Range && Base.currentGame.player1.vehicle.drawInfo.y <= PosY + Range && Base.currentGame.player1.vehicle.drawInfo.x >= PosX - Range && Base.currentGame.player1.vehicle.drawInfo.y >= PosY - Range)
+            if (Base.currentGame.player1.vehicle.drawInfo.x <= PosX + Range && Base.currentGame.player1.vehicle.drawInfo.y <= PosY + Range && Base.currentGame.player1.vehicle.drawInfo.x >= PosX - Range && Base.currentGame.player1.vehicle.drawInfo.y >= PosY - Range && Base.currentGame.player1.vehicle.pitstopCounter < Base.windowHandle.TotalLaps)
             {
                 Base.currentGame.player1.vehicle.inPitstop = true;
             }
 
             else if(Base.currentGame.player1.vehicle.inPitstop)
             {
-                Base.currentGame.player1.vehicle.pitstopCounter--;
+                Base.currentGame.player1.vehicle.pitstopCounter++;
                 Base.currentGame.player1.vehicle.inPitstop = false;
             }
 
-            if (Base.currentGame.player2.vehicle.drawInfo.x <= PosX + Range && Base.currentGame.player2.vehicle.drawInfo.y <= PosY + Range && Base.currentGame.player2.vehicle.drawInfo.x >= PosX - Range && Base.currentGame.player2.vehicle.drawInfo.y >= PosY - Range)
+            if (Base.currentGame.player2.vehicle.drawInfo.x <= PosX + Range && Base.currentGame.player2.vehicle.drawInfo.y <= PosY + Range && Base.currentGame.player2.vehicle.drawInfo.x >= PosX - Range && Base.currentGame.player2.vehicle.drawInfo.y >= PosY - Range && Base.currentGame.player2.vehicle.pitstopCounter < Base.windowHandle.TotalLaps)
             {
                 Base.currentGame.player2.vehicle.inPitstop = true;
             }
 
             else if (Base.currentGame.player2.vehicle.inPitstop)
             {
-                Base.currentGame.player2.vehicle.pitstopCounter--;
+                Base.currentGame.player2.vehicle.pitstopCounter++;
                 Base.currentGame.player2.vehicle.inPitstop = false;
             }
 
